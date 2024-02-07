@@ -1,0 +1,40 @@
+.height-size-he-foo{
+  height: 80px;
+}
+body,main,.container {
+  height: 100vh;
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+}
+
+.header{
+  box-shadow: 0 2px 4px rgba(0,0,0,.08);
+  background-color: blueviolet;
+}
+main{
+   display: flex;
+  flex: 1;
+  flex-direction: row;
+  height: 100vh;
+}
+
+.nav{
+  height: 100%;
+  width: 300px;
+  background-color: #252b3b;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -3px 1px 14px 0px rgb(0 0 0 / 69%);
+  color: aliceblue;
+}
+app-nav{
+  width: 200px;
+  height: 100%;
+}
+app-main{
+  width: 100%;
+  background-color: bisque;
+}

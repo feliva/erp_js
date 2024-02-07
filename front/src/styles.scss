@@ -1,0 +1,43 @@
+@import "app/template/template";
+
+/* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeflex/primeflex.css";
+@import "/node_modules/primeicons/primeicons.css";
+
+html, body { height: 100%; }
+
+body {
+    font-family: var(--font-family);
+}
+
+
+// //correção password para usar todo o espaço da grid
+// .p-password{
+//     display: block !important;
+// }
+
+// //correção password para usar todo o espaço da grid
+// .p-password .p-inputtext{
+//     width: 100%;
+// }
+.p-element input{
+    display: block;
+    width: 100%;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.ui-panelmenu li{
+  list-style-type: none;
+}
+.ui-panelmenu a{
+  text-decoration: none;
+  cursor: pointer;
+  color: rgb(65, 58, 58);
+}
+
+.ui-menu-list{
+  padding: 0;
+}
