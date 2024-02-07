@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>br.com.feliva</groupId>
+	<artifactId>back</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<packaging>war</packaging>
+	<name>back</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.report.sourceEncoding>UTF-8</project.report.sourceEncoding>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<jakartaee-api.version>10.0.0</jakartaee-api.version>
+		<version.server.bom>30.0.1.Final</version.server.bom>
+		<version.microprofile.bom>30.0.1.Final</version.microprofile.bom>
+		<version.compiler.plugin>3.10.1</version.compiler.plugin>
+		<war-plugin.version>3.3.2</war-plugin.version>
+		<wildfly-plugin.version>4.1.0.Final</wildfly-plugin.version>
+
+
+		<flyway.version>10.6.0</flyway.version>
+		<postgres.driver.version>42.7.1</postgres.driver.version>
+		<database.url>jdbc:postgresql://localhost:5432/auth</database.url>
+		<database.user>postgres</database.user>
+		<database.password>postgres</database.password>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.wildfly.bom</groupId>
+				<artifactId>wildfly-ee-with-tools</artifactId>
+				<version>${version.server.bom}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<!-- importing the microprofile BOM adds MicroProfile specs -->
+			<dependency>
+				<groupId>org.wildfly.bom</groupId>
+				<artifactId>wildfly-microprofile</artifactId>
+				<version>${version.microprofile.bom}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		 <!-- Import the MicroProfile JWT API, we use provided scope as the API is included  in JBoss EAP -->
+        <dependency>
+            <groupId>org.eclipse.microprofile.jwt</groupId>
+            <artifactId>microprofile-jwt-auth-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+		<!--rest-->
+        <!-- Import the CDI API, we use provided scope as the API is included  in JBoss EAP -->
+        <dependency>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        
+                <!-- Import the Common Annotations API (JSR-250), we use provided scope
+        as the API is included in JBoss EAP -->
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Import the JAX-RS API, we use provided scope as the API is included in JBoss EAP -->
+        <dependency>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>jakarta.json</groupId>
+            <artifactId>jakarta.json-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!--rest fim-->
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate.orm</groupId>
+			<artifactId>hibernate-envers</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate.orm</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+		<!---->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- start auth-->
+		<dependency>
+	      <groupId>com.nimbusds</groupId>
+	      <artifactId>nimbus-jose-jwt</artifactId>
+	      <version>9.23</version>
+	    </dependency>
+	    
+		<dependency>
+		  <groupId>org.thymeleaf</groupId>
+		  <artifactId>thymeleaf</artifactId>
+		  <version>3.1.1.RELEASE</version>
+		</dependency>
+		<!-- and auth-->
+		
+		 <dependency>
+            <groupId>org.eclipse.angus</groupId>
+            <artifactId>angus-mail</artifactId>
+        </dependency>
+
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>${flyway.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<version>2.1.0.Final</version>
+				<configuration>
+					<filename>${project.artifactId}.war</filename>
+				</configuration>
+
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${version.compiler.plugin}</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.3.2</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>${flyway.version}</version>
+				<configuration>
+					<sqlMigrationSeparator>---</sqlMigrationSeparator>
+					<locations>
+						<location>filesystem:/src/main/resources/migrations</location>
+					</locations>
+					<url>${database.url}</url>
+					<user>${database.user}</user>
+					<password>${database.password}</password>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.flywaydb</groupId>
+						<artifactId>flyway-database-postgresql</artifactId>
+						<version>${flyway.version}</version>
+						<scope>runtime</scope>
+					</dependency>
+					<dependency>
+						<groupId>org.postgresql</groupId>
+						<artifactId>postgresql</artifactId>
+						<version>${postgres.driver.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+</project>
