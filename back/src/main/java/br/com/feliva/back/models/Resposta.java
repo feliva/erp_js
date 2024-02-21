@@ -1,4 +1,4 @@
-package br.com.feliva.back.model;
+package br.com.feliva.back.models;
 
 public class Resposta {
 

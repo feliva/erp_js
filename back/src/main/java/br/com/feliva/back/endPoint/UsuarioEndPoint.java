@@ -1,9 +1,11 @@
 package br.com.feliva.back.endPoint;
 
-import br.com.feliva.dao.UsuarioDAO;
-import br.com.feliva.models.Resposta;
-import br.com.feliva.models.Usuario;
+import br.com.feliva.back.dao.UsuarioDAO;
+import br.com.feliva.back.models.Resposta;
+import br.com.feliva.back.models.Usuario;
 import jakarta.inject.Inject;
+import jakarta.transaction.RollbackException;
+import jakarta.validation.constraints.Min;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -33,7 +35,11 @@ public class UsuarioEndPoint {
         System.out.println("Post");
         System.out.println(user);
 
-        usuarioDAO.merge(user);
+        try {
+            usuarioDAO.merge(user);
+        } catch (RollbackException e) {
+            e.printStackTrace();
+        }
         return Response.ok().build();
     }
 
@@ -49,8 +55,8 @@ public class UsuarioEndPoint {
     @GET
     @Path("/findById/{idUsuario}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findById(@PathParam("idUsuario") Long idUsuario){
-        Usuario u = usuarioDAO.findById(idUsuario);
+    public Response findById(@PathParam("idUsuario") String idUsuario){
+        Usuario u = usuarioDAO.findById(Long.parseLong(idUsuario));
         return Response.ok(u).build();
     }
 }

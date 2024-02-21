@@ -1,7 +1,7 @@
 package br.com.feliva.back.endPoint;
 
-import br.com.feliva.dao.PermissaoDAO;
-import br.com.feliva.models.Permissao;
+import br.com.feliva.back.dao.PermissaoDAO;
+import br.com.feliva.back.models.Permissao;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;

@@ -1,14 +1,14 @@
 package br.com.feliva.back.dao;
 
-import br.com.feliva.models.Usuario;
+import br.com.feliva.back.models.Usuario;
+import br.com.feliva.sharedClass.db.DAO;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.NoResultException;
 
 import java.util.List;
 
 @RequestScoped
-@SuppressWarnings("unchecked")
-public class UsuarioDAO extends Dao<Usuario>{
+public class UsuarioDAO extends DAO<Usuario> {
 
     public Usuario findUsuarioByUsername(String username){
         try {

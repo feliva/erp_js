@@ -1,5 +1,6 @@
-package br.com.feliva.back.model;
+package br.com.feliva.back.models;
 
+import br.com.feliva.sharedClass.db.Model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +13,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class Usuario extends  Model{
+public class Usuario extends Model<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,4 +36,9 @@ public class Usuario extends  Model{
     public Integer getId() {
         return this.idUsuario;
    }
+
+    @Override
+    public Integer getMMId() {
+        return this.idUsuario;
+    }
 }

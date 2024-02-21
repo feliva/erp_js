@@ -3,7 +3,7 @@ import {Observable} from "rxjs";
 
 export abstract class Services<T>{
 
-  serverUrl:string = 'http://localhost:8081';
+  serverUrl:string = 'http://localhost:8080';
   http!:HttpClient;
   static headersForm = new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded',

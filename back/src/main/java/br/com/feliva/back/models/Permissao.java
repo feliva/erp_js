@@ -1,5 +1,6 @@
-package br.com.feliva.back.model;
+package br.com.feliva.back.models;
 
+import br.com.feliva.sharedClass.db.Model;
 import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,7 +10,7 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "permissao")
-public class Permissao extends  Model{
+public class Permissao extends Model<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,5 +37,10 @@ public class Permissao extends  Model{
 
     public void setListUsuarios(Set<Usuario> listUsuarios) {
         this.listUsuarios = listUsuarios;
+    }
+
+    @Override
+    public Integer getMMId() {
+        return this.idPermissao;
     }
 }
