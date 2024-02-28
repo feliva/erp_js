@@ -32,7 +32,48 @@ import {Component} from '@angular/core';
           </li>
         </ul>
       </div>
-
+    </div>
+    <div class="ui-panelmenu">
+      <h3 class="ui-panelmenu-header">
+        <a href="#" class="ui-menuitem-link">
+          <span class="ui-menuitem-icon ui-icon pi pi-angle-down"></span>
+          <span class="ui-menuitem-text">Estoque</span>
+        </a>
+      </h3>
+      <div class="ui-panelmenu-content ">
+        <ul class="ui-menu-list">
+          <li >
+            <a class="ui-menuitem-link" routerLink="/user/buscar">
+              <span class="ui-menuitem-icon ui-icon pi pi-user"></span>
+              <span class="ui-menuitem-text">Consulta</span>
+            </a>
+          </li>
+          <li >
+            <a class="ui-menuitem-link" routerLink="/usuarios/form">
+              <span class="ui-menuitem-icon ui-icon pi pi-refresh"></span>
+              <span class="ui-menuitem-text">Entrada/Saída</span>
+            </a>
+          </li>
+          <li>
+            <a class="ui-menuitem-link ui-corner-all" href="#">
+              <span class="ui-menuitem-icon ui-icon pi pi-times"></span>
+              <span class="ui-menuitem-text">Transferência</span>
+            </a>
+          </li>
+          <li>
+            <a class="ui-menuitem-link ui-corner-all" href="#">
+              <span class="ui-menuitem-icon ui-icon pi pi-times"></span>
+              <span class="ui-menuitem-text">Produtos</span>
+            </a>
+          </li>
+          <li>
+            <a class="ui-menuitem-link ui-corner-all" href="#">
+              <span class="ui-menuitem-icon ui-icon pi pi-times"></span>
+              <span class="ui-menuitem-text">Transferência</span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   `,
   styles: [`
