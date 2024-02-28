@@ -37,7 +37,7 @@ public class UsuarioDAO extends DAO<Usuario> {
         """).setParameter("nome","%" + nome + "%").getResultList();
     }
 
-    public Usuario findById(Long idUsuario){
+    public Usuario findById(Integer idUsuario){
         try {
             return (Usuario) this.em.createQuery("from  Usuario u where u.idUsuario = :idUsuario")
                     .setParameter("idUsuario",idUsuario)

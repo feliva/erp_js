@@ -1,4 +1,5 @@
 import {Route} from "@angular/router";
+import {CRoute} from "../../model/CRouter";
 
 export class BreadMenuItem{
   index?:number;
@@ -20,7 +21,7 @@ export class BreadMenuItem{
     this.before = before;
   }
 
-  createRoute(route:Route):BreadMenuItem{
+  createRoute(route:CRoute):BreadMenuItem{
     this.route = route;
     this.route.data = {'breadMenuItem':this};
     this.route.path = this.path;

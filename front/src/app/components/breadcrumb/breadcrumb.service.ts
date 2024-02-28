@@ -8,19 +8,7 @@ export class BreadcrumbService{
 
   mm:BreadMenuItem[] = [];
 
-  static GUARD_CAN_ACTIVATE: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
-    // console.log(route)
-    // console.log(state)
-    let item:BreadMenuItem = route.data['breadMenuItem'];
-    item.url = state.url;
-    return inject(BreadcrumbService).addItem(item);
-  };
 
-  static GUARD_CAN_ACTIVATE_CHILD: CanActivateChildFn = (route: ActivatedRouteSnapshot,state: RouterStateSnapshot,) => {
-      let item:BreadMenuItem = route.data['breadMenuItem'];
-      item.url = state.url;
-      return inject(BreadcrumbService).addItem(item);
-  };
 
   constructor(private router: Router,
     private activatedRoute: ActivatedRoute) {

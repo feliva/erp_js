@@ -1,4 +1,4 @@
 export class Permissao{
-  idPermissao?:number
+  permissaoId?:string
   nome!:string;
 }

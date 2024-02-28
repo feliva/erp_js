@@ -9,7 +9,7 @@ import {Services} from "./services";
 export class UserService extends Services<Usuario>{
 
   public override getPath(): string {
-    return "/usuario";
+    return "/back/usuario";
   }
 
   constructor(private  httpClient:HttpClient) {

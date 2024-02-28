@@ -14,7 +14,7 @@ export class PermissaoService extends Services<Permissao>{
 
 
   public override getPath(): string {
-    return '/permissao';
+    return '/auth/permissao';
   }
 
 }

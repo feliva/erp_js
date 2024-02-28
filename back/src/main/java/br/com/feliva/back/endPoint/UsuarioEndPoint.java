@@ -3,6 +3,7 @@ package br.com.feliva.back.endPoint;
 import br.com.feliva.back.dao.UsuarioDAO;
 import br.com.feliva.back.models.Resposta;
 import br.com.feliva.back.models.Usuario;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.RollbackException;
 import jakarta.validation.constraints.Min;
@@ -22,6 +23,7 @@ public class UsuarioEndPoint {
     @Path("/listAll")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"manager"})
     public Response listAll(){
         Resposta r = new Resposta();
         r.dados = usuarioDAO.listAll();
@@ -48,6 +50,8 @@ public class UsuarioEndPoint {
     @Produces(MediaType.APPLICATION_JSON)
 //    @Consumes(MediaType.APPLICATION_FORM_URLENCODED) não precisa desse
     public Response findByName(@FormParam("nome") String nome){
+
+        System.out.println("findByName + " + nome);
         List<Usuario> l = usuarioDAO.findByName(nome);
         return Response.ok(l).build();
     }
@@ -55,8 +59,8 @@ public class UsuarioEndPoint {
     @GET
     @Path("/findById/{idUsuario}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findById(@PathParam("idUsuario") String idUsuario){
-        Usuario u = usuarioDAO.findById(Long.parseLong(idUsuario));
+    public Response findById(@PathParam("idUsuario") Integer idUsuario){
+        Usuario u = usuarioDAO.findById(idUsuario);
         return Response.ok(u).build();
     }
 }

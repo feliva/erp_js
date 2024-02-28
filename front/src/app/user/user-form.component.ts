@@ -92,8 +92,8 @@ export class UserFormComponent implements OnInit {
       for (let perm of resp){
         let add = true;
         for(let pu of this.user.listPermissoes){
-          if(pu.idPermissao === perm.idPermissao){
-            console.log(pu.idPermissao +" -- "+ perm.idPermissao)
+          if(pu.permissaoId === perm.permissaoId){
+            console.log(pu.permissaoId +" -- "+ perm.permissaoId)
             add = false;
             break;
           }
