@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {BreadcrumbService} from './breadcrumb.service';
-import {BreadMenuItem} from "./BreadcrumbMenuItem.class";
+import {BreadCrumbMenuItem} from "./BreadCrumbMenuItem.class";
 
 @Component({
   selector: 'app-breadcrumb',
@@ -38,13 +38,11 @@ export class BreadcrumbComponent {
   constructor(private breadService:BreadcrumbService) {}
 
   public getMenuItens(){
-    console.log("getMenuItens")
     return this.breadService.mm;
   }
 
-  public navigate(event:Event,item:BreadMenuItem){
+  public navigate(event:Event,item:BreadCrumbMenuItem){
     this.breadService.navigate(item)
-    console.log(event)
     event.preventDefault();
   }
 }

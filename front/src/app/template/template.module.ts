@@ -6,6 +6,8 @@ import {MainComponent} from './main/main.component';
 import {UserModule} from "../user/user.module";
 import {AppRoutingModule} from '../app-routing.module';
 import {PrimeNGAppUse} from '../prime-ng-app-use.module';
+import {PanelMenuModule} from "primeng/panelmenu";
+import {ComponentsModule} from "../components/components.module";
 
 
 @NgModule({
@@ -14,12 +16,14 @@ import {PrimeNGAppUse} from '../prime-ng-app-use.module';
     NavComponent,
     MainComponent
   ],
-  imports: [
-    CommonModule,
-    UserModule,
-    AppRoutingModule,
-    PrimeNGAppUse
-  ],
+    imports: [
+        CommonModule,
+        UserModule,
+        AppRoutingModule,
+        PrimeNGAppUse,
+        PanelMenuModule,
+        ComponentsModule
+    ],
   exports:[
     HeaderComponent,
     NavComponent,

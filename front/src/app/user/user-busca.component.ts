@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MessageService} from 'primeng/api';
 import {BreadcrumbService} from "../components/breadcrumb/breadcrumb.service";
-import {BreadMenuItem} from "../components/breadcrumb/BreadcrumbMenuItem.class";
 import {ConstantesUtil, TipoBusca} from "../util/constantes.util";
 
 
@@ -57,7 +56,7 @@ export class UserBuscaComponent {
     this.router.navigate(['../listar/',this.tipoBusca,this.busca], { relativeTo: this.activatedRoute });
   }
 
-  protected readonly BreadMenuItem = BreadMenuItem;
+  // protected readonly BreadMenuItem = BreadMenuItem;
   protected readonly ConstantesUtil = ConstantesUtil;
   protected readonly TipoBusca = TipoBusca;
 }

@@ -4,7 +4,7 @@ import {BreadcrumbService} from '../components/breadcrumb/breadcrumb.service';
 @Component({
   selector: 'app-user.control',
   template: `
-    <app-breadcrumb></app-breadcrumb>
+
     <router-outlet
     (activate)='onActivate($event)'
     (deactivate)='onDeactivate($event)'

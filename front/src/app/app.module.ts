@@ -11,6 +11,8 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {UsModule} from './us/us.module';
 import {PrimeNGAppUse} from './prime-ng-app-use.module';
 import {ComponentsModule} from './components/components.module';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import {EstoqueModule} from "./estoque/estoque.module";
 
 @NgModule({
   declarations: [
@@ -28,10 +30,13 @@ import {ComponentsModule} from './components/components.module';
     InputTextModule,
     NoopAnimationsModule,
     PrimeNGAppUse,
-    ComponentsModule
+    ComponentsModule,
+    EstoqueModule
   ],
   bootstrap: [AppComponent],
   providers: [
+
+    provideAnimationsAsync()
   ]
 })
 export class AppModule { }

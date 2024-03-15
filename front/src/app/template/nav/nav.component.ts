@@ -1,4 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {MenuItem} from "primeng/api";
+import {BUILDER_MENU_UNIDADE} from "../../estoque/unidade/unidade-routing.module";
 
 @Component({
   selector: 'app-nav',
@@ -75,6 +77,8 @@ import {Component} from '@angular/core';
         </ul>
       </div>
     </div>
+
+    <p-panelMenu [model]="menus"></p-panelMenu>
   `,
   styles: [`
      .ui-panelmenu > a, span{
@@ -129,6 +133,57 @@ import {Component} from '@angular/core';
     }
   `]
 })
-export class NavComponent {
+export class NavComponent implements OnInit{
+
+  menus:MenuItem[] = [BUILDER_MENU_UNIDADE.getMenuItems()];
+  //   [
+  //   {
+  //     label:'Estoque',
+  //     expanded:true,
+  //     // icon: 'pi pi-fw pi-plus',
+  //     items:[
+  //       {
+  //         label:'Consulta',
+  //         routerLink:'/user/buscar'
+  //       },
+  //       {
+  //         label: 'Entrada/Saída'
+  //       },
+  //       {
+  //         label:'Locais'
+  //       },
+  //       {
+  //         label:'Tranferência'
+  //       },
+  //       {
+  //         label:'Configurações',
+  //         expanded:true,
+  //         items:[
+  //           {
+  //             label:'Unidades',
+  //             routerLink:'/estoque/unidades'
+  //           },
+  //           {
+  //             label:'Marcas',
+  //             routerLink:'/estoque/marcas'
+  //           },
+  //           {
+  //             label:'Categorias',
+  //             routerLink:'/estoque/categorias'
+  //           },
+  //           {
+  //             label:'Produtos',
+  //             routerLink:'/estoque/produtos'
+  //           }
+  //         ]
+  //       }
+  //     ]
+  //   }
+  // ]
+  // ;
+
+  ngOnInit() {
+
+  }
 
 }

@@ -1,20 +1,18 @@
 import {inject, Injectable} from '@angular/core';
 import {ActivatedRoute, ActivatedRouteSnapshot, CanActivateChildFn, CanActivateFn, Router, RouterStateSnapshot} from '@angular/router';
-import {BreadMenuItem} from './BreadcrumbMenuItem.class';
+import {BreadCrumbMenuItem, BreadCrumbUtil} from "./BreadCrumbMenuItem.class";
 
 
 @Injectable({providedIn:'root'})
 export class BreadcrumbService{
 
-  mm:BreadMenuItem[] = [];
-
-
+  mm:BreadCrumbMenuItem[] = [];
 
   constructor(private router: Router,
     private activatedRoute: ActivatedRoute) {
   }
 
-  addItem(bread:BreadMenuItem):boolean{
+  addItem(bread:BreadCrumbMenuItem):boolean{
     if(bread.index == undefined){
       throw Error("Item do breadcrumd devem ter o seu index preenchidos.");
     }
@@ -23,15 +21,15 @@ export class BreadcrumbService{
       this.mm = []
     }
 
-    this.mm.push(BreadMenuItem.SEPARATOR);
+    this.mm.push(BreadCrumbUtil.SEPARATOR);
     this.mm.push(bread);
     return true;
   }
 
-  public navigate(item:BreadMenuItem){
+  public navigate(item:BreadCrumbMenuItem){
     console.log(this.activatedRoute)
     console.log(this.router)
-    let sub:BreadMenuItem[] = [];
+    let sub:BreadCrumbMenuItem[] = [];
     for (let element of this.mm) {
       if(element.url == item.url){
         sub.pop();//retira o ultimo separador e não add o novo item, pois sera add postetiormente os dois
