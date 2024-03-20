@@ -21,8 +21,8 @@ export abstract class Services<T>{
     return this.http.get<T[]>(this.serverUrl + this.getPath() + "/listAll");
   }
 
-  public listAlla(arrow:(value: T[]) => void):void{
-    this.http.get<T[]>(this.serverUrl + this.getPath() + "/listAll").subscribe(arrow);
+  public dataListAll(arrow:(value: T[]) => void):void{
+    this.listAll().subscribe(arrow);
   }
 
   public getOne(url:string,arrow:(value: T) => void):void{

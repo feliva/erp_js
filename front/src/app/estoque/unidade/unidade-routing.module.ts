@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 
 import {BuilderRoute} from "../../util/RouteUtil";
 import {UnidadeBuscaComponent} from "./unidade-busca.component";
+import {UnidadeListComponent} from "./unidade-list.component";
 
 
 // export const UNIDADE_MENU:BreadMenuItem            =
@@ -13,8 +14,9 @@ import {UnidadeBuscaComponent} from "./unidade-busca.component";
   //           .addChildren(new BreadMenuItem('novo','Novo Usuário',4,0).createRoute({component:UserFormComponent}));
 
 export const BUILDER_MENU_UNIDADE:BuilderRoute = new BuilderRoute().createRoot('Unidade','unidade',UnidadeBuscaComponent,['permissao'])
+  .createLocal('Buscar Unidade', 1, 0, '', UnidadeBuscaComponent, ['unidade']).localToRoot()
   .createLocal('Buscar Unidade', 1, 0, 'buscar', UnidadeBuscaComponent, ['unidade']).localToRoot()
-  .createLocal('Lista Unidades', 2, 1, 'listar/:unidade', UnidadeBuscaComponent, ['unidade']).localToRoot()
+  .createLocal('Lista Unidades', 2, 1, 'listar/:unidade', UnidadeListComponent, ['unidade']).localToRoot()
   .openFatherMenu('Configuração')
   .createLocal('Editar Unidade', 3, 2, 'editar/:unidade', UnidadeBuscaComponent, ['unidade']).localToRoot()
   .closefatherMenu()

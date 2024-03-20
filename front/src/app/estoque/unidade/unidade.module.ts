@@ -8,12 +8,14 @@ import {SharedModule} from "../../shared/shared.module";
 import {RouterModule} from "@angular/router";
 import {UserRoutingModule} from "../../user/user-routing.module";
 import {ComponentsModule} from "../../components/components.module";
+import {UnidadeListComponent} from "./unidade-list.component";
 
 
 
 @NgModule({
   declarations: [
-    UnidadeBuscaComponent
+    UnidadeBuscaComponent,
+    UnidadeListComponent
   ],
   imports: [
     CommonModule,

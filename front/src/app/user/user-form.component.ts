@@ -87,7 +87,7 @@ export class UserFormComponent implements OnInit {
     }
 
     //remove permissoes já add ao usuario
-    this.permService.listAlla((resp) => {
+    this.permService.dataListAll((resp) => {
       this.listPermissao = [];
       for (let perm of resp){
         let add = true;

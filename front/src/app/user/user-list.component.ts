@@ -60,7 +60,9 @@ export class UserListComponent implements OnInit{
               private userService:UserService,
               private confirmationService: ConfirmationService,
               private messageService: MessageService) {
-    console.log(activateRoute)
+    console.log(activateRoute.params.subscribe(para =>{
+      console.log(para);
+    }))
     let tipo:TipoBusca = this.activateRoute.snapshot.params['tipo'];
     let busca = this.activateRoute.snapshot.params['busca'];
 
