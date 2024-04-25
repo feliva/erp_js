@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http'
 import {Usuario} from "../model/Usuario";
 import {Services} from "./services";
 import {Unidade} from "../model/Unidade";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -13,20 +14,19 @@ export class UnidadeService extends Services<Unidade>{
     return "/back/unidade";
   }
 
-  constructor(private  httpClient:HttpClient) {
-    super(httpClient);
+  constructor() {
+    super();
   }
 
   // public listAll(){
   //   return this.httpClient.get<Usuario[]>(super.serverUrl);
   // }
-  // public findByName(name:string,arrow:(value: Usuario[]) => void):void{
-  //
-  //    super.postForm(new HttpParams().append('nome',name),'/findByName',arrow);
-  // }
-  //
-  // public findById(idUsuario:number,arrow:(value: Usuario) => void):void{
-  //   super.getOne('/findById/' + idUsuario,arrow)
-  // }
+  public findByDescSigla(termoBuca:string){
+      return this.find('findByDescriSigla/' + termoBuca);
+  }
+
+  public findById(idUnidade:number):Observable<Unidade>{
+    return this.getByUrl('/findById/' + idUnidade)
+  }
 
 }

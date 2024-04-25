@@ -5,7 +5,7 @@ import {AppComponent} from './app.component';
 import {TemplateModule} from "./template/template.module";
 import {UserModule} from "./user/user.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptors} from "@angular/common/http";
 import {InputTextModule} from "primeng/inputtext";
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {UsModule} from './us/us.module';
@@ -13,6 +13,7 @@ import {PrimeNGAppUse} from './prime-ng-app-use.module';
 import {ComponentsModule} from './components/components.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {EstoqueModule} from "./estoque/estoque.module";
+import {loadingInterceptor} from "./interceptor/loading.interceptor";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import {EstoqueModule} from "./estoque/estoque.module";
   ],
   bootstrap: [AppComponent],
   providers: [
-
+    provideHttpClient(withInterceptors([loadingInterceptor])),
     provideAnimationsAsync()
   ]
 })

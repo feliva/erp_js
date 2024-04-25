@@ -135,7 +135,15 @@ import {BUILDER_MENU_UNIDADE} from "../../estoque/unidade/unidade-routing.module
 })
 export class NavComponent implements OnInit{
 
-  menus:MenuItem[] = [BUILDER_MENU_UNIDADE.getMenuItems()];
+  menus:MenuItem[] =
+    [
+      {
+        label:'Estoque',
+        expanded:true,
+        items:BUILDER_MENU_UNIDADE.getMenuItems()
+      }
+    ]
+
   //   [
   //   {
   //     label:'Estoque',

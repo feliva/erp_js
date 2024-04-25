@@ -66,6 +66,8 @@ export class UserListComponent implements OnInit{
     let tipo:TipoBusca = this.activateRoute.snapshot.params['tipo'];
     let busca = this.activateRoute.snapshot.params['busca'];
 
+    console.log(busca);
+
     switch (tipo){
       case TipoBusca.NOME:
         this.userService.findByName(busca,(response)=>{this.listUsuarios = response})

@@ -9,13 +9,15 @@ import {RouterModule} from "@angular/router";
 import {UserRoutingModule} from "../../user/user-routing.module";
 import {ComponentsModule} from "../../components/components.module";
 import {UnidadeListComponent} from "./unidade-list.component";
+import {UnidadeFormComponent} from "./unidade-form.component";
 
 
 
 @NgModule({
   declarations: [
     UnidadeBuscaComponent,
-    UnidadeListComponent
+    UnidadeListComponent,
+    UnidadeFormComponent,
   ],
   imports: [
     CommonModule,

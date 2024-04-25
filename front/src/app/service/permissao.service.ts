@@ -8,8 +8,8 @@ import {Permissao} from '../model/Permissao';
 })
 export class PermissaoService extends Services<Permissao>{
 
-  constructor(private httpClient:HttpClient) {
-    super(httpClient);
+  constructor() {
+    super();
    }
 
 

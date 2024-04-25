@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class SchemaMultiTenantProvider implements MultiTenantConnectionProvider, ServiceRegistryAwareService {
+public class SchemaMultiTenantProvider implements MultiTenantConnectionProvider<String>, ServiceRegistryAwareService {
 
     private static final long serialVersionUID = 1L;
     private static final String TENANT_SUPPORTED = "SCHEMA";

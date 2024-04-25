@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class DatabaseMultiTenantProvider implements MultiTenantConnectionProvider, ServiceRegistryAwareService {
+public class DatabaseMultiTenantProvider implements MultiTenantConnectionProvider<String>, ServiceRegistryAwareService {
     private static final long serialVersionUID = 1L;
     private static final String TENANT_SUPPORTED = "DATABASE";
     private DataSource dataSource;
@@ -51,7 +51,6 @@ public class DatabaseMultiTenantProvider implements MultiTenantConnectionProvide
         return connection;
 
     }
-    @Override
     public Connection getConnection(String tenantIdentifier) throws SQLException {
 
         final Context init;

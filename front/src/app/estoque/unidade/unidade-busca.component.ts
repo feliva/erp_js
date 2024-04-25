@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessageService} from "primeng/api";
 import {BreadcrumbService} from "../../components/breadcrumb/breadcrumb.service";
 import {UnidadeService} from "../../service/unidade.service";
 import {TipoBusca} from "../../util/constantes.util";
+import {UnidadeControlService} from "../../controllers/unidade-control.service";
 
 @Component({
   selector: 'unidade-busca',
@@ -19,7 +20,7 @@ import {TipoBusca} from "../../util/constantes.util";
                   </div>
               </div>
               <div class="field col-12 md:col-6">
-                  <input type="text" pInputText  placeholder="Descrição" class="w-full"/>
+                  <input type="text" pInputText  placeholder="Descrição" class="w-full" [(ngModel)]="termoBusca"/>
               </div>
           </div>
           <div>
@@ -34,18 +35,14 @@ import {TipoBusca} from "../../util/constantes.util";
 })
 export class UnidadeBuscaComponent {
 
-    constructor(private router:Router,
-                private activatedRoute:ActivatedRoute,
-                private messageService:MessageService,
-                private breadservice:BreadcrumbService,
-                private unidadeService:UnidadeService){
+  termoBusca:string=''
+  unidadeControl:UnidadeControlService = inject(UnidadeControlService);
+    constructor(){
     }
 
     public buscar(){
-      this.unidadeService.listAll();
-        this.router.navigateByUrl('/unidade/listar/sss'
-        );
-        console.log(   ' Buscar unidade');
+      this.unidadeControl.setTermoBusca(this.termoBusca)
+      this.unidadeControl.buscar();
     }
 
     protected readonly TipoBusca = TipoBusca;

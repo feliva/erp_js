@@ -1,9 +1,10 @@
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {RouterModule, Routes,Route} from '@angular/router';
 
 import {BuilderRoute} from "../../util/RouteUtil";
 import {UnidadeBuscaComponent} from "./unidade-busca.component";
 import {UnidadeListComponent} from "./unidade-list.component";
+import {UnidadeFormComponent} from "./unidade-form.component";
 
 
 // export const UNIDADE_MENU:BreadMenuItem            =
@@ -13,20 +14,30 @@ import {UnidadeListComponent} from "./unidade-list.component";
   //           .addChildren(new BreadMenuItem('editar/:idUsuario','Editar Usuário',3,1).createRoute({component:UserFormComponent}))
   //           .addChildren(new BreadMenuItem('novo','Novo Usuário',4,0).createRoute({component:UserFormComponent}));
 
-export const BUILDER_MENU_UNIDADE:BuilderRoute = new BuilderRoute().createRoot('Unidade','unidade',UnidadeBuscaComponent,['permissao'])
-  .createLocal('Buscar Unidade', 1, 0, '', UnidadeBuscaComponent, ['unidade']).localToRoot()
-  .createLocal('Buscar Unidade', 1, 0, 'buscar', UnidadeBuscaComponent, ['unidade']).localToRoot()
-  .createLocal('Lista Unidades', 2, 1, 'listar/:unidade', UnidadeListComponent, ['unidade']).localToRoot()
-  .openFatherMenu('Configuração')
-  .createLocal('Editar Unidade', 3, 2, 'editar/:unidade', UnidadeBuscaComponent, ['unidade']).localToRoot()
-  .closefatherMenu()
+export const BUILDER_MENU_UNIDADE:BuilderRoute = new BuilderRoute()
+  .redirectOfTo('','buscar').localToRoot()
+  .navOpen('Unidade').associateWithRote()
+    .createLocal('Buscar Unidade', 1, 0, 'unidade/buscar', UnidadeBuscaComponent, ['unidade']).localToRoot()
+    .createLocal('Lista Unidades', 2, 1, 'unidade/listar/:termoBusca', UnidadeListComponent, ['unidade']).localToRoot()
+      .navOpenChildren('Configuração')
+        .navOpen('teste1')
+        .navOpen('teste2')
+      .navCloseChildren()
+      .navOpenChildren('Configuração')
+        .navOpen('teste3')
+        .createLocal('Editar Unidade', 3, 2, 'unidade/editar/:idUnidade', UnidadeFormComponent, ['unidade']).localToRoot()
+      .navCloseChildren()
 ;
 
-// console.log(BUILDER_MENU_UNIDADE.getRoutes())
+console.log(BUILDER_MENU_UNIDADE.getRoutes())
 // console.log(BUILDER_MENU_UNIDADE.getMenuItems())
 
+// if(BUILDER_MENU_UNIDADE.getRoutes().children == undefined){
+//   BUILDER_MENU_UNIDADE.getRoutes().children = [];
+// }
+
 @NgModule({
-  imports: [RouterModule.forChild([BUILDER_MENU_UNIDADE.getRoutes()])],
+  imports: [RouterModule.forChild(BUILDER_MENU_UNIDADE.getRoutes())],
   exports: [RouterModule],
   declarations:[]
 })

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {UnidadeModule} from "./unidade/unidade.module";
+import {ComponentsModule} from "../components/components.module";
 
 
 
@@ -8,7 +9,8 @@ import {UnidadeModule} from "./unidade/unidade.module";
   declarations: [],
   imports: [
     CommonModule,
-    UnidadeModule
+    UnidadeModule,
+    ComponentsModule
   ]
 })
 export class EstoqueModule { }

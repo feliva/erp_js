@@ -12,8 +12,8 @@ export class UserService extends Services<Usuario>{
     return "/back/usuario";
   }
 
-  constructor(private  httpClient:HttpClient) {
-    super(httpClient);
+  constructor() {
+    super();
   }
 
   // public listAll(){
@@ -25,7 +25,7 @@ export class UserService extends Services<Usuario>{
   }
 
   public findById(idUsuario:number,arrow:(value: Usuario) => void):void{
-    super.getOne('/findById/' + idUsuario,arrow)
+    // super.getOne('/findById/' + idUsuario,arrow)
   }
 
 }

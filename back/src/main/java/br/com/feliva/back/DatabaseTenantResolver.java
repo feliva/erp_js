@@ -1,5 +1,7 @@
 package br.com.feliva.back;
 
+import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +11,7 @@ public class DatabaseTenantResolver extends MuiltitenancyResolver {
     private Map<String, String> userDatasourceMap;
 
     public DatabaseTenantResolver(){
-        userDatasourceMap = new HashMap();
+        userDatasourceMap = new HashMap<>();
         userDatasourceMap.put("erp", "erpDS");
         userDatasourceMap.put("um", "erpUmDS");
         userDatasourceMap.put("dois", "erpDoisDS");
@@ -28,7 +30,7 @@ public class DatabaseTenantResolver extends MuiltitenancyResolver {
 
     }
 
-    @Override
+
     public boolean validateExistingCurrentSessions() {
         return false;
     }

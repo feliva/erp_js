@@ -6,6 +6,7 @@ import {Component} from '@angular/core';
   template: `
     <app-breadcrumb></app-breadcrumb>
     <router-outlet></router-outlet>
+    <app-loading></app-loading>
   `,
   styles: [`
     app-main{

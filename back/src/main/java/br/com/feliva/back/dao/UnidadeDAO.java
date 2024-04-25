@@ -22,16 +22,18 @@ public class UnidadeDAO extends DAO<Unidade> {
         }
     }
 
-    public List<Usuario> findByName(String nome){
+    public List<Usuario> findByDescriSigla(String termoBusca){
         return this.em.createQuery("""
-            from  Usuario u where u.nome ilike :nome
-        """).setParameter("nome","%" + nome + "%").getResultList();
+            from  Unidade u 
+            where u.descricao ilike :termoBusca 
+            or u.sigla ilike :termoBusca
+        """).setParameter("termoBusca","%" + termoBusca + "%").getResultList();
     }
 
-    public Usuario findById(Integer idUsuario){
+    public Unidade findById(Integer idUnidade){
         try {
-            return (Usuario) this.em.createQuery("from  Usuario u where u.idUsuario = :idUsuario")
-                    .setParameter("idUsuario",idUsuario)
+            return (Unidade) this.em.createQuery("from  Unidade u where u.idUnidade = :idUnidade")
+                    .setParameter("idUnidade",idUnidade)
                     .getSingleResult();
         }catch (NoResultException e){
 

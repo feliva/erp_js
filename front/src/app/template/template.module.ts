@@ -8,6 +8,7 @@ import {AppRoutingModule} from '../app-routing.module';
 import {PrimeNGAppUse} from '../prime-ng-app-use.module';
 import {PanelMenuModule} from "primeng/panelmenu";
 import {ComponentsModule} from "../components/components.module";
+import {LoadingComponent} from "../components/loading/loading.component";
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {ComponentsModule} from "../components/components.module";
         AppRoutingModule,
         PrimeNGAppUse,
         PanelMenuModule,
-        ComponentsModule
+        ComponentsModule,
+        LoadingComponent
     ],
   exports:[
     HeaderComponent,

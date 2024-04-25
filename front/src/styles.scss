@@ -48,3 +48,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 h3,ul{
   margin: 0;
 }
+
+table th {
+  text-align: unset;
+  padding: 3px 0 3px 0;
+}
+
+a{
+  text-decoration: none;
+}

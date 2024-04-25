@@ -1,6 +1,7 @@
 package producers;
 
 
+import br.com.feliva.back.DatabaseTenantResolver;
 import br.com.feliva.back.MuiltitenancyResolver;
 import jakarta.annotation.Resource;
 import jakarta.enterprise.context.RequestScoped;
@@ -11,7 +12,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.PersistenceUnit;
+import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
+import org.hibernate.internal.SessionFactoryImpl;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -31,18 +34,10 @@ public class ProducerConnect implements Serializable {
 	@PersistenceUnit(name = "erpUnit")
 	private static EntityManagerFactory emERP;
 
-//	@PersistenceContext(unitName = "authUnit")
-//    @Produces
-//	@Default
-//	private static EntityManager em;
-	
-//	@Resource(mappedName = "java:jboss/datasources/authDS") // same JNDI used by Hibernate Persistence Unit
-//	private static DataSource dss;
-
 	@Produces
 	protected EntityManager getEntityManager(){
 
-		final MuiltitenancyResolver tenantResolver = (MuiltitenancyResolver) ((SessionFactoryImplementor) emERP).getCurrentTenantIdentifierResolver();
+		MuiltitenancyResolver tenantResolver = (MuiltitenancyResolver) (CurrentTenantIdentifierResolver<?>) ((SessionFactoryImpl) emERP).getCurrentTenantIdentifierResolver();
 		tenantResolver.setTenantIdentifier("erp");
 
 		return emERP.createEntityManager();

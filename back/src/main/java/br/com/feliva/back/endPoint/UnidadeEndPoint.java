@@ -27,7 +27,25 @@ public class UnidadeEndPoint {
     public Response listAll(){
         Resposta r = new Resposta();
         r.dados = unidadeDAO.listAll();
+        r.erro = 404;
         return Response.ok(r.dados).build();
     }
 
+    @Path("/findByDescriSigla/{termoBusca}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findByDescriSigla(@PathParam("termoBusca") String termoBusca){
+        Resposta r = new Resposta();
+        r.dados = unidadeDAO.findByDescriSigla(termoBusca);
+        return Response.ok(r.dados).build();
+    }
+
+    @Path("/findById/{idUnidade}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findById(@PathParam("idUnidade") Integer idUnidade){
+        Resposta r = new Resposta();
+        r.dados = unidadeDAO.findById(idUnidade);
+        return Response.ok(r.dados).build();
+    }
 }

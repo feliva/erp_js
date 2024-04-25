@@ -1,17 +1,17 @@
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, take} from "rxjs";
+import {inject} from "@angular/core";
 
 export abstract class Services<T>{
 
   serverUrl:string = 'http://localhost:8080';
-  http!:HttpClient;
+  http = inject(HttpClient)
   static headersForm = new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded',
     'Accept': 'application/json'
   });
 
-  constructor( http:HttpClient){
-    this.http = http;
+  constructor(){
   }
 
   public abstract getPath():string;
@@ -21,12 +21,16 @@ export abstract class Services<T>{
     return this.http.get<T[]>(this.serverUrl + this.getPath() + "/listAll");
   }
 
+  public find(url:string): Observable<T[]>{
+    return this.http.get<T[]>(this.serverUrl + this.getPath() + '/' + url);
+  }
+
   public dataListAll(arrow:(value: T[]) => void):void{
     this.listAll().subscribe(arrow);
   }
 
-  public getOne(url:string,arrow:(value: T) => void):void{
-    this.http.get<T>(this.serverUrl + this.getPath() + url).subscribe(arrow);
+  public getByUrl(url:string): Observable<T>{
+    return this.http.get<T>(this.serverUrl + this.getPath() + url);
   }
 
   /**
