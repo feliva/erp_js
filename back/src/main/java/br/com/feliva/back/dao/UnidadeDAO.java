@@ -30,14 +30,14 @@ public class UnidadeDAO extends DAO<Unidade> {
         """).setParameter("termoBusca","%" + termoBusca + "%").getResultList();
     }
 
-    public Unidade findById(Integer idUnidade){
-        try {
-            return (Unidade) this.em.createQuery("from  Unidade u where u.idUnidade = :idUnidade")
-                    .setParameter("idUnidade",idUnidade)
-                    .getSingleResult();
-        }catch (NoResultException e){
-
-        }
-        return null;
-    }
+//    public Unidade findById(Integer idUnidade){
+//        try {
+//            return (Unidade) this.em.createQuery("from  Unidade u where u.idUnidade = :idUnidade")
+//                    .setParameter("idUnidade",idUnidade)
+//                    .getSingleResult();
+//        }catch (NoResultException e){
+//
+//        }
+//        return null;
+//    }
 }

@@ -8,7 +8,8 @@ export abstract class Services<T>{
   http = inject(HttpClient)
   static headersForm = new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded',
-    'Accept': 'application/json'
+    'Accept': 'application/json',
+    'content-type': 'application/json'
   });
 
   constructor(){
@@ -52,6 +53,15 @@ export abstract class Services<T>{
     const headers = { 'content-type': 'application/json'}
     console.log(JSON.stringify(obj));
     this.http.post(this.serverUrl + this.getPath(),JSON.stringify(obj),{'headers':headers}).subscribe(result => console.log(result));
+  }
+
+  public send(obj:T, url?:string): Observable<any>{
+    url = (url === undefined?'':url);
+
+    return this.http.post(this.serverUrl + this.getPath() + url,
+      JSON.stringify(obj),
+      {'headers':Services.headersForm}
+    );
   }
 
 }

@@ -8,6 +8,7 @@ export class ShowMessageService {
 
   msgs:Map<number,Message> = new Map();
   index:number = 0;
+  timeout:number = 2000;
 
   constructor() { }
 
@@ -19,7 +20,7 @@ export class ShowMessageService {
       console.log(key);
       this.msgs.delete(key);
 
-    }, 50000,this.index);
+    }, this.timeout,this.index);
   }
 
   addError(title:String,msg:String){
@@ -30,7 +31,7 @@ export class ShowMessageService {
       console.log(key);
       this.msgs.delete(key);
 
-    }, 50000,this.index);
+    }, this.timeout,this.index);
   }
 
   addWarn(title:String,msg:String){
@@ -41,7 +42,7 @@ export class ShowMessageService {
       console.log(key);
       this.msgs.delete(key);
 
-    }, 50000,this.index);
+    }, this.timeout,this.index);
   }
 
   addInfo(title:String,msg:String){
@@ -52,7 +53,7 @@ export class ShowMessageService {
       console.log(key);
       this.msgs.delete(key);
 
-    }, 50000,this.index);
+    }, this.timeout,this.index);
   }
 
 }

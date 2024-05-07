@@ -27,7 +27,7 @@ import {UnidadeFormComponent} from "./unidade-form.component";
     SharedModule,
     RouterModule,
     ComponentsModule,
-    UnidadeRoutingModule
+    UnidadeRoutingModule,
   ]
 })
 export class UnidadeModule { }

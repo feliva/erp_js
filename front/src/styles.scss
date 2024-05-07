@@ -6,13 +6,6 @@
 @import "primeflex/primeflex.css";
 @import "/node_modules/primeicons/primeicons.css";
 
-html, body { height: 100%; }
-
-body {
-    font-family: var(--font-family);
-}
-
-
 // //correção password para usar todo o espaço da grid
 // .p-password{
 //     display: block !important;
@@ -26,8 +19,6 @@ body {
     display: block;
     width: 100%;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .ui-panelmenu li{
   list-style-type: none;
@@ -42,8 +33,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding: 0;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 h3,ul{
   margin: 0;
@@ -56,4 +49,8 @@ table th {
 
 a{
   text-decoration: none;
+}
+
+.p-dropdown{
+  width: 100% !important;
 }

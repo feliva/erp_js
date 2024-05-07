@@ -8,8 +8,6 @@ export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
 
   let loadingService = inject(LoadingService);
 
-
-
   loadingService.start();
 
   return next(req).pipe(
@@ -17,6 +15,4 @@ export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
       loadingService.stop()
     })
   );
-
-  return next(req);
 };

@@ -14,29 +14,32 @@ import {ComponentsModule} from './components/components.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {EstoqueModule} from "./estoque/estoque.module";
 import {loadingInterceptor} from "./interceptor/loading.interceptor";
+import {globalErrorInterceptor} from "./interceptor/global.error.interceptor";
+import {LoadingComponent} from "./components/loading/loading.component";
 
 @NgModule({
   declarations: [
     AppComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    TemplateModule,
-    UserModule,
-    UsModule,
-    UserModule,
-    ReactiveFormsModule,
-    FormsModule,
-    InputTextModule,
-    NoopAnimationsModule,
-    PrimeNGAppUse,
-    ComponentsModule,
-    EstoqueModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        TemplateModule,
+        UserModule,
+        UsModule,
+        UserModule,
+        ReactiveFormsModule,
+        FormsModule,
+        InputTextModule,
+        NoopAnimationsModule,
+        PrimeNGAppUse,
+        ComponentsModule,
+        EstoqueModule,
+        LoadingComponent
+    ],
   bootstrap: [AppComponent],
   providers: [
-    provideHttpClient(withInterceptors([loadingInterceptor])),
+    provideHttpClient(withInterceptors([globalErrorInterceptor,loadingInterceptor])),
     provideAnimationsAsync()
   ]
 })

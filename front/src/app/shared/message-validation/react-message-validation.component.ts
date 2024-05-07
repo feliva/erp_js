@@ -10,14 +10,14 @@ import {FormGroup, ValidationErrors} from "@angular/forms";
     </div>
   `,
   styles: [`
-    
+
   `]
 })
 export class ReactMessageValidationComponent {
 
   @Input() fGroup! : FormGroup;
   @Input() field!: string;
-  @Input() label!: string;
+  @Input() label: string|undefined;
 
   constructor(private elRef: ElementRef) {
   }
@@ -25,8 +25,8 @@ export class ReactMessageValidationComponent {
     return this.fGroup.controls[this.field].touched && !this.fGroup.controls[this.field].valid
   }
   message():string[]{
-    if(this.label == null){
-      this.label =  this.field;
+    if(this.label == undefined){
+      this.label = '';
     }
     let fCom :ValidationErrors | null = this.fGroup.controls[this.field].errors;
     let msg:Array<string> = [];

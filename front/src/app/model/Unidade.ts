@@ -1,6 +1,6 @@
 export class Unidade{
   idUnidade?: number | undefined;
-  descicao!:string;
+  descricao!:string;
   sigla!:string;
   status!:string;
 }

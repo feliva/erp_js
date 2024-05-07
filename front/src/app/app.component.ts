@@ -3,18 +3,19 @@ import {Component} from '@angular/core';
 @Component({
   selector: 'app-root',
   template: `
-    <div class="container">
+    <p-toast />
       <app-show-message></app-show-message>
-      <app-header class="header height-size-he-foo"/>
-      <main>
-        <app-nav/>
+      <app-header/>
+      <main class="flex flex-row w-full">
+        <app-nav />
         <app-main/>
       </main>
+      <app-loading></app-loading>
+    <!--app-header></app-header-->
 
-    <app-header></app-header>
-    </div>
   `,
   styles: [`
+
   `],
 })
 export class AppComponent {

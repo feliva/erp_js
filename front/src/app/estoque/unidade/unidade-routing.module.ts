@@ -29,7 +29,7 @@ export const BUILDER_MENU_UNIDADE:BuilderRoute = new BuilderRoute()
       .navCloseChildren()
 ;
 
-console.log(BUILDER_MENU_UNIDADE.getRoutes())
+// console.log(BUILDER_MENU_UNIDADE.getRoutes())
 // console.log(BUILDER_MENU_UNIDADE.getMenuItems())
 
 // if(BUILDER_MENU_UNIDADE.getRoutes().children == undefined){

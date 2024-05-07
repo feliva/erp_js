@@ -1,11 +1,9 @@
 package br.com.feliva.back.endPoint;
 
 import br.com.feliva.back.dao.UnidadeDAO;
-import br.com.feliva.back.dao.UsuarioDAO;
 import br.com.feliva.back.models.Resposta;
 import br.com.feliva.back.models.Unidade;
-import br.com.feliva.back.models.Usuario;
-import jakarta.annotation.security.RolesAllowed;
+import br.com.feliva.back.util.ValidadorUtill;
 import jakarta.inject.Inject;
 import jakarta.transaction.RollbackException;
 import jakarta.ws.rs.*;
@@ -20,6 +18,9 @@ public class UnidadeEndPoint {
     @Inject
     UnidadeDAO unidadeDAO;
 
+    @Inject
+    ValidadorUtill validadorUtill;
+
 //    http://localhost:8081/unidade/listAll
     @Path("/listAll")
     @GET
@@ -27,7 +28,6 @@ public class UnidadeEndPoint {
     public Response listAll(){
         Resposta r = new Resposta();
         r.dados = unidadeDAO.listAll();
-        r.erro = 404;
         return Response.ok(r.dados).build();
     }
 
@@ -44,8 +44,21 @@ public class UnidadeEndPoint {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findById(@PathParam("idUnidade") Integer idUnidade){
-        Resposta r = new Resposta();
-        r.dados = unidadeDAO.findById(idUnidade);
-        return Response.ok(r.dados).build();
+//        Resposta<Unidade> r = new Resposta<Unidade>();
+//        r.dados = unidadeDAO.findById(idUnidade);
+        return Response.ok(unidadeDAO.findById(idUnidade)).build();
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response post(Unidade unidade) throws RollbackException {
+        List<String> erros = this.validadorUtill.validar(unidade);
+        if(!erros.isEmpty()){
+            return Resposta.Builder.<Unidade>errorValidacao(unidade,erros);
+
+        }
+        this.unidadeDAO.mergeT(unidade);
+        return Response.ok(Response.Status.ACCEPTED).build();
     }
 }

@@ -5,8 +5,8 @@ import {ShowMessageService} from './show-message.service';
   selector: 'app-show-message',
   template: `
   <div class="grow">
-    <div *ngFor="let item of this.showMessageService.msgs | keyvalue" class="flex flex-row" [ngClass]="item.value.type">
-      <div class="icone flex align-items-center justify-content-center">
+    <div *ngFor="let item of this.showMessageService.msgs | keyvalue" class="flex flex-row" [ngClass]="item.value.type" style="animation: fade 1s">
+      <div class="icone flex align-items-center justify-content-center"  pAnimateOnScroll enterClass="fadein" leaveClass="fadeout" >
       <i [ngClass]="item.value.icon"></i>
       </div>
       <div class="flex flex-column">
@@ -17,6 +17,34 @@ import {ShowMessageService} from './show-message.service';
   </div>
   `,
   styles: [`
+    :host {
+      @keyframes slidedown-icon {
+        0% {
+          transform: translateY(0);
+        }
+
+        50% {
+          transform: translateY(20px);
+        }
+
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      .slidedown-icon {
+        animation: slidedown-icon;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+      }
+
+      .box {
+        background-image: radial-gradient(var(--primary-300), var(--primary-600));
+        border-radius: 50% !important;
+        color: var(--primary-color-text);
+      }
+    }
+
     .grow{
       position: absolute;
       /* right: 0; */

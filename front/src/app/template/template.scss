@@ -1,40 +1,32 @@
-.height-size-he-foo{
-  height: 80px;
+:root{
+  --color-logo:white;
+  --color-bg-header:#252b3b;
+  --size-header:80px;
+  --size-app-nav:200px
 }
+
+
 body,main,.container {
   height: 100vh;
+  background-color: #f1f5f7;
 }
 
-.container{
-  display: flex;
-  flex-direction: column;
-}
-
-.header{
-  box-shadow: 0 2px 4px rgba(0,0,0,.08);
-  background-color: blueviolet;
-}
-main{
-   display: flex;
-  flex: 1;
-  flex-direction: row;
-  height: 100vh;
-}
-
-.nav{
-  height: 100%;
-  width: 300px;
-  background-color: #252b3b;
-  display: flex;
-  flex-direction: column;
-  box-shadow: -3px 1px 14px 0px rgb(0 0 0 / 69%);
-  color: aliceblue;
-}
 app-nav{
-  width: 200px;
-  height: 100%;
+  box-shadow: 0 .325rem .55rem rgba(51, 51, 51, .36) !important;
 }
+app-nav  .p-panelmenu .p-panelmenu-header .p-panelmenu-header-content, app-nav .p-panelmenu .p-panelmenu-content  {
+  border-radius: unset !important;
+}
+
+.size-app-nav{
+  min-width: var(--size-app-nav) !important;
+  background-color: var(--color-bg-header);
+}
+
 app-main{
   width: 100%;
-  background-color: bisque;
+}
+
+.p-toast .p-toast-message {
+  border: unset;
 }
