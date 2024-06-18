@@ -1,15 +1,19 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {MessageService} from "primeng/api";
+import { MessageService, SharedModule } from "primeng/api";
 import {BreadcrumbService} from "../../components/breadcrumb/breadcrumb.service";
 import {UnidadeService} from "../../service/unidade.service";
 import {TipoBusca} from "../../util/constantes.util";
 import {UnidadeControlService} from "../../controllers/unidade-control.service";
 import {Unidade} from "../../model/Unidade";
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { PanelModule } from 'primeng/panel';
 
 @Component({
-  selector: 'unidade-list',
-  template: `
+    selector: 'unidade-list',
+    template: `
       <p-panel header="Lista de Unidade">
         <div *ngIf="(unidadeControl.unidades$ | async) as unidades">
           <p-table [value]="unidades"  [tableStyle]="{'min-width': '60rem'}">
@@ -38,9 +42,11 @@ import {Unidade} from "../../model/Unidade";
         </div>
       </p-panel>
   `,
-  styles: [`
+    styles: [`
 
-  `]
+  `],
+    standalone: true,
+    imports: [PanelModule, NgIf, TableModule, SharedModule, ButtonModule, AsyncPipe]
 })
 export class UnidadeListComponent implements OnInit{
 

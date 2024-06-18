@@ -7,17 +7,15 @@ import {LoadingComponent} from "./loading/loading.component";
 
 
 @NgModule({
-  declarations: [
-    ShowMessageComponent,
-    BreadcrumbComponent
-  ],
-  imports: [
-    CommonModule,
-    RouterModule
-  ],
-  exports:[
-    ShowMessageComponent,
-    BreadcrumbComponent,
-  ]
+    imports: [
+        CommonModule,
+        RouterModule,
+        ShowMessageComponent,
+        BreadcrumbComponent
+    ],
+    exports: [
+        ShowMessageComponent,
+        BreadcrumbComponent,
+    ]
 })
 export class ComponentsModule { }

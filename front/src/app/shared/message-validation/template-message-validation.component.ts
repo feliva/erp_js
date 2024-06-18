@@ -1,17 +1,20 @@
 import {Component, ElementRef, Input} from '@angular/core';
 import {FormGroup, ValidationErrors} from "@angular/forms";
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-template-message-validation',
-  template: `
+    selector: 'app-template-message-validation',
+    template: `
     <ng-content></ng-content>
     <div *ngIf="hasError()" style="color: red;width: initial;" class="flex flex-column pt-2">
       <small class="pb-1" *ngFor="let err of message()" >{{err}}</small>
     </div>
   `,
-  styles: [`
+    styles: [`
     
-  `]
+  `],
+    standalone: true,
+    imports: [NgIf, NgFor]
 })
 export class TemplateMessageValidationComponent {
 

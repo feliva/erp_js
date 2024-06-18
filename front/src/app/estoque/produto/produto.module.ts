@@ -14,22 +14,18 @@ import {ProdutoControlService} from "../../controllers/produto-control.service";
 
 
 @NgModule({
-  declarations: [
-    ProdutoBuscaComponent,
-    ProdutoListarComponent,
-    ProdutoFormComponent
-  ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    PrimeNGAppUse,
-    SharedModule,
-    RouterModule,
-    ComponentsModule,
-    ProdutoRoutingModule,
-  ],
-  // providers:[ProdutoControlService],
-
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        PrimeNGAppUse,
+        SharedModule,
+        RouterModule,
+        ComponentsModule,
+        ProdutoRoutingModule,
+        ProdutoBuscaComponent,
+        ProdutoListarComponent,
+        ProdutoFormComponent,
+    ],
 })
 export class ProdutoModule { }

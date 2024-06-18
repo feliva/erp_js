@@ -2,15 +2,16 @@ import {Component, OnInit} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {BUILDER_MENU_UNIDADE} from "../../estoque/unidade/unidade-routing.module";
 import {BUILDER_MENU_PRODUTO} from "../../estoque/produto/produto-routing.module";
+import { PanelMenuModule } from 'primeng/panelmenu';
 
 @Component({
-  selector: 'app-nav',
-  template: `
+    selector: 'app-nav',
+    template: `
     <div class="size-app-nav">
         <p-panelMenu [model]="menus" class="w-max"></p-panelMenu>
     </div>
   `,
-  styles: [`
+    styles: [`
      .ui-panelmenu > a, span{
       color: rgb(65, 58, 58);
     }
@@ -61,7 +62,9 @@ import {BUILDER_MENU_PRODUTO} from "../../estoque/produto/produto-routing.module
       margin-right: 0.5rem;
       font-weight: 700;
     }
-  `]
+  `],
+    standalone: true,
+    imports: [PanelMenuModule]
 })
 export class NavComponent implements OnInit{
 

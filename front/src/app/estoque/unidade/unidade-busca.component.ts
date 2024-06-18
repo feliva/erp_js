@@ -1,10 +1,14 @@
 import {Component, inject, OnDestroy} from '@angular/core';
 import {TipoBusca} from "../../util/constantes.util";
 import {UnidadeControlService} from "../../controllers/unidade-control.service";
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { FormsModule } from '@angular/forms';
+import { PanelModule } from 'primeng/panel';
 
 @Component({
-  selector: 'unidade-busca',
-  template: `
+    selector: 'unidade-busca',
+    template: `
       <p-panel header="Busca de Unidade">
 
           <div class="formgrid grid">
@@ -25,9 +29,11 @@ import {UnidadeControlService} from "../../controllers/unidade-control.service";
           </div>
       </p-panel>
   `,
-  styles: [`
+    styles: [`
 
-  `]
+  `],
+    standalone: true,
+    imports: [PanelModule, FormsModule, InputTextModule, ButtonModule]
 })
 export class UnidadeBuscaComponent implements OnDestroy{
 

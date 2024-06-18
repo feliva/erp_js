@@ -11,23 +11,21 @@ import {LoadingComponent} from "../components/loading/loading.component";
 
 
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    NavComponent,
-    MainComponent
-  ],
     imports: [
         CommonModule,
         AppRoutingModule,
         PrimeNGAppUse,
         PanelMenuModule,
         ComponentsModule,
-        LoadingComponent
+        LoadingComponent,
+        HeaderComponent,
+        NavComponent,
+        MainComponent
     ],
-  exports:[
-    HeaderComponent,
-    NavComponent,
-    MainComponent
-  ]
+    exports: [
+        HeaderComponent,
+        NavComponent,
+        MainComponent
+    ]
 })
 export class TemplateModule { }

@@ -1,10 +1,11 @@
 import {Component} from '@angular/core';
 import {BreadcrumbService} from './breadcrumb.service';
 import {BreadCrumbMenuItem} from "./BreadCrumbMenuItem.class";
+import { NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-breadcrumb',
-  template: `
+    selector: 'app-breadcrumb',
+    template: `
     <div class="ui-panelmenu">
       <div class="p-element max-w-full">
         <div class="p-breadcrumb p-component">
@@ -20,7 +21,7 @@ import {BreadCrumbMenuItem} from "./BreadCrumbMenuItem.class";
       </div>
     </div>
   `,
-  styles: [`
+    styles: [`
     .p-breadcrumb .p-breadcrumb-list {
       margin: 0;
       padding: 0;
@@ -31,7 +32,9 @@ import {BreadCrumbMenuItem} from "./BreadCrumbMenuItem.class";
     }
 
 
-  `]
+  `],
+    standalone: true,
+    imports: [NgFor]
 })
 export class BreadcrumbComponent {
 

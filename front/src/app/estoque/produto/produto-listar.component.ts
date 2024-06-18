@@ -13,14 +13,17 @@ import {
 } from '@angular/core';
 import {ActivatedRoute, Route, Router, RouterPreloader} from "@angular/router";
 import {Produto} from "../../model/Produto";
-import {TableLazyLoadEvent, TablePageEvent} from "primeng/table";
+import { TableLazyLoadEvent, TablePageEvent, TableModule } from "primeng/table";
 import {ProdutoControlService} from "../../controllers/produto-control.service";
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService, SharedModule } from 'primeng/api';
 import {AppComponent} from "../../model/AppComponent";
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ButtonModule } from 'primeng/button';
+import { PanelModule } from 'primeng/panel';
 
 @Component({
-  selector: 'produto-busca',
-  template: `
+    selector: 'produto-busca',
+    template: `
     <div >
       <p-panel header="Lista de Produto" id="pnlListarProduto" >
         <div >
@@ -63,9 +66,11 @@ import {AppComponent} from "../../model/AppComponent";
       <p-confirmDialog />
     </div>
   `,
-  styles: [`
+    styles: [`
 
-  `]
+  `],
+    standalone: true,
+    imports: [PanelModule, TableModule, SharedModule, ButtonModule, ConfirmDialogModule]
 })
 export class ProdutoListarComponent implements OnInit,AppComponent{
 

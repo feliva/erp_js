@@ -1,8 +1,10 @@
 import {Component} from '@angular/core';
+import { BadgeModule } from 'primeng/badge';
+import { AvatarModule } from 'primeng/avatar';
 
 @Component({
-  selector: 'app-header',
-  template: `
+    selector: 'app-header',
+    template: `
     <div class="flex" >
       <div class="logo size-app-nav header">
         <div class="sdiv"></div>
@@ -21,7 +23,7 @@ import {Component} from '@angular/core';
       </div>
     </div>
   `,
-  styles: [`
+    styles: [`
     .logo{
       height: var(--size-header);
       padding-left: 20px;
@@ -51,7 +53,9 @@ import {Component} from '@angular/core';
     .sombra{
       box-shadow: 0px 2px 5px 1px rgba(51, 51, 51, 0.36) ;
     }
-  `]
+  `],
+    standalone: true,
+    imports: [AvatarModule, BadgeModule]
 })
 export class HeaderComponent {
 

@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UnidadeService} from "../../service/unidade.service";
 import {Unidade} from "../../model/Unidade";
@@ -9,10 +9,15 @@ import {StatusService} from "../../service/status.service";
 import {Status} from "../../model/Status";
 import {Location} from "@angular/common";
 import {MessageService} from "primeng/api";
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import { ReactMessageValidationComponent } from '../../shared/message-validation/react-message-validation.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { PanelModule } from 'primeng/panel';
 
 @Component({
-  selector: 'unidade-form',
-  template: `
+    selector: 'unidade-form',
+    template: `
     <div class="">
       <p-panel header="Editar Unidade" >
         <form  autocomplete="off" [formGroup]="formGroup" (ngSubmit)="onSubmit()" >
@@ -53,9 +58,11 @@ import {MessageService} from "primeng/api";
       </p-panel>
     </div>
   `,
-  styles:[`
+    styles: [`
 
-  `]
+  `],
+    standalone: true,
+    imports: [PanelModule, FormsModule, ReactiveFormsModule, InputTextModule, ReactMessageValidationComponent, DropdownModule, ButtonModule]
 })
 export class UnidadeFormComponent implements OnInit{
 

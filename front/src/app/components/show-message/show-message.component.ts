@@ -1,9 +1,10 @@
 import {Component} from '@angular/core';
 import {ShowMessageService} from './show-message.service';
+import { NgFor, NgClass, KeyValuePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-show-message',
-  template: `
+    selector: 'app-show-message',
+    template: `
   <div class="grow">
     <div *ngFor="let item of this.showMessageService.msgs | keyvalue" class="flex flex-row" [ngClass]="item.value.type" style="animation: fade 1s">
       <div class="icone flex align-items-center justify-content-center"  pAnimateOnScroll enterClass="fadein" leaveClass="fadeout" >
@@ -16,7 +17,7 @@ import {ShowMessageService} from './show-message.service';
     </div>
   </div>
   `,
-  styles: [`
+    styles: [`
     :host {
       @keyframes slidedown-icon {
         0% {
@@ -97,7 +98,9 @@ import {ShowMessageService} from './show-message.service';
       border-left:5px  solid #004085
     }
 
-  `]
+  `],
+    standalone: true,
+    imports: [NgFor, NgClass, KeyValuePipe]
 })
 export class ShowMessageComponent {
 

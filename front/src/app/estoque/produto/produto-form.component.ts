@@ -7,16 +7,22 @@ import {ActivatedRoute, Route, Router, RouterPreloader} from "@angular/router";
 import {ProdutoService} from "../../service/produto.service";
 import {forkJoin, Observable} from "rxjs";
 import {Produto} from "../../model/Produto";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {UnidadeService} from "../../service/unidade.service";
 import {Unidade} from "../../model/Unidade";
 import {ProdutoControlService} from "../../controllers/produto-control.service";
 import {MessageService} from "primeng/api";
 import {AppMessageService} from "../../service/app-message.service";
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ReactMessageValidationComponent } from '../../shared/message-validation/react-message-validation.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { PanelModule } from 'primeng/panel';
 
 @Component({
-  selector: 'produto-busca',
-  template: `
+    selector: 'produto-busca',
+    template: `
     <div >
       <p-panel header="{{labelForm}} Produto">
         <form  autocomplete="off" [formGroup]="formGroup"  (ngSubmit)="onSubmit($event)" >
@@ -63,10 +69,20 @@ import {AppMessageService} from "../../service/app-message.service";
       </p-panel>
     </div>
   `,
-  styles: [`
+    styles: [`
 
   `],
-
+    standalone: true,
+    imports: [
+        PanelModule,
+        FormsModule,
+        ReactiveFormsModule,
+        InputTextModule,
+        ReactMessageValidationComponent,
+        InputNumberModule,
+        DropdownModule,
+        ButtonModule,
+    ],
 })
 export class ProdutoFormComponent implements OnInit{
 

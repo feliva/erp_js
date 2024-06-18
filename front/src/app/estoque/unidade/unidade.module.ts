@@ -13,20 +13,18 @@ import {UnidadeFormComponent} from "./unidade-form.component";
 
 
 @NgModule({
-  declarations: [
-    UnidadeBuscaComponent,
-    UnidadeListComponent,
-    UnidadeFormComponent,
-  ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    PrimeNGAppUse,
-    SharedModule,
-    RouterModule,
-    ComponentsModule,
-    UnidadeRoutingModule,
-  ]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        PrimeNGAppUse,
+        SharedModule,
+        RouterModule,
+        ComponentsModule,
+        UnidadeRoutingModule,
+        UnidadeBuscaComponent,
+        UnidadeListComponent,
+        UnidadeFormComponent,
+    ]
 })
 export class UnidadeModule { }

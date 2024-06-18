@@ -6,18 +6,15 @@ import {PrimeNGAppUse} from '../prime-ng-app-use.module';
 
 
 @NgModule({
-  declarations: [
-    ReactMessageValidationComponent,
-    TemplateMessageValidationComponent,
-
-  ],
-  imports: [
-    CommonModule,
-    PrimeNGAppUse
-  ],
-  exports:[
-    ReactMessageValidationComponent,
-    TemplateMessageValidationComponent,
-  ]
+    imports: [
+        CommonModule,
+        PrimeNGAppUse,
+        ReactMessageValidationComponent,
+        TemplateMessageValidationComponent
+    ],
+    exports: [
+        ReactMessageValidationComponent,
+        TemplateMessageValidationComponent,
+    ]
 })
 export class SharedModule { }

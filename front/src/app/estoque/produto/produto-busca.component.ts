@@ -28,14 +28,17 @@ import {forkJoin, Observable} from "rxjs";
 import {Produto} from "../../model/Produto";
 import {LazyLoadEvent} from "primeng/api";
 import {TableLazyLoadEvent, TablePageEvent} from "primeng/table";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { FormControl, FormGroup, Validators, FormsModule } from "@angular/forms";
 import {UnidadeService} from "../../service/unidade.service";
 import {Unidade} from "../../model/Unidade";
 import {ProdutoControlService} from "../../controllers/produto-control.service";
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { PanelModule } from 'primeng/panel';
 
 @Component({
-  selector: 'produto-busca',
-  template: `
+    selector: 'produto-busca',
+    template: `
     <div >
       <p-panel header="Busca de Produto" >
 
@@ -58,9 +61,16 @@ import {ProdutoControlService} from "../../controllers/produto-control.service";
       </p-panel>
     </div>
   `,
-  styles: [`
+    styles: [`
 
   `],
+    standalone: true,
+    imports: [
+        PanelModule,
+        FormsModule,
+        InputTextModule,
+        ButtonModule,
+    ],
 })
 export class ProdutoBuscaComponent implements AfterViewInit {
 
