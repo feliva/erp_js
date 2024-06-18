@@ -21,32 +21,48 @@ export class BreadcrumbService{
       this.mm = []
     }
 
+    if(this.getTop() === bread){
+      return true;
+    }
+
     this.mm.push(BreadCrumbUtil.SEPARATOR);
     this.mm.push(bread);
     return true;
   }
 
+  public pop():BreadCrumbMenuItem|undefined{
+    let item = this.mm.pop();//item
+    this.mm.pop();//separador
+    return item;
+  }
+
   public navigate(item:BreadCrumbMenuItem){
     console.log(this.activatedRoute)
-    console.log(this.router)
+    console.log('BreadcrumbService.navigate');
     let sub:BreadCrumbMenuItem[] = [];
     for (let element of this.mm) {
+      sub.push(element);
       if(element.url == item.url){
-        sub.pop();//retira o ultimo separador e não add o novo item, pois sera add postetiormente os dois
         break;
-      }else{
-        sub.push(element);
       }
     }
     this.mm = sub;
     this.router.navigate([item.url], { relativeTo: this.activatedRoute });
   }
 
-  private getLastRoute(activeRoute:ActivatedRoute):ActivatedRouteSnapshot {
-    if (activeRoute.snapshot.children == undefined) {
-      return activeRoute.snapshot;
-    } else {
-      return this.getLastRoute(activeRoute);
+  toTop(){
+    let menu = this.getTop()
+    if(menu?.url) {
+      this.router.navigateByUrl(menu?.url);
+    }
+  }
+
+  getTop() {
+    console.log(this.mm)
+    if (this.mm !=undefined && this.mm.length != 0) {
+      return this.mm[this.mm.length - 1];
+    }else{
+      return undefined;
     }
   }
 }

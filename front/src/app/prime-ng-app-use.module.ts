@@ -10,13 +10,14 @@ import {InputMaskModule} from 'primeng/inputmask';
 import {CalendarModule} from 'primeng/calendar';
 import {PanelModule} from 'primeng/panel';
 import {TableModule} from 'primeng/table';
-import {MessageService} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import {ConfirmPopupModule} from 'primeng/confirmpopup';
 import {DropdownModule} from "primeng/dropdown";
 import {AnimateOnScrollModule} from "primeng/animateonscroll";
 import {AvatarModule} from "primeng/avatar";
 import {BadgeModule} from "primeng/badge";
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
   declarations: [],
@@ -38,9 +39,11 @@ import {BadgeModule} from "primeng/badge";
     DropdownModule,
     AnimateOnScrollModule,
     AvatarModule,
-    BadgeModule
+    BadgeModule,
+    ConfirmDialogModule,
+    InputNumberModule
     //BreadcrumbModule// não funciona nao atualiza
   ],
-  providers:[MessageService]
+  providers:[MessageService,ConfirmationService]
 })
 export class PrimeNGAppUse { }

@@ -19,6 +19,10 @@
     display: block;
     width: 100%;
 }
+//para elementos ocuparem todo o espaço da grid
+.full,.full *{
+  width: 100%;
+}
 
 .ui-panelmenu li{
   list-style-type: none;

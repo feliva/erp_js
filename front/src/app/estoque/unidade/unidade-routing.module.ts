@@ -15,26 +15,15 @@ import {UnidadeFormComponent} from "./unidade-form.component";
   //           .addChildren(new BreadMenuItem('novo','Novo Usuário',4,0).createRoute({component:UserFormComponent}));
 
 export const BUILDER_MENU_UNIDADE:BuilderRoute = new BuilderRoute()
-  .redirectOfTo('','buscar').localToRoot()
+  .redirectOfTo('unidade','unidade/buscar').localToRoot()
   .navOpen('Unidade').associateWithRote()
-    .createLocal('Buscar Unidade', 1, 0, 'unidade/buscar', UnidadeBuscaComponent, ['unidade']).localToRoot()
-    .createLocal('Lista Unidades', 2, 1, 'unidade/listar/:termoBusca', UnidadeListComponent, ['unidade']).localToRoot()
-      .navOpenChildren('Configuração')
-        .navOpen('teste1')
-        .navOpen('teste2')
-      .navCloseChildren()
-      .navOpenChildren('Configuração')
-        .navOpen('teste3')
-        .createLocal('Editar Unidade', 3, 2, 'unidade/editar/:idUnidade', UnidadeFormComponent, ['unidade']).localToRoot()
-      .navCloseChildren()
+    .createLocal('Buscar Unidade', 1, 0, 0,'estoque/unidade/buscar', UnidadeBuscaComponent, ['unidade']).localToRoot()
+    .createLocal('Lista Unidades', 2, 1, 0, 'unidade/listar/:termoBusca', UnidadeListComponent, ['unidade']).localToRoot()
+    .createLocal('Editar Unidade', 3, 2, 0,'unidade/editar/:idUnidade', UnidadeFormComponent, ['unidade']).localToRoot()
 ;
 
 // console.log(BUILDER_MENU_UNIDADE.getRoutes())
 // console.log(BUILDER_MENU_UNIDADE.getMenuItems())
-
-// if(BUILDER_MENU_UNIDADE.getRoutes().children == undefined){
-//   BUILDER_MENU_UNIDADE.getRoutes().children = [];
-// }
 
 @NgModule({
   imports: [RouterModule.forChild(BUILDER_MENU_UNIDADE.getRoutes())],

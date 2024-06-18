@@ -7,6 +7,7 @@ import {Type} from "@angular/core";
 
 export interface RouteP extends Route{
   permissao?:Array<string>;
+  tela:number;
   breadCrumbMenuItem?:BreadCrumbMenuItem;
 }
 
@@ -22,22 +23,42 @@ export class BuilderRoute{
   localItem?:BreadCrumbMenuItem;
   associarItem?:BreadCrumbMenuItem;
 
-  createLocal(label:string,index:number,before:number,path:string,component : Type<any>, permissao:Array<string>):BuilderRoute{
+  createLocal(label:string,index:number,before:number,tela:number,path:string,component : Type<any>, permissao:Array<string>):BuilderRoute{
     this.localRoute = {
       path:path,
       component:component,
       permissao:permissao,
-      canActivate : [Guards.CAN_ACTIVATE_CHILD_BREADCRUMB,Guards.CAN_ACTIVATE_CHILD_PERMISSAO]
+      tela:tela,
+      canActivate : [
+        Guards.CAN_ACTIVATE_CHILD_BREADCRUMB,
+        Guards.CAN_ACTIVATE_CHILD_PERMISSAO]
+      ,
+      data:{}
     }
+
+
     this.localItem = {
       label:label,
       index:index,
       before:before,
-      routerLink:path
+      routerLink:path,
+      routerLinkActiveOptions:'teste'
     }
     return this;
   }
 
+  addRouteData(data:{[key: string | symbol]:any}){
+    if(this.localRoute != undefined) {//so pra para o erro do typescript
+      if (this.localRoute?.data != undefined) {
+        Object.assign(this.localRoute.data, data)
+      } else {
+        this.localRoute.data = data;
+      }
+    }else{
+      throw new Error('Crie primeiro a rota antes de adicionar dados');
+    }
+    return this;
+  }
 
   navOpen(label:string):BuilderRoute{
     this.localItem = {
@@ -109,7 +130,8 @@ export class BuilderRoute{
     this.localRoute = {
       path:path,
       component:component,
-      permissao:permissao
+      permissao:permissao,
+      tela:0
     }
     return this;
   }
@@ -134,7 +156,13 @@ export class BuilderRoute{
       this.associarItem = undefined;
     }
 
-    this.localRoute.data = {'breadMenuItem':this.localItem};
+    if(this.localRoute.data == undefined) {
+      this.localRoute.data = {'breadMenuItem': this.localItem};
+    }else{
+      Object.assign(this.localRoute.data , {'breadMenuItem': this.localItem});
+    }
+
+    console.log(this.localRoute.data)
 
     this.rootRoute.push(this.localRoute);
 
@@ -148,6 +176,7 @@ export class BuilderRoute{
     this.localRoute = {
       redirectTo : urlRedirect,
       pathMatch : 'full',
+      tela:0,
       path : path
     }
 

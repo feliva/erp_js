@@ -1,0 +1,360 @@
+// import {
+//   AfterContentChecked,
+//   AfterContentInit,
+//   AfterViewChecked,
+//   AfterViewInit,
+//   Component,
+//   DoCheck,
+//   inject,
+//   Input,
+//   input,
+//   OnChanges, OnDestroy,
+//   OnInit
+// } from '@angular/core';
+// import {TipoBusca} from "../../util/constantes.util";
+// import {UnidadeControlService} from "../../controllers/unidade-control.service";
+// import {ActivatedRoute, Route, Router, RouterPreloader} from "@angular/router";
+// import {RouteP} from "../../util/RouteUtil";
+// import {Location} from "@angular/common";
+// import {ProdutoService} from "../../service/produto.service";
+// import {forkJoin, Observable} from "rxjs";
+// import {Produto} from "../../model/Produto";
+// import {LazyLoadEvent} from "primeng/api";
+// import {TableLazyLoadEvent, TablePageEvent} from "primeng/table";
+// import {FormControl, FormGroup, Validators} from "@angular/forms";
+// import {UnidadeService} from "../../service/unidade.service";
+// import {Unidade} from "../../model/Unidade";
+//
+// @Component({
+//   selector: 'produto-busca',
+//   template: `
+//     <div *ngIf="rendBusca">
+//       <p-panel header="Busca de Produto" >
+//
+//         <div class="formgrid grid">
+//           <div class="field col-12 md:col-12">
+//             <div class="flex flex-wrap gap-3">
+//               <div class="flex align-items-center">
+//                 <label class="ml-2">Descrição</label>
+//               </div>
+//             </div>
+//           </div>
+//           <div class="field col-12 md:col-6">
+//             <input type="text" pInputText  placeholder="Descrição" class="w-full" [(ngModel)]="termoBusca"/>
+//           </div>
+//         </div>
+//         <div>
+//           <p-button label="Buscar" (click)="this.buscar()" icon="pi pi-search" class="pr-3"></p-button>
+//           <!--              <p-button label="Novo" routerLink="/user/novo" icon="pi pi-plus"></p-button>-->
+//         </div>
+//       </p-panel>
+//     </div>
+//
+//     <div *ngIf="rendListaProdutos">
+//       <p-panel header="Lista de Produto" id="pnlListarProduto" >
+//         <div >
+//           <p-table [value]="listProdutos"  [tableStyle]="{'min-width': '60rem'}"
+//             [lazy]="true" dataKey="idProduto"
+//                    [paginator]="true"
+//                    [rows]="rowsPage"
+//                    [totalRecords]="100"
+//                    (onLazyLoad)="onLazyLoad($event)"
+//                    (onPage)="onPage($event)"
+//                    (firstChange)="firstChange($event)"
+//                    [rowsPerPageOptions]="[20,40,80,160]"
+//                    >
+//             <ng-template pTemplate="header">
+//               <tr>
+//                 <th>id</th>
+//                 <th>descreicao</th>
+//                 <th>sigla</th>
+//                 <th>Status</th>
+//                 <th></th>
+//               </tr>
+//               <tr>
+//                 <th>id</th>
+//                 <th>
+//                     <p-columnFilter type="text" field="descricao" />
+//                 </th>
+//                 <th>sigla</th>
+//                 <th>Status</th>
+//                 <th></th>
+//               </tr>
+//             </ng-template>
+//             <ng-template pTemplate="body" let-produto>
+//               <tr>
+//                 <th>{{produto.idProduto}}</th>
+//                 <th>{{produto.nome}}</th>
+//                 <th>{{produto.valorVenda}}</th>
+//                 <th>{{produto.valor}}</th>
+//                 <th>
+//                   <p-button icon="pi pi-pencil" [rounded]="true" [text]="true"
+//                     (onClick)="editar(produto,$event)" ></p-button>
+//                   <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger "
+//                     (onClick)="excluir(produto,$event)"></p-button>
+//                 </th>
+//               </tr>
+//             </ng-template>
+//           </p-table>
+//         </div>
+//       </p-panel>
+//     </div>
+//
+//     <div *ngIf="rendNovoProduto || rendEditProduto">
+//       <p-panel header="{{labelForm}} Produto">
+//         <form  autocomplete="off" [formGroup]="formGroup"  >
+//           <div class="formgrid grid">
+//             <div class="field col-12 md:col-6">
+//               <label>Nome</label>
+//               <input pInputText  type="text" formControlName="nome" >
+//               <app-react-message-validation [fGroup]="formGroup" field="nome" ></app-react-message-validation>
+//             </div>
+//             <div class="field col-12 md:col-6">
+//               <label>Valor de Venda</label>
+//               <input pInputText  type="text" formControlName="valorVenda" >
+//               <app-react-message-validation [fGroup]="formGroup" field="valorVenda" ></app-react-message-validation>
+//             </div>
+//             <div class="field col-12 md:col-6">
+//               <label>Status</label>
+//               <p-dropdown [options]="listaUnidades" optionLabel="descricao" formControlName="unidade">
+//               </p-dropdown>
+//               <app-react-message-validation [fGroup]="formGroup" field="unidade" ></app-react-message-validation>
+//             </div>
+//           </div>
+//
+//           <div class="grid mt-2 ">
+//             <div class="col-fixed">
+//               <p-button [raised]="true" type="submit" [disabled]="!formGroup.valid" >
+//                 <i class="pi pi-check mr-2"></i>
+//                 <span>Enviar</span>
+//               </p-button>
+//             </div>
+//             <div class="col-fixed">
+//               <p-button severity="secondary" [raised]="true" (onClick)="onCancelarForm($event)" >
+//                 <i class="pi pi-times mr-2"></i>
+//                 <span>Cancelar</span>
+//               </p-button>
+//             </div>
+//           </div>
+//         </form>
+//       </p-panel>
+//     </div>
+//
+//   `,
+//   styles: [`
+//
+//   `]
+// })
+// export class ProdutoBuscaComponent2 implements OnInit,
+//   OnChanges,
+//   // DoCheck,
+//   // AfterViewChecked,
+//   // AfterViewInit,
+//   // AfterContentInit,
+//   // AfterContentChecked,
+//   OnDestroy {
+//
+//   termoBusca:string='';
+//   produto?:Produto|null = null;
+//
+//   formGroup:FormGroup = this.initFormGroup();
+//
+//   rendBusca:boolean = false;
+//   rendListaProdutos:boolean = false;
+//   rendEditProduto:boolean = false;
+//   rendNovoProduto:boolean = false;
+//   rowsPage = 20;
+//
+//   labelForm = '';
+//
+//   listaUnidades:Unidade[]|undefined;
+//
+//   unidadeService:UnidadeService = inject(UnidadeService);
+//
+//
+//   @Input({alias:'telaInicial'})
+//   tela:number = 0;
+//
+//   listProdutos:Produto[]|any[] = [];
+//
+//
+//   unidadeControl:UnidadeControlService = inject(UnidadeControlService);
+//   router:Router = inject(Router);
+//   activatedRoute:ActivatedRoute = inject(ActivatedRoute)
+//   locations:Location = inject(Location);
+//   produtoService:ProdutoService = inject(ProdutoService);
+//
+//
+//   constructor(){
+//     console.log(this.activatedRoute)
+//     if(this.tela == 0) {
+//       const rota: RouteP | null = <RouteP>this.activatedRoute.snapshot.routeConfig;
+//
+//       if (rota != null) {
+//         this.tela = rota.tela;
+//       }
+//     }
+//     switch (this.tela) {
+//       case 1:this.telaBusca();break;
+//       case 2:this.buscar();break;
+//       case 3:
+//         let idProduto: number = this.activatedRoute.snapshot.params['idProduto'];
+//         this.produtoService.findById(idProduto).subscribe(resposta =>{
+//           this.editar(resposta,null);
+//         });
+//         break;
+//       case 4:this.telaNovoProduto();break;
+//     }
+//   }
+//
+//   initFormGroup():FormGroup{
+//     return new FormGroup({
+//       nome: new FormControl('', [Validators.required]),
+//       valorVenda: new FormControl('', [Validators.required]),
+//       valor: new FormControl('', [Validators.required]),
+//       unidade: new FormControl('', [Validators.required]),
+//     });
+//   }
+//
+//   public buscar(){
+//     console.log('busca')
+//     console.log(this.termoBusca)
+//     if(this.termoBusca.trim().length > 0){
+//       this.termoBusca = this.termoBusca.trim();
+//     }else{
+//       this.termoBusca = '*';
+//     }
+//
+//     // this.realizaBusca(null);
+//     this.telaListaProduto()
+//   }
+//
+//   public editar(produto:Produto,event:any){
+//     // console.log(event)
+//     // console.log(produto)
+//     this.produto = produto;
+//     this.initForm();
+//     this.telaEditProduto();
+//   }
+//
+//   public excluir(produto:Produto,event:any){
+//     console.log(event)
+//     console.log(produto)
+//   }
+//
+//   realizaBusca(event: TableLazyLoadEvent){
+//     console.log(event)
+//     this.produtoService.findByNome(this.termoBusca,event).subscribe(result=>{
+//       console.log(result)
+//       this.listProdutos = result;
+//       this.rowsPage = this.listProdutos.length;
+//     });
+//   }
+//
+//   initForm(){
+//     console.log('initForm')
+//
+//     forkJoin({
+//       lUnidade:this.unidadeService.listAll()
+//     }).subscribe(({lUnidade}) => {
+//       this.listaUnidades = lUnidade;
+//       this.populaForm();
+//     });
+//   }
+//
+//   populaForm() {
+//     if (this.produto == null) {
+//      this.formGroup = this.initFormGroup();
+//     } else {
+//       this.formGroup.patchValue(this.produto);
+//     }
+//   }
+//
+//   onCancelarForm(event:any){
+//
+//   }
+//
+//   onLazyLoad(event: TableLazyLoadEvent){
+//     this.realizaBusca(event);
+//     console.log('onlazyLoad');
+//     console.log(event)
+//   }
+//
+//   onPage(event:TablePageEvent){
+//     console.log('onpage')
+//     console.log(event)
+//   }
+//
+//   firstChange(value:number){
+//     console.log('firstChange '+ value)
+//   }
+//
+//   protected readonly TipoBusca = TipoBusca;
+//
+//   telaBusca(){
+//     this.rendBusca = true;
+//     this.rendListaProdutos = false;
+//     this.rendEditProduto = false;
+//     this.rendNovoProduto = false;
+//   }
+//   telaListaProduto(){
+//     this.rendBusca = false;
+//     this.rendListaProdutos = true;
+//     this.rendEditProduto = false;
+//     this.rendNovoProduto = false;
+//     this.locations.replaceState('/produto/listar/'+this.termoBusca);
+//   }
+//   telaEditProduto(){
+//     this.rendBusca = false;
+//     this.rendListaProdutos = false;
+//     this.rendEditProduto = true;
+//     this.rendNovoProduto = false;
+//     this.labelForm = 'Editar'
+//     this.locations.replaceState('/produto/editar/'+this.produto?.idProduto);
+//   }
+//   telaNovoProduto(){
+//     this.rendBusca = false;
+//     this.rendListaProdutos = false;
+//     this.rendEditProduto = false;
+//     this.rendNovoProduto = true;
+//     this.labelForm = 'Novo';
+//   }
+//
+//   onGenerateUserId(uid:string) {
+//     console.log("Generating UserID");
+//     // this.userid = uid;
+//   }
+//
+//   ngOnInit() {
+//     // this.name = "John Doe";
+//     console.log("Parent ngOnInit() called");
+//   }
+//
+//   ngOnChanges() {
+//     console.log("Parent ngOnChanges() called");
+//   }
+//   //
+//   // ngDoCheck() {
+//   //   console.log("Parent ngDoCheck() called");
+//   // }
+//   //
+//   // ngAfterViewChecked() {
+//   //   console.log("Parent ngAfterViewChecked() called");
+//   // }
+//   //
+//   // ngAfterViewInit() {
+//   //   console.log("Parent ngAfterViewInit() called");
+//   // }
+//   //
+//   // ngAfterContentInit() {
+//   //   console.log("Parent ngAfterContentInit() called");
+//   // }
+//   //
+//   // ngAfterContentChecked() {
+//   //   console.log("Parent ngAfterContentChecked() called");
+//   // }
+//
+//   ngOnDestroy() {
+//     console.log("Parent ngOnDestroy() called");
+//   }
+// }

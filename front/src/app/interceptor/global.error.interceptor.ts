@@ -6,7 +6,6 @@ import {MessageService} from "primeng/api";
 import {Resposta} from "../model/Resposta";
 
 export const globalErrorInterceptor: HttpInterceptorFn = (req, next) => {
-  console.log('globalErrorInterceptor')
 
   const showMessageService:ShowMessageService = inject(ShowMessageService);
   const  ss:MessageService = inject(MessageService)
@@ -14,7 +13,7 @@ export const globalErrorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((errr)=>{
       const resposta:Resposta<any> =  errr.error;
-
+      console.log(errr);
       if(resposta.msgs == undefined){
         ss.add({ severity: 'error', summary: 'Um erro ocorreu.'})
       }else {

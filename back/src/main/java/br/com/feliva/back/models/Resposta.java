@@ -24,7 +24,8 @@ public class Resposta<T> {
 
 
     public enum Error{
-        NOT_VALID(101,"Parametro com erros de validação.");
+        VALIDACAO_ERRO(101,"Parametro com erros de validação."),
+        FORMATO_ERRO(101,"Erro no formato dos dados.");
 
         private final int code;
         private final String reason;
@@ -37,7 +38,7 @@ public class Resposta<T> {
 
     public static class Builder<I>{
          public static <I> Response errorValidacao(I dados, List<String> msg){
-             return Response.status(Response.Status.BAD_REQUEST).entity(new Resposta<I>(dados,Error.NOT_VALID,msg)).build();
+             return Response.status(Response.Status.BAD_REQUEST).entity(new Resposta<I>(dados,Error.VALIDACAO_ERRO,msg)).build();
         }
     }
 }

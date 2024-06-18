@@ -1,82 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {BUILDER_MENU_UNIDADE} from "../../estoque/unidade/unidade-routing.module";
+import {BUILDER_MENU_PRODUTO} from "../../estoque/produto/produto-routing.module";
 
 @Component({
   selector: 'app-nav',
   template: `
-<!--    <div class="ui-panelmenu">-->
-<!--      <h3 class="ui-panelmenu-header">-->
-<!--        <a href="#" class="ui-menuitem-link">-->
-<!--          <span class="ui-menuitem-icon ui-icon pi pi-angle-down"></span>-->
-<!--          <span class="ui-menuitem-text">Grupo</span>-->
-<!--        </a>-->
-<!--      </h3>-->
-<!--      <div class="ui-panelmenu-content ">-->
-<!--        <ul class="ui-menu-list">-->
-<!--          <li >-->
-<!--            <a class="ui-menuitem-link" routerLink="/user/buscar">-->
-<!--              <span class="ui-menuitem-icon ui-icon pi pi-user"></span>-->
-<!--              <span class="ui-menuitem-text">Usuários</span>-->
-<!--            </a>-->
-<!--          </li>-->
-<!--          <li >-->
-<!--            <a class="ui-menuitem-link" routerLink="/usuarios/form">-->
-<!--              <span class="ui-menuitem-icon ui-icon pi pi-refresh"></span>-->
-<!--              <span class="ui-menuitem-text">User form</span>-->
-<!--            </a>-->
-<!--          </li>-->
-<!--          <li>-->
-<!--            <a class="ui-menuitem-link ui-corner-all" href="#">-->
-<!--              <span class="ui-menuitem-icon ui-icon pi pi-times"></span>-->
-<!--              <span class="ui-menuitem-text">Link 3</span>-->
-<!--            </a>-->
-<!--          </li>-->
-<!--        </ul>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="ui-panelmenu">-->
-<!--      <h3 class="ui-panelmenu-header">-->
-<!--        <a href="#" class="ui-menuitem-link">-->
-<!--          <span class="ui-menuitem-icon ui-icon pi pi-angle-down"></span>-->
-<!--          <span class="ui-menuitem-text">Estoque</span>-->
-<!--        </a>-->
-<!--      </h3>-->
-<!--      <div class="ui-panelmenu-content ">-->
-<!--        <ul class="ui-menu-list">-->
-<!--          <li >-->
-<!--            <a class="ui-menuitem-link" routerLink="/user/buscar">-->
-<!--              <span class="ui-menuitem-icon ui-icon pi pi-user"></span>-->
-<!--              <span class="ui-menuitem-text">Consulta</span>-->
-<!--            </a>-->
-<!--          </li>-->
-<!--          <li >-->
-<!--            <a class="ui-menuitem-link" routerLink="/usuarios/form">-->
-<!--              <span class="ui-menuitem-icon ui-icon pi pi-refresh"></span>-->
-<!--              <span class="ui-menuitem-text">Entrada/Saída</span>-->
-<!--            </a>-->
-<!--          </li>-->
-<!--          <li>-->
-<!--            <a class="ui-menuitem-link ui-corner-all" href="#">-->
-<!--              <span class="ui-menuitem-icon ui-icon pi pi-times"></span>-->
-<!--              <span class="ui-menuitem-text">Transferência</span>-->
-<!--            </a>-->
-<!--          </li>-->
-<!--          <li>-->
-<!--            <a class="ui-menuitem-link ui-corner-all" href="#">-->
-<!--              <span class="ui-menuitem-icon ui-icon pi pi-times"></span>-->
-<!--              <span class="ui-menuitem-text">Produtos</span>-->
-<!--            </a>-->
-<!--          </li>-->
-<!--          <li>-->
-<!--            <a class="ui-menuitem-link ui-corner-all" href="#">-->
-<!--              <span class="ui-menuitem-icon ui-icon pi pi-times"></span>-->
-<!--              <span class="ui-menuitem-text">Transferência</span>-->
-<!--            </a>-->
-<!--          </li>-->
-<!--        </ul>-->
-<!--      </div>-->
-<!--    </div>-->
     <div class="size-app-nav">
         <p-panelMenu [model]="menus" class="w-max"></p-panelMenu>
     </div>
@@ -141,58 +70,13 @@ export class NavComponent implements OnInit{
       {
         label:'Estoque',
         expanded:true,
-        items:BUILDER_MENU_UNIDADE.getMenuItems()
-      }
+        items:BUILDER_MENU_UNIDADE.getMenuItems().concat(BUILDER_MENU_PRODUTO.getMenuItems())
+      },
     ]
-
-  //   [
-  //   {
-  //     label:'Estoque',
-  //     expanded:true,
-  //     // icon: 'pi pi-fw pi-plus',
-  //     items:[
-  //       {
-  //         label:'Consulta',
-  //         routerLink:'/user/buscar'
-  //       },
-  //       {
-  //         label: 'Entrada/Saída'
-  //       },
-  //       {
-  //         label:'Locais'
-  //       },
-  //       {
-  //         label:'Tranferência'
-  //       },
-  //       {
-  //         label:'Configurações',
-  //         expanded:true,
-  //         items:[
-  //           {
-  //             label:'Unidades',
-  //             routerLink:'/estoque/unidades'
-  //           },
-  //           {
-  //             label:'Marcas',
-  //             routerLink:'/estoque/marcas'
-  //           },
-  //           {
-  //             label:'Categorias',
-  //             routerLink:'/estoque/categorias'
-  //           },
-  //           {
-  //             label:'Produtos',
-  //             routerLink:'/estoque/produtos'
-  //           }
-  //         ]
-  //       }
-  //     ]
-  //   }
-  // ]
-  // ;
 
   ngOnInit() {
 
   }
 
+  protected readonly console = console;
 }

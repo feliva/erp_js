@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 import {HeaderComponent} from './header/header.component';
 import {NavComponent} from './nav/nav.component';
 import {MainComponent} from './main/main.component';
-import {UserModule} from "../user/user.module";
 import {AppRoutingModule} from '../app-routing.module';
 import {PrimeNGAppUse} from '../prime-ng-app-use.module';
 import {PanelMenuModule} from "primeng/panelmenu";
@@ -19,7 +18,6 @@ import {LoadingComponent} from "../components/loading/loading.component";
   ],
     imports: [
         CommonModule,
-        UserModule,
         AppRoutingModule,
         PrimeNGAppUse,
         PanelMenuModule,

@@ -22,7 +22,10 @@ export class UnidadeControlService {
   router:Router = inject(Router);
   activatedRoute:ActivatedRoute = inject(ActivatedRoute)
 
-  constructor(){}
+  constructor(){
+
+    console.log(this.router)
+  }
 
   buscar(){
     this.trazDados();

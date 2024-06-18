@@ -1,8 +1,4 @@
-import {Component, inject} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {MessageService} from "primeng/api";
-import {BreadcrumbService} from "../../components/breadcrumb/breadcrumb.service";
-import {UnidadeService} from "../../service/unidade.service";
+import {Component, inject, OnDestroy} from '@angular/core';
 import {TipoBusca} from "../../util/constantes.util";
 import {UnidadeControlService} from "../../controllers/unidade-control.service";
 
@@ -33,11 +29,12 @@ import {UnidadeControlService} from "../../controllers/unidade-control.service";
 
   `]
 })
-export class UnidadeBuscaComponent {
+export class UnidadeBuscaComponent implements OnDestroy{
 
   termoBusca:string=''
   unidadeControl:UnidadeControlService = inject(UnidadeControlService);
     constructor(){
+
     }
 
     public buscar(){
@@ -46,4 +43,8 @@ export class UnidadeBuscaComponent {
     }
 
     protected readonly TipoBusca = TipoBusca;
+
+  ngOnDestroy() {
+    console.log("Parent ngOnDestroy() unidade");
+  }
 }

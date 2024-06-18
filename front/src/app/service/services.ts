@@ -22,8 +22,18 @@ export abstract class Services<T>{
     return this.http.get<T[]>(this.serverUrl + this.getPath() + "/listAll");
   }
 
-  public find(url:string): Observable<T[]>{
-    return this.http.get<T[]>(this.serverUrl + this.getPath() + '/' + url);
+  // public find(url:string): Observable<T[]>{
+  //   return this.http.get<T[]>(this.serverUrl + this.getPath() + '/' + url);
+  // }
+
+  public find(url:string,obj?:any ): Observable<T[]>{
+    console.log('teste')
+    console.log(JSON.stringify(obj));
+    if(obj == null){
+      return this.http.get<T[]>(this.serverUrl + this.getPath() + '/' + url);
+    }else {
+      return this.http.get<T[]>(this.serverUrl + this.getPath() + '/' + url);
+    }
   }
 
   public dataListAll(arrow:(value: T[]) => void):void{
@@ -49,13 +59,18 @@ export abstract class Services<T>{
     ).subscribe(arrow);
   }
 
-  public save(obj:T): void{
+  public save(obj:T):Observable<any>{
     const headers = { 'content-type': 'application/json'}
-    console.log(JSON.stringify(obj));
-    this.http.post(this.serverUrl + this.getPath(),JSON.stringify(obj),{'headers':headers}).subscribe(result => console.log(result));
+    return this.http.post(this.serverUrl + this.getPath(),JSON.stringify(obj),{'headers':headers});
+      // .subscribe(result => console.log(result));
   }
 
-  public send(obj:T, url?:string): Observable<any>{
+  public delete(id:number): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.http.delete(this.serverUrl + this.getPath() +"/"+ id,{'headers':headers});
+  }
+
+  public send(obj:any, url?:string): Observable<any>{
     url = (url === undefined?'':url);
 
     return this.http.post(this.serverUrl + this.getPath() + url,

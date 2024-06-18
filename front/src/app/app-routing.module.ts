@@ -1,20 +1,18 @@
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {BuilderRoute} from "./util/RouteUtil";
-import {UnidadeBuscaComponent} from "./estoque/unidade/unidade-busca.component";
-import {UnidadeListComponent} from "./estoque/unidade/unidade-list.component";
+import {RouteReuseStrategy, RouterModule, Routes} from '@angular/router';
+import {TesteRouteReuseStrategy} from "./util/TesteReuseStrategy";
 
 const routes: Routes = [
-  {path: '',loadChildren: () => import('./us/us.module').then(m => m.UsModule)},
-  {path:'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule)},
-  //http://localhost:4200/estoque/unidade/buscar
-  {path:'unidade', loadChildren: () => import('./estoque/unidade/unidade.module').then(m => m.UnidadeModule)},
-  // {path:'estoque/unidade/buscar',component:UnidadeBuscaComponent},
-  // {path:'estoque/unidade/listar/:termo',component:UnidadeListComponent},
+  {path:'estoque',loadChildren: () => import('./estoque/produto/produto.module').then(m => m.ProdutoModule)},
+  {path:'estoque', loadChildren: () => import('./estoque/unidade/unidade.module').then(m => m.UnidadeModule)},
+
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{onSameUrlNavigation:'reload'})],
+  providers:[
+    // {provide:RouteReuseStrategy,useClass:TesteRouteReuseStrategy}
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
