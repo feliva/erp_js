@@ -8,7 +8,7 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors, withInterceptor
 import {InputTextModule} from "primeng/inputtext";
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {PrimeNGAppUse} from './prime-ng-app-use.module';
-import {ComponentsModule} from './components/components.module';
+
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {EstoqueModule} from "./estoque/estoque.module";
 import {loadingInterceptor} from "./interceptor/loading.interceptor";
@@ -19,17 +19,16 @@ import {LoadingComponent} from "./components/loading/loading.component";
         AppComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
-        TemplateModule,
-        // UsModule,
-        // UserModule,
-        ReactiveFormsModule,
-        FormsModule,
-        InputTextModule,
-        NoopAnimationsModule,
-        PrimeNGAppUse,
-        ComponentsModule,
-        EstoqueModule,
-        LoadingComponent], providers: [
+    TemplateModule,
+    // UsModule,
+    // UserModule,
+    ReactiveFormsModule,
+    FormsModule,
+    InputTextModule,
+    NoopAnimationsModule,
+    PrimeNGAppUse,
+    EstoqueModule,
+    LoadingComponent], providers: [
         provideHttpClient(withInterceptors([globalErrorInterceptor, loadingInterceptor])),
         provideAnimationsAsync(),
         provideHttpClient(withInterceptorsFromDi())

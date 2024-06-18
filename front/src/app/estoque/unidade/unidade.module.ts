@@ -6,7 +6,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {PrimeNGAppUse} from "../../prime-ng-app-use.module";
 import {SharedModule} from "../../shared/shared.module";
 import {RouterModule} from "@angular/router";
-import {ComponentsModule} from "../../components/components.module";
+
 import {UnidadeListComponent} from "./unidade-list.component";
 import {UnidadeFormComponent} from "./unidade-form.component";
 
@@ -14,17 +14,16 @@ import {UnidadeFormComponent} from "./unidade-form.component";
 
 @NgModule({
     imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        FormsModule,
-        PrimeNGAppUse,
-        SharedModule,
-        RouterModule,
-        ComponentsModule,
-        UnidadeRoutingModule,
-        UnidadeBuscaComponent,
-        UnidadeListComponent,
-        UnidadeFormComponent,
-    ]
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    PrimeNGAppUse,
+    SharedModule,
+    RouterModule,
+    UnidadeRoutingModule,
+    UnidadeBuscaComponent,
+    UnidadeListComponent,
+    UnidadeFormComponent,
+]
 })
 export class UnidadeModule { }

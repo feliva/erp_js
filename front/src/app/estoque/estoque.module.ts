@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {UnidadeModule} from "./unidade/unidade.module";
-import {ComponentsModule} from "../components/components.module";
+
 import {ProdutoModule} from "./produto/produto.module";
 
 
@@ -11,8 +11,7 @@ import {ProdutoModule} from "./produto/produto.module";
   imports: [
     CommonModule,
     UnidadeModule,
-    ProdutoModule,
-    ComponentsModule
-  ]
+    ProdutoModule
+]
 })
 export class EstoqueModule { }
