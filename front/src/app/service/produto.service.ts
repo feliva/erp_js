@@ -15,20 +15,24 @@ export class ProdutoService extends Services<Produto>{
   public override getPath(): string {
     return "/back/produto";
   }
-
+  public converteToIntance(observable:Observable<any>):Observable<any>{
+    return observable
+  }  public converteToArrayIntance(observable:Observable<any>):Observable<any>{
+    return observable
+  }
   constructor() {
     super();
   }
 
-  // public listAll(){
-  //   return this.httpClient.get<Usuario[]>(super.serverUrl);
+  public findByIdOrName(termoBusca:string) :Observable<Produto[]>{
+    return this.find('findByIdOrName/'+ termoBusca);
+  }
+  // public findByNome(nome:string, paginacao:TableLazyLoadEvent ) : Observable<Produto[]>{
+  //     return this.send(paginacao,'/findByNome/' + nome);
   // }
-  public findByNome(nome:string, paginacao:TableLazyLoadEvent ) : Observable<Produto[]>{
-      return this.send(paginacao,'/findByNome/' + nome);
-  }
-
-  public findById(idProduto:number):Observable<Produto>{
-    return this.getByUrl('/findById/' + idProduto)
-  }
+  //
+  // public findById(idProduto:number):Observable<Produto>{
+  //   return this.getByUrl('/findById/' + idProduto)
+  // }
 
 }

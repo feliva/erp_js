@@ -7,7 +7,7 @@ import {Type} from "@angular/core";
 
 export interface RouteP extends Route{
   permissao?:Array<string>;
-  tela:number;
+  // tela:number;
   breadCrumbMenuItem?:BreadCrumbMenuItem;
 }
 
@@ -23,12 +23,25 @@ export class BuilderRoute{
   localItem?:BreadCrumbMenuItem;
   associarItem?:BreadCrumbMenuItem;
 
-  createLocal(label:string,index:number,before:number,tela:number,path:string,component : Type<any>, permissao:Array<string>):BuilderRoute{
+  masterPath:string = '';
+
+  constructor(masterPath:string) {
+    this.masterPath = masterPath;
+  }
+
+  first(){
+    if(this.localItem) {
+      this.localItem.first = true;
+    }
+    return this;
+  }
+
+  createLocal(label:string,path:string,component : Type<any>, permissao:Array<string>):BuilderRoute{
     this.localRoute = {
-      path:path,
+      path:path, //não precisa do masterPath pq vem do roteadr
       component:component,
       permissao:permissao,
-      tela:tela,
+      // tela:tela,
       canActivate : [
         Guards.CAN_ACTIVATE_CHILD_BREADCRUMB,
         Guards.CAN_ACTIVATE_CHILD_PERMISSAO]
@@ -39,9 +52,8 @@ export class BuilderRoute{
 
     this.localItem = {
       label:label,
-      index:index,
-      before:before,
-      routerLink:path,
+      first:false,
+      routerLink: this.masterPath + path,//para os links staticos
       routerLinkActiveOptions:'teste'
     }
     return this;
@@ -131,7 +143,7 @@ export class BuilderRoute{
       path:path,
       component:component,
       permissao:permissao,
-      tela:0
+      // tela:0
     }
     return this;
   }
@@ -176,7 +188,7 @@ export class BuilderRoute{
     this.localRoute = {
       redirectTo : urlRedirect,
       pathMatch : 'full',
-      tela:0,
+      // tela:0,
       path : path
     }
 

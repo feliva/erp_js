@@ -32,6 +32,8 @@ public class Unidade extends Model<Integer> {
     @Size(min = 3,message = "Sigla deve ter no mínimo 3 caracteres.")
     public String sigla;
 
+    public Integer quantidade;
+
     @NotNull(message = "Informe um status.")
     @Enumerated(EnumType.STRING)
     public Status status;

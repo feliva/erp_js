@@ -58,6 +58,16 @@ public class ProdutoEndPoint {
         return Response.ok(produtoDAO.findById(idProduto)).build();
     }
 
+    @Path("/findByIdOrName/{termoBusca}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findByIdOrNome(@PathParam("termoBusca") String termoBusca){
+        Resposta<List<Produto>> r = new Resposta<>();
+
+        r.dados = this.produtoDAO.findbyIdOrName(termoBusca);
+
+        return Response.ok(r.dados).build();
+    }
 
     @Path("/{idProduto}")
     @DELETE

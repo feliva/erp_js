@@ -1,4 +1,4 @@
 export class Status{
-  name:string | undefined;
+  nome:string | undefined;
   descricao!:string;
 }

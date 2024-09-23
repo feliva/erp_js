@@ -34,7 +34,7 @@ import { PanelModule } from 'primeng/panel';
                 <th>{{unidade.status}}</th>
                 <th>
                   <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (click)="editar(unidade)"></p-button>
-                  <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger "></p-button>
+                  <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"></p-button>
                 </th>
               </tr>
             </ng-template>
@@ -46,7 +46,7 @@ import { PanelModule } from 'primeng/panel';
 
   `],
     standalone: true,
-    imports: [PanelModule, NgIf, TableModule, SharedModule, ButtonModule, AsyncPipe]
+    imports: [PanelModule, NgIf, TableModule, SharedModule, ButtonModule, AsyncPipe],
 })
 export class UnidadeListComponent implements OnInit{
 

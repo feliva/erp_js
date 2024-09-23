@@ -5,15 +5,13 @@ import {BreadcrumbService} from "../components/breadcrumb/breadcrumb.service";
 import {Produto} from "../model/Produto";
 import {ProdutoService} from "../service/produto.service";
 import {TableLazyLoadEvent} from "primeng/table";
-import {AppComponent} from "../model/AppComponent";
+import {OperacoesExcluir} from "../model/OperacoesExcluir";
 import {AppMessageService} from "../service/app-message.service";
-import {BreadCrumbMenuItem} from "../components/breadcrumb/BreadCrumbMenuItem.class";
-
 
 @Injectable({
   providedIn:'root'
 })
-export class ProdutoControlService implements OnInit{
+export class ProdutoControlService{
 
   termoBusca:string='';
   listProdutos:Produto[] = [];
@@ -23,20 +21,16 @@ export class ProdutoControlService implements OnInit{
   appMessage:AppMessageService = inject(AppMessageService);
   breadservice:BreadcrumbService = inject(BreadcrumbService);
   router:Router = inject(Router);
-  activatedRoute:ActivatedRoute = inject(ActivatedRoute);
+  activatedRouteRI:ActivatedRoute|undefined;
 
   acessoDireto:boolean = true;
 
   constructor(){
-    console.log("Produtocontroler construtor!!!!!!!!!!!!!!!!!!!!!!");
   }
 
   inicializaFluxoNormal(){
     this.acessoDireto = false;
   }
-
-
-  activatedRouteRI:ActivatedRoute|undefined;
 
   public reInit(activatedRouteRI:ActivatedRoute){
     this.activatedRouteRI = activatedRouteRI;
@@ -47,9 +41,8 @@ export class ProdutoControlService implements OnInit{
   }
 
   public novoProduto(){
-    this.toUrl('produto/novo');
+    this.toUrl('estoque/produto/novo');
   }
-
 
   buscar( termobusca:string|undefined = '*'){
     this.termoBusca = termobusca?.trim();
@@ -60,26 +53,16 @@ export class ProdutoControlService implements OnInit{
     this.listar();
   }
 
-  public listar(){
-    this.toUrl('produto/listar/'+this.termoBusca);
-  }
-
-  telaBuscar(){
-    this.toUrl('produto/buscar');
-  }
-
   realizaBusca(event: TableLazyLoadEvent){
-    console.log(this.termoBusca);
     return this.produtoService.findByNome(this.termoBusca, event);
   }
 
   public editar(produto:Produto,event:any){
     this.produto = produto;
-    this.toUrl('produto/editar/'+this.produto.idProduto);
-
+    this.toUrl('estoque/produto/editar/'+this.produto.idProduto);
   }
 
-  public excluir(produto:Produto,event:any,component:AppComponent){
+  public excluir(produto:Produto,event:any,component:OperacoesExcluir<Produto>){
 
     if(produto.idProduto == undefined){
       this.appMessage.addError('','Produto não cadastrado.');
@@ -100,16 +83,18 @@ export class ProdutoControlService implements OnInit{
     this.breadservice.toTop();//faz o click no ultimo link do breacrumb
   }
 
-  ngOnInit(): void {
-    console.log("Produtocontroler init!!!!!!!!!!!!!!!!!!!!!!");
+  public toTelaInicial(){
+    this.toUrl('estoque/produto/buscar');
+  }
+  public listar(){
+    this.toUrl('estoque/produto/listar/'+this.termoBusca);
   }
 
-  public toTelaInicial(){
-    this.toUrl('/produto/buscar');
+  telaBuscar(){
+    this.toUrl('estoque/produto/buscar');
   }
 
   public toUrl(url:string){
     this.router.navigateByUrl(url);
   }
-
 }

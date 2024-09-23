@@ -72,17 +72,13 @@ import { PanelModule } from 'primeng/panel';
         ButtonModule,
     ],
 })
-export class ProdutoBuscaComponent implements AfterViewInit {
+export class ProdutoBuscaComponent implements AfterViewInit,OnInit {
 
   termoBusca:string='';
 
   produtoCS:ProdutoControlService = inject(ProdutoControlService);
-  activatedRoute:ActivatedRoute = inject(ActivatedRoute)
 
   constructor(){
-    // this.produtoCS.breadservice.reInicializar();
-    // this.produtoCS.breadservice.addItem(this.activatedRoute.snapshot.data['breadMenuItem'])
-    this.produtoCS.inicializaFluxoNormal();
   }
 
   public buscar(){
@@ -92,5 +88,9 @@ export class ProdutoBuscaComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.produtoCS.inicializaFluxoNormal();
     console.log( 'ngAfterViewInit!!!!!!!!!!!!!!!!!!!!!!');
+  }
+
+  ngOnInit() {
+    console.log( 'oninit!!!!!!!!!!!!!!!!!!!!!!');
   }
 }

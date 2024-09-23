@@ -32,12 +32,12 @@ public enum Status {
         this.descricao = descricao;
     }
 
-    public String getName(){
+    public String getNome(){
         return this.name();
     }
 
     @JsonCreator
-    public static Status fromJson(@JsonProperty("name") String name) {
+    public static Status fromJson(@JsonProperty("nome") String name) {
         return valueOf(name);
     }
 }

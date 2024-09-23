@@ -5,6 +5,8 @@
 @import "primeng/resources/primeng.css";
 @import "primeflex/primeflex.css";
 @import "/node_modules/primeicons/primeicons.css";
+@import "/node_modules/quill/dist/quill.core.css";
+@import "/node_modules/quill/dist/quill.snow.css";
 
 // //correção password para usar todo o espaço da grid
 // .p-password{
@@ -56,5 +58,15 @@ a{
 }
 
 .p-dropdown{
-  width: 100% !important;
+  width: 100%;
 }
+.p-calendar{
+  width: 100%;
+}
+.p-autocomplete{
+  width: 100% ;
+}
+.obrigatorio{
+  color:red;
+}
+

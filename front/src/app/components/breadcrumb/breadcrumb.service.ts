@@ -13,11 +13,7 @@ export class BreadcrumbService{
   }
 
   addItem(bread:BreadCrumbMenuItem):boolean{
-    if(bread.index == undefined){
-      throw Error("Item do breadcrumd devem ter o seu index preenchidos.");
-    }
-
-    if(bread.index <= 1 ){//se for os primeiros componente, reinicia dos bradcrumbs
+    if(bread.first){//se for os primeiros componente, reinicia dos bradcrumbs
       this.mm = []
     }
 

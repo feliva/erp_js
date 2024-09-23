@@ -18,6 +18,13 @@ export class UnidadeService extends Services<Unidade>{
     super();
   }
 
+  public converteToIntance(observable:Observable<any>):Observable<any>{
+    return observable
+  }
+  public converteToArrayIntance(observable:Observable<any>):Observable<any>{
+    return observable
+  }
+
   // public listAll(){
   //   return this.httpClient.get<Usuario[]>(super.serverUrl);
   // }
@@ -25,8 +32,8 @@ export class UnidadeService extends Services<Unidade>{
       return this.find('findByDescriSigla/' + termoBuca);
   }
 
-  public findById(idUnidade:number):Observable<Unidade>{
-    return this.getByUrl('/findById/' + idUnidade)
-  }
+  // public findById(idUnidade:number):Observable<Unidade>{
+  //   return this.getByUrl('/findById/' + idUnidade)
+  // }
 
 }

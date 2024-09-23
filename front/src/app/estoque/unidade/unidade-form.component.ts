@@ -23,20 +23,23 @@ import { PanelModule } from 'primeng/panel';
         <form  autocomplete="off" [formGroup]="formGroup" (ngSubmit)="onSubmit()" >
           <div class="formgrid grid">
             <div class="field col-12 md:col-6">
-              <label>Sigla</label>
-              <input pInputText  type="text" formControlName="sigla" >
-              <app-react-message-validation [fGroup]="formGroup" field="sigla" ></app-react-message-validation>
+              <app-react-message-validation >
+                <label>Sigla</label>
+                <input pInputText  type="text" formControlName="sigla" >
+              </app-react-message-validation>
             </div>
             <div class="field col-12 md:col-6">
-              <label>Descrição</label>
-              <input pInputText  type="text" formControlName="descricao" >
-              <app-react-message-validation [fGroup]="formGroup" field="descricao" ></app-react-message-validation>
+              <app-react-message-validation>
+                <label>Descrição</label>
+                <input pInputText  type="text" formControlName="descricao" >
+              </app-react-message-validation>
             </div>
             <div class="field col-12 md:col-6">
-              <label>Status</label>
-              <p-dropdown [options]="statusList" optionLabel="descricao" formControlName="status">
-              </p-dropdown>
-              <app-react-message-validation [fGroup]="formGroup" field="status" ></app-react-message-validation>
+              <app-react-message-validation>
+                <label>Status</label>
+                <p-dropdown [options]="statusList" optionLabel="descricao" formControlName="status">
+                </p-dropdown>
+              </app-react-message-validation>
             </div>
           </div>
 

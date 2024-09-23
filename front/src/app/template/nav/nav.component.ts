@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuItem} from "primeng/api";
-import {BUILDER_MENU_UNIDADE} from "../../estoque/unidade/unidade-routing.module";
-import {BUILDER_MENU_PRODUTO} from "../../estoque/produto/produto-routing.module";
+import {BUILDER_MENU_UNIDADE} from "../../estoque/unidade/unidade.router";
+
 import { PanelMenuModule } from 'primeng/panelmenu';
+import {BUILDER_MENU_PRODUTO} from "../../estoque/produto/produto.routes";
+import {BUILDER_MENU_MOVIMENTACAO} from "../../estoque/movimentacao/movimentacao.routes";
 
 @Component({
     selector: 'app-nav',
@@ -73,12 +75,13 @@ export class NavComponent implements OnInit{
       {
         label:'Estoque',
         expanded:true,
-        items:BUILDER_MENU_UNIDADE.getMenuItems().concat(BUILDER_MENU_PRODUTO.getMenuItems())
+        items:BUILDER_MENU_UNIDADE.getMenuItems()
+          .concat(BUILDER_MENU_PRODUTO.getMenuItems())
+          .concat(BUILDER_MENU_MOVIMENTACAO.getMenuItems())
       },
     ]
 
   ngOnInit() {
-
   }
 
   protected readonly console = console;

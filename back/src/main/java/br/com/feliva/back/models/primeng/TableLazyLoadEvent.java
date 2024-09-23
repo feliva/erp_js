@@ -2,6 +2,7 @@ package br.com.feliva.back.models.primeng;
 
 import lombok.Getter;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 @Getter
@@ -16,7 +17,7 @@ public class TableLazyLoadEvent {
     List<String> sortField;
     int sortOrder;
 //    String filters;
-    Map<String,FilterMetadata> filters;
+    Map<String,FilterMetadata[]> filters = new HashMap<>();
 //        [s: string]: FilterMetadata | FilterMetadata[] | undefined;
 //    };
     List<String> globalFilter;

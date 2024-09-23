@@ -14,6 +14,12 @@ export class StatusService extends Services<Status>{
   public override getPath(): string {
     return "/back/status";
   }
+  public converteToArrayIntance(observable:Observable<any>):Observable<any>{
+    return observable
+  }
+  public converteToIntance(observable:Observable<any>):Observable<any>{
+    return observable
+  }
 
   constructor() {
     super();

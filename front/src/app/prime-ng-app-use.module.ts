@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {importProvidersFrom, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {InputTextModule} from "primeng/inputtext";
 import {ButtonModule} from "primeng/button";
@@ -18,30 +18,31 @@ import {AvatarModule} from "primeng/avatar";
 import {BadgeModule} from "primeng/badge";
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
+import {DiretivasModule} from "./shared/diretivas";
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
+    // CommonModule,
   ],
   exports:[
-    InputTextModule,
-    ButtonModule,
-    PickListModule,
-    PasswordModule,
-    RadioButtonModule,
-    InputMaskModule,
-    CalendarModule,
-    PanelModule,
-    ToastModule,
-    TableModule,
-    ConfirmPopupModule,
-    DropdownModule,
-    AnimateOnScrollModule,
-    AvatarModule,
-    BadgeModule,
-    ConfirmDialogModule,
-    InputNumberModule
+    // InputTextModule,
+    // ButtonModule,
+    // PickListModule,
+    // PasswordModule,
+    // RadioButtonModule,
+    // InputMaskModule,
+    // CalendarModule,
+    // PanelModule,
+    // ToastModule,
+    // TableModule,
+    // ConfirmPopupModule,
+    // DropdownModule,
+    // AnimateOnScrollModule,
+    // AvatarModule,
+    // BadgeModule,
+    // ConfirmDialogModule,
+    // InputNumberModule
     //BreadcrumbModule// não funciona nao atualiza
   ],
   providers:[MessageService,ConfirmationService]

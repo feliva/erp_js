@@ -16,7 +16,7 @@ import {Produto} from "../../model/Produto";
 import { TableLazyLoadEvent, TablePageEvent, TableModule } from "primeng/table";
 import {ProdutoControlService} from "../../controllers/produto-control.service";
 import { ConfirmationService, MessageService, SharedModule } from 'primeng/api';
-import {AppComponent} from "../../model/AppComponent";
+import {OperacoesExcluir} from "../../model/OperacoesExcluir";
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ButtonModule } from 'primeng/button';
 import { PanelModule } from 'primeng/panel';
@@ -51,11 +51,11 @@ import { PanelModule } from 'primeng/panel';
                 <th>{{produto.idProduto}}</th>
                 <th>{{produto.nome}}</th>
                 <th>{{produto.valorVenda}}</th>
-                <th>{{produto.valor}}</th>
+                <th>{{produto.status.descricao}}</th>
                 <th>
                   <p-button icon="pi pi-pencil" [rounded]="true" [text]="true"
                     (onClick)="this.produtoCS.editar(produto,$event)" ></p-button>
-                  <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger "
+                  <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
                     (onClick)="this.confirmExcluir(produto,$event)"></p-button>
                 </th>
               </tr>
@@ -72,7 +72,7 @@ import { PanelModule } from 'primeng/panel';
     standalone: true,
     imports: [PanelModule, TableModule, SharedModule, ButtonModule, ConfirmDialogModule]
 })
-export class ProdutoListarComponent implements OnInit,AppComponent{
+export class ProdutoListarComponent implements OnInit,OperacoesExcluir<Produto>{
 
   rowsPage = 20;
   totalRegistros = 20;
@@ -96,31 +96,28 @@ export class ProdutoListarComponent implements OnInit,AppComponent{
     this.ultimoLLE = event;
     this.produtoCS.realizaBusca(event).subscribe((list:Produto[])=>{
       this.listProdutos = list;
+      console.log(list);
       this.totalRegistros += this.listProdutos.length;
     });
   }
 
   onPage(event:TablePageEvent){
-    console.log('onpage')
-    console.log(event)
     this.rowsPage = event.rows;
   }
 
   firstChange(value:number){
-    console.log('firstChange '+ value)
   }
 
   confirmExcluir(produto:Produto,event:Event){
     this.confirmationService.confirm({
       target: event.target as EventTarget,
-      message: 'Você tem certeza que disso?',
-      header: 'Exclusão de item',
+      message: 'Você tem certeza que deseja excluir o produto ' + produto.nome+' ?',
+      header: 'Excluir',
       icon: 'pi pi-exclamation-triangle',
-      acceptIcon:"none",
-      rejectIcon:"none",
-      acceptLabel:"Sim",
-      rejectLabel:"Não",
+      acceptLabel:"Excluir",
+      rejectLabel:"Cancelar",
       rejectButtonStyleClass:"p-button-text",
+      acceptButtonStyleClass:"p-button-danger",
       accept: () => {
         this.produtoCS.excluir(produto,event,this)
       }
