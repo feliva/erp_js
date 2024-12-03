@@ -1,5 +1,7 @@
 package br.com.feliva.back.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.transaction.RollbackException;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.ws.rs.core.Response;
@@ -11,34 +13,58 @@ public class Resposta<T> {
 
     public T dados;
     public Error erro;
-    public List<String> msgs;
+    public List<String> mensagenErros;
 
     public Resposta() {
     }
 
-    public Resposta(T dados, Error erro, List<String> msgs) {
+    public Resposta(T dados, Error erro, List<String> mensagenErros) {
         this.dados = dados;
         this.erro = erro;
-        this.msgs = msgs;
+        this.mensagenErros = mensagenErros;
     }
 
 
+    @JsonFormat(shape = JsonFormat.Shape.OBJECT)
     public enum Error{
-        VALIDACAO_ERRO(101,"Parametro com erros de validação."),
-        FORMATO_ERRO(101,"Erro no formato dos dados.");
+        VALIDACAO_ERRO(Response.Status.NOT_ACCEPTABLE,"Existem erros de validação."),
+        ENTIDADE_NAO_ENCONTRADA(Response.Status.NOT_FOUND,"Entidade não foi encontrada."),
+        ;
 
-        private final int code;
-        private final String reason;
+        private final Response.Status status;
+        private final String msg;
 
-        Error(int code, String reason) {
-            this.code = code;
-            this.reason = reason;
+        Error(Response.Status status, String msg) {
+            this.status = status;
+            this.msg = msg;
+        }
+
+        public Response.Status getStatus() {
+            return status;
+        }
+
+        public String getMsg() {
+            return msg;
         }
     }
 
+    static public <T> Response buildResponse(T dados,Error erro) {
+        return Response.status(erro.status).entity(new Resposta<T>(dados,erro,null)).build();
+    }
+
+    static public <T> Response buildResponse(T dados,Error erro, List<String> mensagenErros) {
+        return Response.status(erro.status).entity(new Resposta<>(dados, erro, mensagenErros)).build();
+    }
+
+    static public <T> Response buildResponse(T dados,Error erro,String mensagen) {
+        List<String> mensagenErros = new ArrayList<>();
+        mensagenErros.add(mensagen);
+        return Response.status(erro.status).entity(new Resposta<T>(dados,erro,mensagenErros)).build();
+    }
+
     public static class Builder<I>{
-         public static <I> Response errorValidacao(I dados, List<String> msg){
-             return Response.status(Response.Status.BAD_REQUEST).entity(new Resposta<I>(dados,Error.VALIDACAO_ERRO,msg)).build();
+        public static <I> Response errorValidacao(I dados, List<String> msg){
+            return Response.status(Response.Status.NOT_ACCEPTABLE).entity(new Resposta<I>(dados,Error.VALIDACAO_ERRO,msg)).build();
         }
     }
 }

@@ -6,12 +6,19 @@ import {Unidade} from "../model/Unidade";
 import {Observable} from "rxjs";
 import {Produto} from "../model/Produto";
 import {TableLazyLoadEvent} from "primeng/table";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProdutoService extends Services<Produto>{
+  protected filtroForm:FormGroup = new FormGroup({
+    nome: new FormControl(''),
+  });
 
+  public getFiltrosForm():FormGroup{
+    return this.filtroForm
+  }
   public override getPath(): string {
     return "/back/produto";
   }

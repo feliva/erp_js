@@ -4,6 +4,8 @@ import {inject} from "@angular/core";
 import {TableLazyLoadEvent} from "primeng/table";
 import {Marca} from "../model/Marca";
 import {Movimentacao} from "../model/Movimentacao";
+import {FormGroup} from "@angular/forms";
+import {Contato} from "../model/Contato";
 
 export abstract class Services<T>{
 
@@ -24,7 +26,7 @@ export abstract class Services<T>{
   public abstract converteToIntance(observable:Observable<T>):Observable<T>;
 
   public listAll(): Observable<T[]>{
-    return this.converteToArrayIntance(this.http.get<T[]>(this.serverUrl + this.getPath() + "/listAll"));
+    return this.http.get<T[]>(this.serverUrl + this.getPath() + "/listAll");
   }
 
   // public find(url:string): Observable<T[]>{
@@ -90,7 +92,7 @@ export abstract class Services<T>{
 
   public delete(id:number): Observable<any>{
     const headers = { 'content-type': 'application/json'}
-    return this.http.delete(this.serverUrl + this.getPath() +"/"+ id,{'headers':headers});
+    return this.http.delete(this.serverUrl + this.getPath() +"/"+ id);//,{'headers':headers});
   }
 
   public send(obj:any, url?:string): Observable<any>{
@@ -112,7 +114,31 @@ export abstract class Services<T>{
   }
 
   public findById(id: number): Observable<T> {
-    return this.converteToIntance(this.getByUrl('/findById/' + id));
+    return this.converteToIntance(this.getByUrl('/' + id));
   }
+
+  // public paginado(filtroForm:FormGroup, arrow:(value: T[]) => void): void{
+  //   let param:string = "?"
+  //   Object.keys(filtroForm.controls).forEach((key:string) => {
+  //     const abstractControl = filtroForm.get(key);
+  //     param = param + (key +"="+abstractControl?.value+"&");
+  //   });
+  //
+  //   this.http.get<T[]>(
+  //       this.serverUrl + this.getPath() + "/paginado"+param
+  //   ).subscribe(arrow);
+  // }
+  //
+  // public paginadoCount(): number {
+  //   let retorno:number = 0;
+  //   this.http.get<number>(this.serverUrl + this.getPath() + "/paginadoCount").subscribe((dado)=>{
+  //     retorno = dado;
+  //   });
+  //   return retorno;
+  // }
+  //
+  // public paginado_(arrow:(value: T[]) => void): void{
+  //   this.paginado(this.getFiltrosForm(),arrow);
+  // }
 
 }

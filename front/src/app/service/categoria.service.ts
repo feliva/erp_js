@@ -7,12 +7,19 @@ import {Observable} from "rxjs";
 import {Produto} from "../model/Produto";
 import {TableLazyLoadEvent} from "primeng/table";
 import {Categoria} from "../model/Categoria";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriaService extends Services<Categoria> {
+  protected filtroForm:FormGroup = new FormGroup({
+    nome: new FormControl(''),
+  });
 
+  public getFiltrosForm():FormGroup{
+    return this.filtroForm
+  }
   public override getPath(): string {
     return "/back/categoria";
   }

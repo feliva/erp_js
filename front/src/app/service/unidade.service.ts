@@ -4,6 +4,7 @@ import {Usuario} from "../model/Usuario";
 import {Services} from "./services";
 import {Unidade} from "../model/Unidade";
 import {Observable} from "rxjs";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,13 @@ export class UnidadeService extends Services<Unidade>{
 
   constructor() {
     super();
+  }
+  protected filtroForm:FormGroup = new FormGroup({
+    nome: new FormControl(''),
+  });
+
+  public getFiltrosForm():FormGroup{
+    return this.filtroForm
   }
 
   public converteToIntance(observable:Observable<any>):Observable<any>{

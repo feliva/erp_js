@@ -1,6 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {ActivatedRoute, ActivatedRouteSnapshot, CanActivateChildFn, CanActivateFn, Router, RouterStateSnapshot} from '@angular/router';
 import {BreadCrumbMenuItem, BreadCrumbUtil} from "./BreadCrumbMenuItem.class";
+import {Location} from "@angular/common";
 
 
 @Injectable({providedIn:'root'})
@@ -44,6 +45,19 @@ export class BreadcrumbService{
     }
     this.mm = sub;
     this.router.navigate([item.url], { relativeTo: this.activatedRoute });
+  }
+
+  back(){
+    let item = this.mm.pop();//item
+    this.mm.pop();//separador
+
+    let menu = this.getTop()
+    if(menu?.url) {
+      this.router.navigateByUrl(menu?.url);
+      return true;
+    }else{
+      return false;
+    }
   }
 
   toTop(){

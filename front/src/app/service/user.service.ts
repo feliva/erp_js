@@ -4,6 +4,7 @@ import {Usuario} from "../model/Usuario";
 import {Services} from "./services";
 import {map, Observable} from "rxjs";
 import {Movimentacao} from "../model/Movimentacao";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +14,20 @@ export class UserService extends Services<Usuario>{
   public override getPath(): string {
     return "/back/usuario";
   }
+  protected filtroForm:FormGroup = new FormGroup({
+    nome: new FormControl(''),
+  });
+
+  public getFiltrosForm():FormGroup{
+    return this.filtroForm
+  }
   public converteToArrayIntance(observable:Observable<any>):Observable<any>{
     return observable
   }
   public converteToIntance(observable:Observable<Usuario>){
     return observable
   }
+
 
   constructor() {
     super();

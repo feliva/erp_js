@@ -70,3 +70,13 @@ a{
   color:red;
 }
 
+.div-btn-novo{
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  z-index: 1000;
+}
+
+.filter-fildset legend {
+  padding: .4rem !important;
+}

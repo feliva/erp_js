@@ -9,9 +9,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="sharedClass" />
         <module name="back" />
-        <module name="auth" />
-        <module name="authClass" />
-        <module name="testAuth" />
       </profile>
     </annotationProcessing>
   </component>
