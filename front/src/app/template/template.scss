@@ -34,3 +34,8 @@ app-main{
 .p-panelmenu .p-panelmenu-panel {
   margin-bottom: 0 !important;
 }
+
+//correção em dropDown filter
+.p-icon-wrapper {
+  display: flex !important;
+}

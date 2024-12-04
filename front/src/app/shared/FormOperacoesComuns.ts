@@ -10,28 +10,29 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {FormGroup} from "@angular/forms";
 import {Resposta} from "../model/Resposta";
 
-export abstract class FormOperacoesComuns<T> {
+export abstract class FormOperacoesComuns<T>{
     protected appMessage: AppMessageService = inject(AppMessageService);
     protected breadservice:BreadcrumbService = inject(BreadcrumbService);
-    activatedRoute: ActivatedRoute = inject(ActivatedRoute);
-    router: Router = inject(Router);
+    protected activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+    protected router: Router = inject(Router);
 
     protected entity!:T;
 
-    labelForm = 'Editar';
-    formGroup!: FormGroup;
+    protected labelForm = 'Editar';
+    protected formGroup!: FormGroup;
 
     constructor() {
-        //para inicializar o formFroup, sen essa call ele da erro
-        this.inicializaFormGroup(undefined);
+        this.inicializaFormGroup(true);
     }
 
     //faz as chamada ajax necessrias
-    public abstract carregaDadosForm():void;
+    // public abstract carregaDadosForm():void;
     public abstract getService():FiltroServices<T>;
-    public abstract inicializaFormGroup(entity:T|undefined):void;
+    public abstract inicializaCamposForm(ehNovo:boolean):void;
     public abstract getUrlOnCancelarForm():string;
     public abstract getMensagemSucessoSubmit():string;
+    public abstract formToObject():T;
+    public abstract inicializaFormGroup(clean:boolean): void;
 
 
     isNovo(){
@@ -41,17 +42,16 @@ export abstract class FormOperacoesComuns<T> {
     /**
      * Chamar este metodo no ngOnInit
      */
-    init() {
+    onInit() {
         if(this.isNovo()){
             this.labelForm = 'Novo';
-            this.inicializaFormGroup(undefined);
+            this.inicializaCamposForm(true);
         }else{
             this.getService().findById(this.activatedRoute.snapshot.params['id']).subscribe((result) => {
                 this.entity = result;
-                this.inicializaFormGroup(result);
+                this.inicializaCamposForm(false);
             })
         }
-        this.carregaDadosForm();
     }
 
     onSubmit(event: SubmitEvent) {
@@ -59,7 +59,7 @@ export abstract class FormOperacoesComuns<T> {
             this.appMessage.addError('', 'Existem pendências no cadastro.')
             return;
         }
-        this.getService().save(this.formGroup.value).subscribe((resp:Resposta<Contato>) => {
+        this.getService().save(this.formToObject()).subscribe((resp:Resposta<Contato>) => {
             this.onCancelarForm(null);
             this.appMessage.addSuccess('', this.getMensagemSucessoSubmit())
         })

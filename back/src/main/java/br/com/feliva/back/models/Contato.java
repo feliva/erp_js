@@ -4,8 +4,10 @@ import br.com.feliva.sharedClass.db.Model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "contato")
 public class Contato extends Model<Integer> {
@@ -27,10 +29,9 @@ public class Contato extends Model<Integer> {
     @Column(length = 100)
     private String celular;
 
-//    @NotNull(message = "Informe um telefone.")
-//    @Column(length = 100)
-//    private String telefone;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_cidade")
+    private Cidade cidade;
 
     @Override
     public Integer getMMId() {

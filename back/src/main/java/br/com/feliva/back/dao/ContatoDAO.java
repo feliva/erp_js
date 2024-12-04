@@ -17,7 +17,16 @@ import java.util.Map;
 @Default
 public class ContatoDAO extends DAO<Contato> implements ComunDAO<Contato> {
 
+    public Contato findById(Integer id) {
+        String hql = """
+                        select c from Contato c
+                         left join fetch c.cidade ci
+                         left join fetch ci.estado e
+                         where c.idContato = :idContato
+                        """;
 
+        return (Contato)  this.em.createQuery(hql).setParameter("idContato", id).getSingleResult();
+    }
 
     public List<Contato> listAll(){
         try {
@@ -44,7 +53,11 @@ public class ContatoDAO extends DAO<Contato> implements ComunDAO<Contato> {
             if(!whereClause.isEmpty()){
                 w = "where " + whereClause.substring(3);
             }
-            String hql = "select c from Contato c " + w + " order by c.nome";
+            String hql = """
+                        select c from Contato c
+                         left join fetch c.cidade ci
+                         left join fetch ci.estado e 
+                        """ + w + " order by c.nome";
 
             Query query = this.em.createQuery(hql);
 

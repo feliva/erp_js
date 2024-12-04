@@ -117,28 +117,4 @@ export abstract class Services<T>{
     return this.converteToIntance(this.getByUrl('/' + id));
   }
 
-  // public paginado(filtroForm:FormGroup, arrow:(value: T[]) => void): void{
-  //   let param:string = "?"
-  //   Object.keys(filtroForm.controls).forEach((key:string) => {
-  //     const abstractControl = filtroForm.get(key);
-  //     param = param + (key +"="+abstractControl?.value+"&");
-  //   });
-  //
-  //   this.http.get<T[]>(
-  //       this.serverUrl + this.getPath() + "/paginado"+param
-  //   ).subscribe(arrow);
-  // }
-  //
-  // public paginadoCount(): number {
-  //   let retorno:number = 0;
-  //   this.http.get<number>(this.serverUrl + this.getPath() + "/paginadoCount").subscribe((dado)=>{
-  //     retorno = dado;
-  //   });
-  //   return retorno;
-  // }
-  //
-  // public paginado_(arrow:(value: T[]) => void): void{
-  //   this.paginado(this.getFiltrosForm(),arrow);
-  // }
-
 }
