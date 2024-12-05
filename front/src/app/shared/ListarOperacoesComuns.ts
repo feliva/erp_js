@@ -4,19 +4,18 @@ import {ConfirmationService} from "primeng/api";
 import {AppMessageService} from "../service/app-message.service";
 import {TableLazyLoadEvent, TablePageEvent} from "primeng/table";
 import {FiltroServices} from "../service/FiltroServices";
+import {forkJoin} from "rxjs";
+import {FormGroup} from "@angular/forms";
 
 export abstract class ListarOperacoesComuns<T> {
 
     protected confirmationService: ConfirmationService = inject(ConfirmationService);
     protected appMessage:AppMessageService = inject(AppMessageService);
-
     protected expandFiltro:boolean = false;
-
     protected totalRegistros:number = 0;
 
-    protected rowsPage = 10;
-
     protected entitys:T[] = [];
+    protected tablePageEvent:TablePageEvent = {first:0,rows:20};
 
     constructor() {
     }
@@ -24,22 +23,14 @@ export abstract class ListarOperacoesComuns<T> {
     abstract getService():FiltroServices<T>;
     abstract getMessageExcluir(entity:T):string;
 
-
     toggle(event:any){
         this.expandFiltro = !this.expandFiltro;
-        console.log(this.expandFiltro)
     }
 
     onLazyLoad(event: TableLazyLoadEvent){
-        this.totalRegistros = this.getService().paginadoCount();
-        this.getService().listAll().subscribe((dados)=>{
+        this.getService().paginado(this.criaQueryParams()).subscribe((dados)=>{
             this.entitys = dados;
-            this.totalRegistros += this.entitys.length;
         });
-    }
-
-    onPage(event:TablePageEvent){
-        this.rowsPage = event.rows;
     }
 
     confirmExcluir(entity:T,id:number,event:Event){
@@ -60,8 +51,13 @@ export abstract class ListarOperacoesComuns<T> {
     }
 
     filtrarBusca() {
-        this.totalRegistros = this.getService().paginadoCount();
-        this.getService().paginado1((data)=>{ this.entitys = data})
+        forkJoin({
+            lCount:this.getService().paginadoCount(this.criaQueryParams()),
+            lPaginado: this.getService().paginado(this.criaQueryParams())
+        }).subscribe(({lCount,lPaginado}) => {
+            this.totalRegistros = lCount;
+            this.entitys = lPaginado;
+        });
     }
 
     excluir(id:number){
@@ -74,5 +70,20 @@ export abstract class ListarOperacoesComuns<T> {
     limpaFiltros(){
         this.getService().limpaFiltros();
         this.filtrarBusca();
+    }
+
+    onPage(event:TablePageEvent){
+        this.tablePageEvent = event
+    }
+
+    private criaQueryParams():string {
+        let param: string = "?"
+        Object.entries(this.tablePageEvent).forEach(([key, value], index, array) => {
+            param = param + `${key}=${value}&`;
+        });
+        Object.entries(this.getService().getFiltrosForm().controls).forEach(([key, formControl]) => {
+            param = param + `${key}=${formControl?.value}&`;
+        });
+        return param;
     }
 }

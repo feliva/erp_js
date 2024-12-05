@@ -1,40 +1,25 @@
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import {FormControl} from "@angular/forms";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {map, Observable, take} from "rxjs";
 import {inject} from "@angular/core";
-import {TableLazyLoadEvent} from "primeng/table";
+import {TableLazyLoadEvent, TablePageEvent} from "primeng/table";
 import {Marca} from "../model/Marca";
 import {Movimentacao} from "../model/Movimentacao";
 import {FormGroup} from "@angular/forms";
 import {Contato} from "../model/Contato";
 import {Services} from "./services";
 
-export abstract class FiltroServices<T> extends Services<T>{
+export abstract class FiltroServices<T> extends Services<T> {
 
-  public abstract getFiltrosForm():FormGroup;
-  public abstract limpaFiltros():void;
+    public abstract getFiltrosForm(): FormGroup;
 
-  public paginado(filtroForm:FormGroup, arrow:(value: T[]) => void): void{
-    let param:string = "?"
-    Object.keys(filtroForm.controls).forEach((key:string) => {
-      const abstractControl = filtroForm.get(key);
-      param = param + (key +"="+abstractControl?.value+"&");
-    });
+    public abstract limpaFiltros(): void;
 
-    this.http.get<T[]>(
-        this.serverUrl + this.getPath() + "/paginado"+param
-    ).subscribe(arrow);
-  }
+    public paginado(queryParam: string): Observable<T[]> {
+        return this.http.get<T[]>(this.serverUrl + this.getPath() + "/paginado" + queryParam);
+    }
 
-  public paginadoCount(): number {
-    let retorno:number = 0;
-    this.http.get<number>(this.serverUrl + this.getPath() + "/paginadoCount").subscribe((dado)=>{
-      retorno = dado;
-    });
-    return retorno;
-  }
-
-  public paginado1(arrow:(value: T[]) => void): void{
-    this.paginado(this.getFiltrosForm(),arrow);
-  }
-
+    public paginadoCount(queryParam: string): Observable<number> {
+        return this.http.get<number>(this.serverUrl + this.getPath() + "/paginadoCount" + queryParam)
+    }
 }

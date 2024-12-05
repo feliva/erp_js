@@ -67,17 +67,15 @@ import {FiltroServices} from "../../../service/FiltroServices";
       
       <p-panel header="Lista de Contatos">
           <p-table [value]="entitys"  [tableStyle]="{'min-width': '60rem'}"
-                   [lazy]="true"
-                   [paginator]="true" 
-                   [totalRecords]="totalRegistros"
-                   [first]="this.tablePageEvent.first"
+                   [paginator]="true"
+                   [first]="this.tablePageEvent.first" 
                    [rows]="this.tablePageEvent.rows"
-                   [showCurrentPageReport]="true"
+                   [totalRecords]="totalRegistros"
                    (onLazyLoad)="onLazyLoad($event)"
                    (onPage)="onPage($event)"
-                   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                   [rowsPerPageOptions]="[20, 40, 80,160]">
-            <!--                   "-->
+                   
+                   [rowsPerPageOptions]="[10, 25, 50]">
+          
             <ng-template pTemplate="header">
                 <tr>
                   <th>id</th>
@@ -113,7 +111,7 @@ import {FiltroServices} from "../../../service/FiltroServices";
     standalone: true,
   imports: [PanelModule, NgIf, TableModule, SharedModule, ButtonModule, AsyncPipe, InputTextModule, PaginatorModule, FieldsetModule, ReactiveFormsModule, RouterLink, DataRowOutlet, ConfirmDialogModule],
 })
-export class CrmContatoListComponent extends ListarOperacoesComuns<Contato> implements OnInit{
+export class CrmEmpresasListComponent extends ListarOperacoesComuns<Contato> implements OnInit{
 
   contatoService:CrmContatoService = inject(CrmContatoService);
 
@@ -132,4 +130,5 @@ export class CrmContatoListComponent extends ListarOperacoesComuns<Contato> impl
   override getMessageExcluir(entity:Contato): string {
     return 'Você tem certeza que deseja excluir o contato ' + entity.nome+' ?';
   }
+
 }

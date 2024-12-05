@@ -21,6 +21,7 @@ public class JacksonDatatypeJacksonProducer implements ContextResolver<ObjectMap
                 .findAndAddModules()
                 .build()
                 .registerModule(new JavaTimeModule())
+                .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
                 .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
     }
 

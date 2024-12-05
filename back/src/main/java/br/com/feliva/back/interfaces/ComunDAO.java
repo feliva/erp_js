@@ -11,9 +11,9 @@ public interface ComunDAO<M extends Model<?>> {
 
     public List<M> listAll();
 
-    public List<M> listPaginado(Map<String, Object> filter);
+    public List<M> listPaginado(Integer first, Integer rows, Map<String, Object> filter);
 
-    public Integer paginadoCount(Map<String, Object> filter);
+    public Integer paginadoCount(Integer first, Integer rows, Map<String, Object> filter);
 
     public M findById(Integer id);
 

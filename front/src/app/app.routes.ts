@@ -7,5 +7,6 @@ export const APP_ROUTES: Routes = [
   {path:'estoque/produto',loadChildren: () => import('./estoque/produto/produto.routes').then(m => m.BUILDER_MENU_PRODUTO.getRoutes())},
   {path:'estoque/unidade', loadChildren: () => import('./estoque/unidade/unidade.router').then(m => m.BUILDER_MENU_UNIDADE.getRoutes())},
   {path:'crm/contato', loadChildren: () => import('./crm/views/contato/contato.router').then(m => m.BUILDER_MENU_CONTATO.getRoutes())},
+  {path:'crm/empresas', loadChildren: () => import('./crm/views/empresas/empresas.router').then(m => m.BUILDER_MENU_EMPRESAS.getRoutes())},
 
 ];

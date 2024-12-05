@@ -38,48 +38,62 @@ public class ContatoDAO extends DAO<Contato> implements ComunDAO<Contato> {
         }
     }
 
-    public List<Contato> listPaginado(Map<String, Object> filter){
+    private Map<String,String>  criaQueryPaginando(StringBuffer hql, Map<String, Object> filter){
+        Map<String,String> paramMap = new HashMap<>();
+
+        StringBuffer join = new StringBuffer("");
+        StringBuffer whereClause = new StringBuffer("and ");
+        String w = "";
+
+        String string = (String) filter.get("nome");
+
+        if(string != null && !string.isEmpty()){
+            whereClause.append("and c.nome like :nome ");
+            paramMap.put("nome", string+"%");
+        }
+        //proximo
+
+        if(!paramMap.isEmpty()){
+            w = "where " + whereClause.delete(0, 3).toString();
+        }
+
+        join.append("left join fetch c.cidade ci ")
+            .append("left join fetch ci.estado e ");
+
+        hql.append(join).append(w).append(" order by c.nome");
+        return paramMap;
+    }
+
+    public List<Contato> listPaginado(Integer first, Integer rows, Map<String, Object> filter){
         try {
-            Map<String,String> paramMap = new HashMap<>();
+            StringBuffer hql = new StringBuffer("select c from Contato c ");
+            Map<String,String> paramMap =  this.criaQueryPaginando(hql,filter);
 
-            String whereClause = "",w = "";
-            String param = (String) filter.get("nome");
-            if(param != null && !param.isEmpty()){
-                whereClause += "and c.nome like :nome ";
-                paramMap.put("nome", param+"%");
+            Query query = this.em.createQuery(hql.toString());
+            if(first != null) {
+                query.setFirstResult(first).setMaxResults(rows);
             }
-
-
-            if(!whereClause.isEmpty()){
-                w = "where " + whereClause.substring(3);
-            }
-            String hql = """
-                        select c from Contato c
-                         left join fetch c.cidade ci
-                         left join fetch ci.estado e 
-                        """ + w + " order by c.nome";
-
-            Query query = this.em.createQuery(hql);
 
             paramMap.forEach((s, s2) -> {
                 query.setParameter(s, s2);
-                System.out.println(s + s2);
             });
 
             return query.getResultList();
         }catch (NoResultException e){
-            return null;
+        }catch (Exception e){
+            e.printStackTrace();
         }
+        return null;
     }
 
-    public Integer paginadoCount(Map<String, Object> filter){
+    public Integer paginadoCount(Integer first, Integer rows,Map<String, Object> filter){
         try {
-            return this.em.createQuery("""
-                        select c from Contato c order by c.nome
-                    """).getResultList().size();
+            return this.listPaginado(null,null,filter).size();
         }catch (NoResultException e){
-            return null;
+        }catch (Exception e){
+            e.printStackTrace();
         }
+        return 0;
     }
 
 }

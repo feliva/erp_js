@@ -6,6 +6,7 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import {BUILDER_MENU_PRODUTO} from "../../estoque/produto/produto.routes";
 import {BUILDER_MENU_MOVIMENTACAO} from "../../estoque/movimentacao/movimentacao.routes";
 import {BUILDER_MENU_CONTATO} from "../../crm/views/contato/contato.router";
+import {BUILDER_MENU_EMPRESAS} from "../../crm/views/empresas/empresas.router";
 
 @Component({
     selector: 'app-nav',
@@ -84,6 +85,7 @@ export class NavComponent implements OnInit{
             label:'CRM',
             expanded:true,
             items:BUILDER_MENU_CONTATO.getMenuItems()
+                .concat(BUILDER_MENU_EMPRESAS.getMenuItems())
         }
     ]
 
