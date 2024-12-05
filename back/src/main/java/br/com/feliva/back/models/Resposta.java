@@ -29,6 +29,7 @@ public class Resposta<T> {
     public enum Error{
         VALIDACAO_ERRO(Response.Status.NOT_ACCEPTABLE,"Existem erros de validação."),
         ENTIDADE_NAO_ENCONTRADA(Response.Status.NOT_FOUND,"Entidade não foi encontrada."),
+        INTERNAL_SERVER_ERROR(Response.Status.INTERNAL_SERVER_ERROR,"Internal Server Error."),
         ;
 
         private final Response.Status status;

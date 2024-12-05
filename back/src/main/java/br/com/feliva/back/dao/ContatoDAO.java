@@ -18,14 +18,18 @@ import java.util.Map;
 public class ContatoDAO extends DAO<Contato> implements ComunDAO<Contato> {
 
     public Contato findById(Integer id) {
-        String hql = """
+        try {
+            String hql = """
                         select c from Contato c
                          left join fetch c.cidade ci
                          left join fetch ci.estado e
                          where c.idContato = :idContato
                         """;
 
-        return (Contato)  this.em.createQuery(hql).setParameter("idContato", id).getSingleResult();
+            return (Contato)  this.em.createQuery(hql).setParameter("idContato", id).getSingleResult();
+        }catch (NoResultException e) {
+            return null;
+        }
     }
 
     public List<Contato> listAll(){

@@ -24,7 +24,15 @@ public abstract class ComumEndPoint<I extends DAO<M>, M extends Model<?>> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findById(@PathParam("id") Integer id){
-        return Response.ok(this.getDao().findById(id)).build();
+        try {
+            M entity = (M) this.getDao().findById(id);
+            if(entity == null){
+                return Resposta.buildResponse(id, Resposta.Error.ENTIDADE_NAO_ENCONTRADA);
+            }
+            return Response.ok(entity).build();
+        }catch (Exception e){
+            return Resposta.buildResponse(id, Resposta.Error.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Path("/{id}")
@@ -39,8 +47,7 @@ public abstract class ComumEndPoint<I extends DAO<M>, M extends Model<?>> {
             this.getDao().removeT(p);
             return Response.ok().build();
         } catch (Exception e) {
-            e.printStackTrace();
-            return  Response.serverError().build();
+            return Resposta.buildResponse(id, Resposta.Error.INTERNAL_SERVER_ERROR);
         }
     }
 
