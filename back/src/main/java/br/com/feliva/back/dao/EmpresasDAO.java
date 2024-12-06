@@ -22,7 +22,8 @@ public class EmpresasDAO extends DAO<Empresa> implements ComunDAO<Empresa> {
     public Empresa findById(Integer id) {
         String hql = """
                         select e from Empresa e
-                         left join fetch e.cidade ci
+                        left join fetch e.endereco en
+                         left join fetch en.cidade ci
                          left join fetch e.setContatos cont
                          where e.idEmpresa =:idEmpresa
                         """;

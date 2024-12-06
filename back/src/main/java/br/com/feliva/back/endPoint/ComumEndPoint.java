@@ -31,6 +31,7 @@ public abstract class ComumEndPoint<I extends DAO<M>, M extends Model<?>> {
             }
             return Response.ok(entity).build();
         }catch (Exception e){
+            System.out.println(e.getMessage());
             return Resposta.buildResponse(id, Resposta.Error.INTERNAL_SERVER_ERROR);
         }
     }
