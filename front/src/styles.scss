@@ -80,3 +80,16 @@ a{
 .filter-fildset legend {
   padding: .4rem !important;
 }
+
+//begin nav
+.size-app-nav .p-panelmenu-header-action{
+  padding: 0.75rem;
+}
+.size-app-nav .p-menuitem-link{
+  padding: 0.5rem 1rem;
+}
+:host(.size-app-nav .p-panelmenu-content){
+  padding: 0;
+  padding-bottom: .5rem !important;
+}
+//end nav

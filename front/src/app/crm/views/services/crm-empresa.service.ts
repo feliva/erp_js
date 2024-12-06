@@ -26,7 +26,7 @@ export class CrmEmpresaService extends FiltroServices<Contato> {
   }
 
   public override getPath(): string {
-    return "/back/crm/empresas";
+    return "/back/crm/empresa";
   }
 
   public converteToIntance(observable:Observable<any>):Observable<any>{

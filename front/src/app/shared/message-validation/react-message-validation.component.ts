@@ -43,7 +43,8 @@ export class ReactMessageValidationComponent implements AfterContentChecked,OnIn
   @Input() label: string|undefined;
 
   children:any[] =[];
-  menssagens:string[] = []
+  menssagens:string[] = [];
+  formControl?:FormControl;
 
   constructor(public elRef: ElementRef, public parentForm: FormGroupDirective) {
   }
@@ -61,25 +62,46 @@ export class ReactMessageValidationComponent implements AfterContentChecked,OnIn
     }else{
       console.debug('ReactMessageValidationComponent sem children')
     }
+    this.formControl = this.getFormControl(this.formGroup, this.fmControlName);
   }
 
   ngAfterContentChecked(){
-      if(this.formGroup.controls[this.fmControlName].touched && !this.formGroup.controls[this.fmControlName].valid){
+    // let control:FormControl|undefined = this.getFormControl(this.formGroup, this.fmControlName)
+      if(this.formControl!= undefined && this.formControl.touched && !this.formControl.valid){
         this.menssagens = this.message();
       }else{
         this.menssagens = [];
       }
   }
 
+  private getFormControl(formGroup:FormGroup, formControName:string):FormControl|undefined{
+    let control:FormControl|undefined;
+
+    for (const [key,value] of Object.entries(formGroup.controls) ) {
+      if(key == formControName && value instanceof FormControl){
+        control = value;
+        return value;
+      }
+
+      if(value instanceof FormGroup){
+        control = this.getFormControl(value, this.fmControlName);
+      }
+    }
+
+    return control;
+  }
+
   message():string[]{
+    let msg: Array<string> = [];
     if(this.label == undefined){
       this.label = '';
     }
-    let fCom :ValidationErrors | null = this.formGroup.controls[this.fmControlName].errors;
-    let msg:Array<string> = [];
-    for (const errorName in fCom ) {
-      msg.push(this.getErrorMsg(this.label,errorName,fCom[errorName]));
-    }
+    // if(this.formControl) {
+      let fCom: ValidationErrors | null | undefined = this.formControl?.errors;
+      for (const errorName in fCom) {
+        msg.push(this.getErrorMsg(this.label, errorName, fCom[errorName]));
+      }
+    // }
     return msg;
   }
 

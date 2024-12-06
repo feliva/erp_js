@@ -3,7 +3,15 @@ import {
     inject,
     OnInit
 } from '@angular/core';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {
+    EmailValidator,
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    FormsModule,
+    ReactiveFormsModule,
+    Validators
+} from "@angular/forms";
 import {ButtonModule} from 'primeng/button';
 import {DropdownModule} from 'primeng/dropdown';
 import {InputNumberModule} from 'primeng/inputnumber';
@@ -21,6 +29,8 @@ import {FiltroServices} from "../../../service/FiltroServices";
 import {forkJoin} from "rxjs";
 import {CidadeService} from "../../../service/cidade.service";
 import {Cidade, Estado} from "../../../model/Cidade";
+import {Empresa} from "../../../model/Empresa";
+import {CrmEmpresaService} from "../services/crm-empresa.service";
 
 @Component({
     selector: 'crm-contato-form',
@@ -31,34 +41,40 @@ import {Cidade, Estado} from "../../../model/Cidade";
                     <div class="formgrid grid">
                         <div class="field col-12 md:col-6">
                             <app-react-message-validation>
-                                <label>Nome</label>
-                                <input pInputText type="text" formControlName="nome" class="full">
+                                <label>Nome Fantasia</label>
+                                <input pInputText type="text" formControlName="nomeFantasia" class="full">
                             </app-react-message-validation>
                         </div>
+<!--                        <div class="field col-12 md:col-6">-->
+<!--                            <app-react-message-validation>-->
+<!--                                <label>E-mail</label>-->
+<!--                                <input pInputText type="email" class="full" formControlName="email"/>-->
+<!--                            </app-react-message-validation>-->
+<!--                        </div>-->
+<!--                        <div class="field col-12 md:col-6">-->
+<!--                            <app-react-message-validation>-->
+<!--                                <label>Razão Social</label>-->
+<!--                                <input pInputText type="text" formControlName="razaoSocial"/>-->
+<!--                            </app-react-message-validation>-->
+<!--                        </div>-->
+<!--                        <div class="field col-12 md:col-6">-->
+<!--                            <app-react-message-validation>-->
+<!--                                <label>Telefone</label>-->
+<!--                                <p-inputMask mask="(99)99999-9999"   formControlName="telefone" />-->
+<!--                            </app-react-message-validation>-->
+<!--                        </div>-->
+<!--                        <div class="field col-12 md:col-6">-->
+<!--                            <app-react-message-validation>-->
+<!--                                <label>Inscrisão Estadual</label>-->
+<!--                                <input pInputText type="text" formControlName="inscricaoEstadual"/>-->
+<!--                            </app-react-message-validation>-->
+<!--                        </div>                        -->
+                    </div>
+                    <div class="formgrid grid" formGroupName="endereco">
                         <div class="field col-12 md:col-6">
                             <app-react-message-validation>
-                                <label>E-mail</label>
-                                <input pInputText type="email" class="full" formControlName="email"/>
-                            </app-react-message-validation>
-                        </div>
-                        <div class="field col-12 md:col-6">
-                            <app-react-message-validation>
-                                <label>Celular</label>
-                                <p-inputMask mask="(99) 9999-9999" formControlName="celular"
-                                             placeholder="(99) 9999-9999"/>
-                            </app-react-message-validation>
-                        </div>
-                        <div class="field col-12 md:col-6">
-                            <label>Estado</label>
-                            <p-dropdown [options]="listEstados" formControlName="estado" optionLabel="nome"
-                                        (onChange)="changeEstado($event.value)"/>
-                        </div>
-                        <div class="field col-12 md:col-6">
-                            <app-react-message-validation>
-                                <label>Cidade</label>
-                                <p-dropdown [options]="listCidades" formControlName="cidade" optionLabel="nome"
-                                            [filter]="true"
-                                            filterBy="nome" placeholder="Selecione uma cidade"/>
+                                <label>Cep</label>
+                                <input pInputText type="text" formControlName="cep"/>
                             </app-react-message-validation>
                         </div>
                     </div>
@@ -98,9 +114,9 @@ import {Cidade, Estado} from "../../../model/Cidade";
         InputMaskModule
     ],
 })
-export class CrmEmpresasFormComponent extends FormOperacoesComuns<Contato> implements OnInit {
+export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> implements OnInit {
 
-    contatoService: CrmContatoService = inject(CrmContatoService);
+    serviceF: CrmEmpresaService = inject(CrmEmpresaService);
     cidadeService: CidadeService = inject(CidadeService);
 
     estado: Estado | undefined;
@@ -119,44 +135,44 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Contato> imple
         });
     }
 
-    public override getService(): FiltroServices<Contato> {
-        return this.contatoService;
+    public override getService(): FiltroServices<Empresa> {
+        return this.serviceF;
     }
 
     getUrlOnCancelarForm(): string {
-        return '/crm/contato/listar';
+        return '/crm/empresa/listar';
     }
 
     getMensagemSucessoSubmit(): string {
-        return 'Contato salvo com sucesso.';
+        return 'Empresa salva com sucesso.';
     }
 
     public inicializaCamposForm(ehNovo: boolean) {
         if (ehNovo) {
-            forkJoin({
-                lEstado: this.cidadeService.listAllEstados(),
-            }).subscribe(({lEstado}) => {
-                this.listEstados = lEstado;
-            });
+            // forkJoin({
+            //     lEstado: this.cidadeService.listAllEstados(),
+            // }).subscribe(({lEstado}) => {
+            //     this.listEstados = lEstado;
+            // });
         } else {
-            forkJoin({
-                lEstado: this.cidadeService.listAllEstados(),
-                lCidade: this.cidadeService.listAllByEstado(this.entity.cidade?.estado.idEstado),
-            }).subscribe(({lEstado,lCidade}) => {
-                this.listEstados = lEstado;
-                this.listCidades = lCidade;
-                this.inicializaFormGroup(false);
-            });
+            // forkJoin({
+            //     lEstado: this.cidadeService.listAllEstados(),
+            //     lCidade: this.cidadeService.listAllByEstado(this.entity.cidade?.estado.idEstado),
+            // }).subscribe(({lEstado,lCidade}) => {
+            //     this.listEstados = lEstado;
+            //     this.listCidades = lCidade;
+            //     this.inicializaFormGroup(false);
+            // });
         }
     }
 
     public formToObject(): Contato {
-        // let contatoForm: Contato = new Contato();
-        this.entity.idContato = this.formGroup.controls['idContato'].value;
-        this.entity.nome = this.formGroup.controls['nome'].value;
+        this.entity.idEmpresa = this.formGroup.controls['idEmpresa'].value;
+        this.entity.nomeFantasia = this.formGroup.controls['nomeFantasia'].value;
         this.entity.email = this.formGroup.controls['email'].value;
-        this.entity.celular = this.formGroup.controls['celular'].value;
-        this.entity.cidade = this.formGroup.controls['cidade'].value;
+        this.entity.razaoSocial = this.formGroup.controls['razaoSocial'].value;
+        this.entity.telefone = this.formGroup.controls['telefone'].value;
+        this.entity.inscricaoEstadual = this.formGroup.controls['inscricaoEstadual'].value;
         return this.entity;
     }
 
@@ -166,15 +182,23 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Contato> imple
 
     public inicializaFormGroup(clean:boolean): void{
         if(clean){
-            this.entity = new Contato();
+            this.entity = new Empresa();
         }
-        this.formGroup =  new FormGroup({
-            idContato: new FormControl(this.entity?.idContato),
-            nome:new FormControl(this.entity?.nome, [Validators.required]),
-            email:new FormControl(this.entity?.email, [Validators.required,Validators.email]),
-            celular:new FormControl(this.entity?.celular, [Validators.required]),
-            cidade:new FormControl(this.entity?.cidade, []),
-            estado:new FormControl(this.entity?.cidade?.estado, []),
-        });
+
+
+        this.formGroup = new FormGroup({
+                // idEmpresa: new FormControl(this.entity?.idEmpresa),
+                nomeFantasia: new FormControl('', Validators.required),
+            //     email: new FormControl(this.entity?.email, [Validators.required, Validators.email]),
+            // razaoSocial: new FormControl(this.entity?.razaoSocial, []),
+            //     telefone: new FormControl(this.entity?.telefone, []),
+            //     inscricaoEstadual: new FormControl(this.entity?.inscricaoEstadual, []),
+                endereco:new FormGroup({
+                    cep: new FormControl('', [Validators.required, Validators.email]),
+                })
+        })
+
+
+        // this.formGroup =  f;
     }
 }

@@ -46,7 +46,7 @@ public class CRMEmpresaEndPoint extends ComumEndPoint<EmpresasDAO, Empresa> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response paginado(@QueryParam("first") Integer first,
                              @QueryParam("rows") Integer rows,
-                             @QueryParam("nome") String nome){
+                             @QueryParam("nomeFantasia") String nome){
         Map<String,Object> param = new HashMap<>();
         param.put("nome",nome);
 
@@ -58,9 +58,9 @@ public class CRMEmpresaEndPoint extends ComumEndPoint<EmpresasDAO, Empresa> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response paginadoCount(@QueryParam("first") Integer first,
                                   @QueryParam("rows") Integer rows,
-                                  @QueryParam("nome") String nome){
+                                  @QueryParam("nomeFantasia") String nome){
         Map<String,Object> param = new HashMap<>();
-        param.put("nome",nome);
+        param.put("nomeFantasia",nome);
         return Response.ok(this.getDao().paginadoCount(first, rows, param)).build();
     }
 }

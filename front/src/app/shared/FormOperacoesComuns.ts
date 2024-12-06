@@ -7,7 +7,7 @@ import {FiltroServices} from "../service/FiltroServices";
 import {BreadcrumbService} from "../components/breadcrumb/breadcrumb.service";
 import {Contato} from "../model/Contato";
 import {ActivatedRoute, Router} from "@angular/router";
-import {FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {Resposta} from "../model/Resposta";
 
 export abstract class FormOperacoesComuns<T>{
@@ -20,6 +20,7 @@ export abstract class FormOperacoesComuns<T>{
 
     protected labelForm = 'Editar';
     protected formGroup!: FormGroup;
+    protected formBuilder!: FormBuilder;
 
     constructor() {
         this.inicializaFormGroup(true);
