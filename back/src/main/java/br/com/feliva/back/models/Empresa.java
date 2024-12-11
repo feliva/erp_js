@@ -43,7 +43,7 @@ public class Empresa extends Model<Integer> {
             inverseJoinColumns= {@JoinColumn(name="id_contato")})
     private Set<Contato> setContatos;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "id_endereco")
     private Endereco endereco;
 

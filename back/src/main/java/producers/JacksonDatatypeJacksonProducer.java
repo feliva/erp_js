@@ -1,5 +1,7 @@
 package producers;
 
+import com.fasterxml.jackson.core.StreamReadFeature;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.ws.rs.Produces;
@@ -18,10 +20,12 @@ public class JacksonDatatypeJacksonProducer implements ContextResolver<ObjectMap
 
     public JacksonDatatypeJacksonProducer() throws Exception {
         this.json = JsonMapper.builder()
+                .enable(StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION)
                 .findAndAddModules()
                 .build()
                 .registerModule(new JavaTimeModule())
                 .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
     }
 

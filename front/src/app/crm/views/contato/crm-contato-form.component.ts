@@ -30,20 +30,17 @@ import {Cidade, Estado} from "../../../model/Cidade";
                 <form autocomplete="off" [formGroup]="formGroup" (ngSubmit)="onSubmit($event)">
                     <div class="formgrid grid">
                         <div class="field col-12 md:col-6">
-                            <app-react-message-validation>
-                                <label>Nome</label>
+                            <app-react-message-validation label="Nome">
                                 <input pInputText type="text" formControlName="nome" class="full">
                             </app-react-message-validation>
                         </div>
                         <div class="field col-12 md:col-6">
-                            <app-react-message-validation>
-                                <label>E-mail</label>
+                            <app-react-message-validation label="E-mail">
                                 <input pInputText type="email" class="full" formControlName="email"/>
                             </app-react-message-validation>
                         </div>
                         <div class="field col-12 md:col-6">
-                            <app-react-message-validation>
-                                <label>Celular</label>
+                            <app-react-message-validation label="Celular">
                                 <p-inputMask mask="(99) 9999-9999" formControlName="celular"
                                              placeholder="(99) 9999-9999"/>
                             </app-react-message-validation>
@@ -54,8 +51,7 @@ import {Cidade, Estado} from "../../../model/Cidade";
                                         (onChange)="changeEstado($event.value)"/>
                         </div>
                         <div class="field col-12 md:col-6">
-                            <app-react-message-validation>
-                                <label>Cidade</label>
+                            <app-react-message-validation label="Cidade">
                                 <p-dropdown [options]="listCidades" formControlName="cidade" optionLabel="nome"
                                             [filter]="true"
                                             filterBy="nome" placeholder="Selecione uma cidade"/>
@@ -109,11 +105,9 @@ export class CrmContatoFormComponent extends FormOperacoesComuns<Contato> implem
 
     constructor(private location: Location) {
         super();
-
     }
 
     changeEstado(estado: Estado | undefined) {
-        console.log(estado)
         this.cidadeService.listAllByEstado(estado?.idEstado).subscribe(data => {
             this.listCidades = data;
         });

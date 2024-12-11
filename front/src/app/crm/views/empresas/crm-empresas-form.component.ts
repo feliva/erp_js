@@ -40,40 +40,34 @@ import {CrmEmpresaService} from "../services/crm-empresa.service";
                 <form autocomplete="off" [formGroup]="formGroup" (ngSubmit)="onSubmit($event)">
                     <div class="formgrid grid">
                         <div class="field col-12 md:col-6">
-                            <app-react-message-validation>
-                                <label>Nome Fantasia</label>
+                            <app-react-message-validation label="Nome Fantasia">
                                 <input pInputText type="text" formControlName="nomeFantasia" class="full">
                             </app-react-message-validation>
                         </div>
                         <div class="field col-12 md:col-6">
-                            <app-react-message-validation>
-                                <label>E-mail</label>
+                            <app-react-message-validation label="Nome Fantasia">
                                 <input pInputText type="email" class="full" formControlName="email"/>
                             </app-react-message-validation>
                         </div>
                         <div class="field col-12 md:col-6">
-                            <app-react-message-validation>
-                                <label>Razão Social</label>
+                            <app-react-message-validation label="Razão Social">
                                 <input pInputText type="text" formControlName="razaoSocial"/>
                             </app-react-message-validation>
                         </div>
                         <div class="field col-12 md:col-6">
-                            <app-react-message-validation>
-                                <label>Telefone</label>
+                            <app-react-message-validation  label="Telefone">
                                 <p-inputMask mask="(99)99999-9999"   formControlName="telefone" />
                             </app-react-message-validation>
                         </div>
                         <div class="field col-12 md:col-6">
-                            <app-react-message-validation>
-                                <label>Inscrisão Estadual</label>
+                            <app-react-message-validation label="Inscrisão Estadual">
                                 <input pInputText type="text" formControlName="inscricaoEstadual"/>
                             </app-react-message-validation>
                         </div>                        
                     </div>
                     <div class="formgrid grid" formGroupName="endereco">
                         <div class="field col-12 md:col-6">
-                            <app-react-message-validation>
-                                <label>Cep</label>
+                            <app-react-message-validation label="Cep">
                                 <input pInputText type="text" formControlName="cep"/>
                             </app-react-message-validation>
                         </div>
@@ -83,34 +77,29 @@ import {CrmEmpresaService} from "../services/crm-empresa.service";
                                         (onChange)="changeEstado($event.value)"/>
                         </div>
                         <div class="field col-12 md:col-6">
-                            <app-react-message-validation>
-                                <label>Cidade</label>
+                            <app-react-message-validation label="Cidade">
                                 <p-dropdown [options]="listCidades" formControlName="cidade" optionLabel="nome"
                                             [filter]="true"
                                             filterBy="nome" placeholder=""/>
                             </app-react-message-validation>
                         </div>
                         <div class="field col-12 md:col-6">
-                            <app-react-message-validation>
-                                <label>Bairro</label>
+                            <app-react-message-validation label="Bairro">
                                 <input pInputText type="text" formControlName="bairro"/>
                             </app-react-message-validation>
                         </div>
                         <div class="field col-12 md:col-6">
-                            <app-react-message-validation>
-                                <label>Logradouro</label>
+                            <app-react-message-validation label="Logradouro">
                                 <input pInputText type="text" formControlName="logradouro"/>
                             </app-react-message-validation>
                         </div>
                         <div class="field col-12 md:col-6">
-                            <app-react-message-validation>
-                                <label>Numero</label>
+                            <app-react-message-validation label="Numero">
                                 <input pInputText type="text" formControlName="numero"/>
                             </app-react-message-validation>
                         </div>
                         <div class="field col-12 md:col-6">
-                            <app-react-message-validation>
-                                <label>Complemento</label>
+                            <app-react-message-validation label="Complemento">
                                 <input pInputText type="text" formControlName="complemento"/>
                             </app-react-message-validation>
                         </div>
@@ -203,12 +192,14 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
     }
 
     public formToObject(): Contato {
-        this.entity.idEmpresa = this.formGroup.controls['idEmpresa'].value;
-        this.entity.nomeFantasia = this.formGroup.controls['nomeFantasia'].value;
-        this.entity.email = this.formGroup.controls['email'].value;
-        this.entity.razaoSocial = this.formGroup.controls['razaoSocial'].value;
-        this.entity.telefone = this.formGroup.controls['telefone'].value;
-        this.entity.inscricaoEstadual = this.formGroup.controls['inscricaoEstadual'].value;
+        // this.entity.idEmpresa = this.formGroup.controls['idEmpresa'].value;
+        // this.entity.nomeFantasia = this.formGroup.controls['nomeFantasia'].value;
+        // this.entity.email = this.formGroup.controls['email'].value;
+        // this.entity.razaoSocial = this.formGroup.controls['razaoSocial'].value;
+        // this.entity.telefone = this.formGroup.controls['telefone'].value;
+        // this.entity.inscricaoEstadual = this.formGroup.controls['inscricaoEstadual'].value;
+
+        this.entity = this.formGroup.getRawValue();
         return this.entity;
     }
 
@@ -229,6 +220,7 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
             telefone : new FormControl('', []),
             inscricaoEstadual : new FormControl('', []),
             endereco : new FormGroup({
+                idEndereco : new FormControl('', []),
                 cep : new FormControl('', [Validators.required]),
                 estado : new FormControl(this.entity.endereco?.cidade?.estado, [Validators.required]),
                 cidade : new FormControl('', [Validators.required]),
@@ -238,7 +230,6 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
                 complemento : new FormControl('', [Validators.required]),
             })
         })
-
         this.formGroup.patchValue(this.entity);
     }
 }

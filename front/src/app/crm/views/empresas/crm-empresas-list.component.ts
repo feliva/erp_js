@@ -99,7 +99,7 @@ import {CrmEmpresaService} from "../services/crm-empresa.service";
                         <th>{{ entity.razaoSocial }}</th>
                         <th>
                             <a class="p-ripple p-element p-button p-component p-button-icon-only p-button-rounded p-button-text"
-                               routerLink="/crm/contato/editar/{{entity.idEmpresa}}" aria-label="Novo">
+                               routerLink="/crm/empresa/editar/{{entity.idEmpresa}}" aria-label="Novo">
                                 <i class="pi pi-pencil"></i>
                             </a>
                             <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
