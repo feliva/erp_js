@@ -1,8 +1,6 @@
 
 import {inject, OnInit} from "@angular/core";
-import {ConfirmationService} from "primeng/api";
 import {AppMessageService} from "../service/app-message.service";
-import {TableLazyLoadEvent, TablePageEvent} from "primeng/table";
 import {FiltroServices} from "../service/FiltroServices";
 import {BreadcrumbService} from "../components/breadcrumb/breadcrumb.service";
 import {Contato} from "../model/Contato";
@@ -57,12 +55,12 @@ export abstract class FormOperacoesComuns<T>{
 
     onSubmit(event: SubmitEvent) {
         if (!this.formGroup.valid) {
-            this.appMessage.addError('', 'Existem pendências no cadastro.')
+            this.appMessage.addError('Existem pendências no cadastro.')
             return;
         }
         this.getService().save(this.formToObject()).subscribe((resp:Resposta<Contato>) => {
             this.onCancelarForm(null);
-            this.appMessage.addSuccess('', this.getMensagemSucessoSubmit())
+            this.appMessage.addSuccess(this.getMensagemSucessoSubmit())
         })
     }
 

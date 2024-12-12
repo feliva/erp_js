@@ -1,7 +1,7 @@
 :root{
   --color-logo:white;
   --color-bg-header:#252b3b;
-  --size-header:80px;
+  --size-header:70px;
   --size-app-nav:200px;
 }
 
@@ -27,9 +27,9 @@ app-main{
   width: 100%;
 }
 
-.p-toast .p-toast-message {
-  border: unset;
-}
+//.p-toast .p-toast-message {
+//  border: unset;
+//}
 
 //.p-panelmenu .p-panelmenu-panel {
 //  margin-bottom: 0 !important;

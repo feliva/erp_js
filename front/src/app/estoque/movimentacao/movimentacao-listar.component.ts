@@ -25,7 +25,6 @@ import {Movimentacao} from "../../model/Movimentacao";
 import {MovimentacaoControlService} from "./movimentacao-control.service";
 import {CommonModule, DatePipe} from "@angular/common";
 import {map} from "rxjs";
-import {FeTableComponent, TableLoadFilterEvent} from "../../components/fe-table/fe-table.component";
 import {DiretivasModule, Template} from "../../shared/diretivas";
 
 @Component({
@@ -85,27 +84,12 @@ import {DiretivasModule, Template} from "../../shared/diretivas";
         </div>
       </p-panel>
       <p-confirmDialog />
-
-        <p-panel>
-      <fe-table [values]="this.listMovimentacoes" key='idMovimentacao'
-        (onLazyLoadEvent)="onLazyLoadEvent($event)" >
-        <ng-template template="thead" pTemplate="thead" >
-          <th>id</th>
-          <th>Nome</th>
-        </ng-template>
-        <ng-template template="body" pTemplate="body" let-item>
-            <th>{{item.idMovimentacao}}</th>
-            <th>{{item.produto.nome}}</th>
-        </ng-template>
-      </fe-table>
-
-        </p-panel>
-  `,
+    `,
     styles: [`
 
   `],
     standalone: true,
-  imports: [CommonModule,PanelModule, TableModule, SharedModule, ButtonModule, ConfirmDialogModule, MovimentacaoBuscaComponent, DatePipe, FeTableComponent,DiretivasModule]
+  imports: [CommonModule,PanelModule, TableModule, SharedModule, ButtonModule, ConfirmDialogModule, MovimentacaoBuscaComponent, DatePipe, DiretivasModule]
 })
 export class MovimentacaoListarComponent implements OnInit,OperacoesExcluir<Movimentacao>{
 

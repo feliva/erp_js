@@ -5,7 +5,6 @@ import {AppMessageService} from "../service/app-message.service";
 import {TableLazyLoadEvent, TablePageEvent} from "primeng/table";
 import {FiltroServices} from "../service/FiltroServices";
 import {forkJoin} from "rxjs";
-import {FormGroup} from "@angular/forms";
 
 export abstract class ListarOperacoesComuns<T> {
 
@@ -62,7 +61,7 @@ export abstract class ListarOperacoesComuns<T> {
 
     excluir(id:number){
         this.getService().delete(id).subscribe(()=>{
-            this.appMessage.addSuccess('','Contato excluído com sucesso.')
+            this.appMessage.addSuccess('Contato excluído com sucesso.')
             this.filtrarBusca();
         });
     }
