@@ -31,32 +31,35 @@ import {CidadeService} from "../../../service/cidade.service";
 import {Cidade, Estado} from "../../../model/Cidade";
 import {Empresa} from "../../../model/Empresa";
 import {CrmEmpresaService} from "../services/crm-empresa.service";
+import {TableModule} from "primeng/table";
+import {Dialog} from "primeng/dialog";
 
 @Component({
     selector: 'crm-contato-form',
     template: `
         <div>
             <p-panel header="{{labelForm}} Empresa">
+                <ng-template pTemplate="header"></ng-template>
                 <form autocomplete="off" [formGroup]="formGroup" (ngSubmit)="onSubmit($event)">
-                    <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-2">
-                        <div class="md:col-span-1">
+                    <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-4">
+                        <div class="md:col-span-2">
                             <app-react-message-validation label="Nome Fantasia">
-                                <input pInputText type="text" formControlName="nomeFantasia" class="full">
+                                <input pInputText type="text" formControlName="nomeFantasia" class="w-full">
                             </app-react-message-validation>
                         </div>
-                        <div class=" md:col-span-1">
-                            <app-react-message-validation label="Nome Fantasia">
-                                <input pInputText type="email" class="full" formControlName="email"/>
+                        <div class=" md:col-span-2">
+                            <app-react-message-validation label="E-mail">
+                                <input pInputText type="email" class="w-full" formControlName="email"/>
                             </app-react-message-validation>
                         </div>
-                        <div class=" md:col-span-1">
+                        <div class=" md:col-span-2">
                             <app-react-message-validation label="Razão Social">
                                 <input pInputText type="text" formControlName="razaoSocial" class="w-full"/>
                             </app-react-message-validation>
                         </div>
                         <div class="md:col-span-1">
                             <app-react-message-validation  label="Telefone">
-                                <p-inputMask mask="(99)99999-9999"   formControlName="telefone" class="grid"/>
+                                <p-inputMask mask="(99)99999-9999"   formControlName="telefone" class="grid w-full"/>
                             </app-react-message-validation>
                         </div>
                         <div class="md:col-span-1 ">
@@ -65,7 +68,7 @@ import {CrmEmpresaService} from "../services/crm-empresa.service";
                             </app-react-message-validation>
                         </div>                        
                     </div>
-                    <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-2 pt-4" formGroupName="endereco">
+                    <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-4 pt-4" formGroupName="endereco">
                         <div class="md:col-span-1">
                             <app-react-message-validation label="Cep">
                                 <input pInputText type="text" formControlName="cep" class="w-full"/>
@@ -88,7 +91,7 @@ import {CrmEmpresaService} from "../services/crm-empresa.service";
                                 <input pInputText type="text" formControlName="bairro" class="w-full"/>
                             </app-react-message-validation>
                         </div>
-                        <div class="md:col-span-1">
+                        <div class="md:col-span-2">
                             <app-react-message-validation label="Logradouro">
                                 <input pInputText type="text" formControlName="logradouro" class="w-full"/>
                             </app-react-message-validation>
@@ -104,6 +107,31 @@ import {CrmEmpresaService} from "../services/crm-empresa.service";
                             </app-react-message-validation>
                         </div>
                     </div>
+                    <p-table [value]="this.entity.setContatos || []">
+                        <ng-template pTemplate="caption">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xl font-bold">Contatos</span>
+                            </div>
+                        </ng-template>
+                        <ng-template #header let-columns>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>E-mail</th>
+                                <th>Celular</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template #body let-contato>
+                            <tr>
+                                <td>{{ contato.idContato }}</td>
+                                <td>{{ contato.nome }}</td>
+                                <td>{{ contato.email }}</td>
+                                <td>{{ contato.celular }}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                    
+                    
                     <div class="flex pt-10">
                         <div class="pr-5">
                             <p-button [raised]="true" type="submit" [disabled]="!formGroup.valid">
@@ -137,7 +165,9 @@ import {CrmEmpresaService} from "../services/crm-empresa.service";
         ButtonModule,
         EditorModule,
         AutoCompleteModule,
-        InputMaskModule
+        InputMaskModule,
+        TableModule,
+        Dialog
     ],
 })
 export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> implements OnInit {
@@ -148,6 +178,8 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
     estado: Estado | undefined;
     listCidades: Cidade[] = [];
     listEstados: Estado[] = [];
+
+    listContatos:Contato[] = [];
 
     constructor(private location: Location) {
         super();
@@ -191,7 +223,7 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
         }
     }
 
-    public formToObject(): Contato {
+    public formToObject(): Empresa {
         // this.entity.idEmpresa = this.formGroup.controls['idEmpresa'].value;
         // this.entity.nomeFantasia = this.formGroup.controls['nomeFantasia'].value;
         // this.entity.email = this.formGroup.controls['email'].value;
