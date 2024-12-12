@@ -21,13 +21,6 @@ import {InputTextModule} from 'primeng/inputtext';
 import {PanelModule} from 'primeng/panel';
 import {EditorModule} from "primeng/editor";
 import {AutoCompleteCompleteEvent, AutoCompleteModule, AutoCompleteSelectEvent} from "primeng/autocomplete";
-import {Categoria} from "../../model/Categoria";
-import {CategoriaService} from "../../service/categoria.service";
-import {Marca} from "../../model/Marca";
-import {MarcaService} from "../../service/marca.service";
-import {Status} from "../../model/Status";
-import {StatusService} from "../../service/status.service";
-import {InputTextareaModule} from "primeng/inputtextarea";
 import {CalendarModule} from "primeng/calendar";
 import {TipoMovimentacao} from "../../model/TipoMovimentacao";
 import {TipoMovimentacaoService} from "../../service/tipo-movimentacao.service";
@@ -49,15 +42,15 @@ import {MovimentacaoControlService} from "./movimentacao-control.service";
     <div>
       <p-panel header="{{labelForm}} Movimentação">
         <form autocomplete="off" [formGroup]="formGroupMovimentacao" (ngSubmit)="onSubmit($event)">
-          <div class="formgrid grid">
-            <div class="field col-12 md:col-6">
+          <div class="formgrid grid grid-cols-12 gap-4 grid-cols-12 gap-6">
+            <div class="field col-span-12 md:col-span-6">
                 <app-react-message-validation >
                   <label>Data da movimentação<span class="obrigatorio">*</span></label>
                   <p-calendar class="w-full" formControlName="dtMovimentacao"  dateFormat="dd/MM/yy"/>
                 </app-react-message-validation>
             </div>
 
-            <div class="field col-12 md:col-6">
+            <div class="field col-span-12 md:col-span-6">
               <app-react-message-validation >
                 <label>Tipo de Movimentação<span class="obrigatorio">*</span></label>
                 <p-dropdown [options]="this.listaTipoMobilidade" optionLabel="descricao" formControlName="tipoMovimentacao">
@@ -65,7 +58,7 @@ import {MovimentacaoControlService} from "./movimentacao-control.service";
               </app-react-message-validation>
             </div>
 
-            <div class="field col-12 md:col-6">
+            <div class="field col-span-12 md:col-span-6">
               <app-react-message-validation>
                 <label>Armazenagem<span class="obrigatorio">*</span></label>
                 <p-dropdown [options]="this.listaArmazenagem" optionLabel="descricao" formControlName="armazenagem" >
@@ -73,7 +66,7 @@ import {MovimentacaoControlService} from "./movimentacao-control.service";
               </app-react-message-validation>
             </div>
 
-            <div class="field col-12 md:col-6">
+            <div class="field col-span-12 md:col-span-6">
               <app-react-message-validation>
                 <label>Tipo justificativa<span class="obrigatorio">*</span></label>
                 <p-dropdown [options]="this.listaTipoJustufucativa" optionLabel="descricao" formControlName="tipoJustificativaMovimentacao">
@@ -81,19 +74,19 @@ import {MovimentacaoControlService} from "./movimentacao-control.service";
               </app-react-message-validation>
             </div>
 
-            <div class="field col-12 md:col-12">
+            <div class="field col-span-12 md:col-span-12">
               <label>Descrição</label>
               <textarea pInputTextarea rows="2" cols="60" formControlName="descricao" class="w-full"></textarea>
             </div>
 
-            <div class="field col-12 md:col-12">
+            <div class="field col-span-12 md:col-span-12">
 
             </div>
 
-            <div class="field col-12 md:col-12">
+            <div class="field col-span-12 md:col-span-12">
               <p-table [value]="this.itensMovimentacao" dataKey="produto.idProduto"  [tableStyle]="{ 'min-width': '50rem' }" >
                 <ng-template pTemplate="caption">
-                  <div class="flex flex-wrap justify-content-between ">
+                  <div class="flex flex-wrap justify-between ">
                     <span class="text-xl">Item da movimentação</span>
                     <p-button icon="pi pi-plus-circle"  label="Adicional produto" (onClick)="novoItemMovimentacao($event)" *ngIf="this.movimentacaoCS.isNovo()"/>
                   </div>
@@ -122,7 +115,7 @@ import {MovimentacaoControlService} from "./movimentacao-control.service";
             </div>
 
           </div>
-          <div class="flex justify-content-start gap-2">
+          <div class="flex justify-start gap-2">
               <p-button [raised]="true" type="submit" [disabled]="!formGroupMovimentacao.valid"  icon="pi pi-check" label="Enviar" *ngIf="this.movimentacaoCS.isNovo()"/>
               <p-button severity="secondary" [raised]="true" (onClick)="onCancelarForm($event)" icon="pi pi-times" label="Cancelar" />
           </div>
@@ -138,21 +131,21 @@ import {MovimentacaoControlService} from "./movimentacao-control.service";
         position="top"
         maximizable="true"
         [style]="{ width: '600px' }">
-        <span class="p-text-secondary block mb-5">
+        <span class="p-text-secondary block mb-20">
           <b>
             Adiciona produto a movimentadao(E/S)
             </b>
         </span>
         <form autocomplete="off" [formGroup]="formGroupItemMovimentacao" (ngSubmit)="onSubmitItemMovimentacao($event)">
-          <div class="formgrid grid">
-            <div class="field col-12 md:col-12">
+          <div class="formgrid grid grid-cols-12 gap-4 grid-cols-12 gap-6">
+            <div class="field col-span-12 md:col-span-12">
               <app-react-message-validation >
                 <label for="dlgAutProduto">Produto<span class="obrigatorio">*</span></label>
                 <p-autoComplete id="dlgAutProduto" name="dlgAutProduto" [suggestions]="this.listaProdutos"
                                 (completeMethod)="filterAutoCompleteProduto($event)" (onSelect)="onSelectFilterAutoCompleteProduto($event)"
                                 class="w-full" [optionLabel]="Produto.getOptionLabel" formControlName="produto">
                   <ng-template let-auProdut pTemplate="item">
-                    <div class="flex align-items-center gap-2">
+                    <div class="flex items-center gap-2">
                       <div>{{auProdut.idProduto}} - {{auProdut.nome }} - {{auProdut.unidadeCompra.sigla}}</div>
                     </div>
                   </ng-template>
@@ -160,20 +153,20 @@ import {MovimentacaoControlService} from "./movimentacao-control.service";
               </app-react-message-validation>
             </div>
 
-            <div class="field col-12 md:col-12">
+            <div class="field col-span-12 md:col-span-12">
               <app-react-message-validation >
                 <label>Quantidade<span class="obrigatorio">*</span></label>
                 <p-inputNumber formControlName="quantidade" class="w-full"/>
               </app-react-message-validation>
             </div>
 
-            <div class="field col-12 md:col-6">
+            <div class="field col-span-12 md:col-span-6">
                 <label>Em estoque</label>
                 <p-inputNumber class="w-full" formControlName="emEstoque"/>
             </div>
           </div>
 
-          <div class="flex justify-content-end gap-2">
+          <div class="flex justify-end gap-2">
             <p-button label="Cancelar" severity="secondary" (onClick)="visivel = false" icon="pi pi-times"/>
             <p-button type="submit" label="ok" icon="pi pi-check"  />
           </div>
@@ -196,7 +189,6 @@ import {MovimentacaoControlService} from "./movimentacao-control.service";
     ButtonModule,
     EditorModule,
     AutoCompleteModule,
-    InputTextareaModule,
     CalendarModule,
     TableModule,
     DialogModule,

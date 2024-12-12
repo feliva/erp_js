@@ -11,20 +11,20 @@ import { PanelModule } from 'primeng/panel';
     template: `
       <p-panel header="Busca de Unidade">
 
-          <div class="formgrid grid">
-              <div class="field col-12 md:col-12">
-                  <div class="flex flex-wrap gap-3">
-                      <div class="flex align-items-center">
+          <div class="formgrid grid grid-cols-12 gap-4 grid-cols-12 gap-6">
+              <div class="field col-span-12 md:col-span-12">
+                  <div class="flex flex-wrap gap-6">
+                      <div class="flex items-center">
                           <label class="ml-2">Descrição</label>
                       </div>
                   </div>
               </div>
-              <div class="field col-12 md:col-6">
+              <div class="field col-span-12 md:col-span-6">
                   <input type="text" pInputText  placeholder="Descrição" class="w-full" [(ngModel)]="termoBusca"/>
               </div>
           </div>
           <div>
-              <p-button label="Buscar" (click)="this.buscar()" icon="pi pi-search" class="pr-3"></p-button>
+              <p-button label="Buscar" (click)="this.buscar()" icon="pi pi-search" class="pr-6"></p-button>
 <!--              <p-button label="Novo" routerLink="/user/novo" icon="pi pi-plus"></p-button>-->
           </div>
       </p-panel>

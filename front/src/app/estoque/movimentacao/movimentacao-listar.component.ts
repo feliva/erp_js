@@ -50,14 +50,14 @@ import {DiretivasModule, Template} from "../../shared/diretivas";
               <tr>
                 <th>Id</th>
                 <th pSortableColumn="produto.nome" >
-                  <div class="flex justify-content-between align-items-center">
+                  <div class="flex justify-between items-center">
                     Nome
                     <p-sortIcon field="produto.nome" />
                     <p-columnFilter type="text" field="produto.nome" display="menu" class="ml-auto" />
                   </div>
                 </th>
                 <th pSortableColumn="dtMovimentacao" >
-                  <div class="flex justify-content-between align-items-center">
+                  <div class="flex justify-between items-center">
                     Data
                     <p-sortIcon field="dtMovimentacao" />
                     <p-columnFilter type="date" field="dtMovimentacao" display="menu" class="ml-auto" />

@@ -2,7 +2,7 @@
   --color-logo:white;
   --color-bg-header:#252b3b;
   --size-header:80px;
-  --size-app-nav:200px
+  --size-app-nav:200px;
 }
 
 
@@ -31,11 +31,13 @@ app-main{
   border: unset;
 }
 
-.p-panelmenu .p-panelmenu-panel {
-  margin-bottom: 0 !important;
-}
+//.p-panelmenu .p-panelmenu-panel {
+//  margin-bottom: 0 !important;
+//}
 
 //correção em dropDown filter
-.p-icon-wrapper {
-  display: flex !important;
-}
+//.p-icon-wrapper {
+//  display: flex !important;
+//}
+
+//pos prime ng 18

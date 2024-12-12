@@ -38,80 +38,80 @@ import {CrmEmpresaService} from "../services/crm-empresa.service";
         <div>
             <p-panel header="{{labelForm}} Empresa">
                 <form autocomplete="off" [formGroup]="formGroup" (ngSubmit)="onSubmit($event)">
-                    <div class="formgrid grid">
-                        <div class="field col-12 md:col-6">
+                    <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-2">
+                        <div class="md:col-span-1">
                             <app-react-message-validation label="Nome Fantasia">
                                 <input pInputText type="text" formControlName="nomeFantasia" class="full">
                             </app-react-message-validation>
                         </div>
-                        <div class="field col-12 md:col-6">
+                        <div class=" md:col-span-1">
                             <app-react-message-validation label="Nome Fantasia">
                                 <input pInputText type="email" class="full" formControlName="email"/>
                             </app-react-message-validation>
                         </div>
-                        <div class="field col-12 md:col-6">
+                        <div class=" md:col-span-1">
                             <app-react-message-validation label="Razão Social">
-                                <input pInputText type="text" formControlName="razaoSocial"/>
+                                <input pInputText type="text" formControlName="razaoSocial" class="w-full"/>
                             </app-react-message-validation>
                         </div>
-                        <div class="field col-12 md:col-6">
+                        <div class="md:col-span-1">
                             <app-react-message-validation  label="Telefone">
-                                <p-inputMask mask="(99)99999-9999"   formControlName="telefone" />
+                                <p-inputMask mask="(99)99999-9999"   formControlName="telefone" class="grid"/>
                             </app-react-message-validation>
                         </div>
-                        <div class="field col-12 md:col-6">
+                        <div class="md:col-span-1 ">
                             <app-react-message-validation label="Inscrisão Estadual">
-                                <input pInputText type="text" formControlName="inscricaoEstadual"/>
+                                <input pInputText type="text" formControlName="inscricaoEstadual" class="w-full"/>
                             </app-react-message-validation>
                         </div>                        
                     </div>
-                    <div class="formgrid grid" formGroupName="endereco">
-                        <div class="field col-12 md:col-6">
+                    <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-2 pt-4" formGroupName="endereco">
+                        <div class="md:col-span-1">
                             <app-react-message-validation label="Cep">
-                                <input pInputText type="text" formControlName="cep"/>
+                                <input pInputText type="text" formControlName="cep" class="w-full"/>
                             </app-react-message-validation>
                         </div>
-                        <div class="field col-12 md:col-6">
+                        <div class="md:col-span-1">
                             <label>Estado</label>
                             <p-dropdown [options]="listEstados" formControlName="estado" optionLabel="nome"
                                         (onChange)="changeEstado($event.value)"/>
                         </div>
-                        <div class="field col-12 md:col-6">
+                        <div class="md:col-span-1">
                             <app-react-message-validation label="Cidade">
                                 <p-dropdown [options]="listCidades" formControlName="cidade" optionLabel="nome"
                                             [filter]="true"
                                             filterBy="nome" placeholder=""/>
                             </app-react-message-validation>
                         </div>
-                        <div class="field col-12 md:col-6">
+                        <div class="md:col-span-1">
                             <app-react-message-validation label="Bairro">
-                                <input pInputText type="text" formControlName="bairro"/>
+                                <input pInputText type="text" formControlName="bairro" class="w-full"/>
                             </app-react-message-validation>
                         </div>
-                        <div class="field col-12 md:col-6">
+                        <div class="md:col-span-1">
                             <app-react-message-validation label="Logradouro">
-                                <input pInputText type="text" formControlName="logradouro"/>
+                                <input pInputText type="text" formControlName="logradouro" class="w-full"/>
                             </app-react-message-validation>
                         </div>
-                        <div class="field col-12 md:col-6">
+                        <div class="md:col-span-1">
                             <app-react-message-validation label="Numero">
-                                <input pInputText type="text" formControlName="numero"/>
+                                <input pInputText type="text" formControlName="numero" class="w-full"/>
                             </app-react-message-validation>
                         </div>
-                        <div class="field col-12 md:col-6">
+                        <div class="md:col-span-1">
                             <app-react-message-validation label="Complemento">
-                                <input pInputText type="text" formControlName="complemento"/>
+                                <input pInputText type="text" formControlName="complemento" class="w-full"/>
                             </app-react-message-validation>
                         </div>
                     </div>
-                    <div class="grid mt-2 ">
-                        <div class="col-fixed">
+                    <div class="flex pt-10">
+                        <div class="pr-5">
                             <p-button [raised]="true" type="submit" [disabled]="!formGroup.valid">
                                 <i class="pi pi-check mr-2"></i>
                                 <span>Enviar</span>
                             </p-button>
                         </div>
-                        <div class="col-fixed">
+                        <div class="">
                             <p-button severity="secondary" [raised]="true" (onClick)="onCancelarForm($event)">
                                 <i class="pi pi-times mr-2"></i>
                                 <span>Cancelar</span>

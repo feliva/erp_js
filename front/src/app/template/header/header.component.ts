@@ -10,7 +10,7 @@ import { AvatarModule } from 'primeng/avatar';
         <div class="sdiv"></div>
         <span class="name-sys">Feliva</span>
       </div>
-      <div class="size-app-nav header w-full sombra  flex flex-row-reverse align-items-center pr-4">
+      <div class="size-app-nav header w-full sombra  flex flex-row-reverse items-center pr-12">
         <div >
           <p-avatar shape="circle" size="large"
                        image="https://www.cetroconcursos.org.br/wp-content/uploads/2023/08/fotos-tristes-para-perfil-do-whatsapp-feminino-.webp"

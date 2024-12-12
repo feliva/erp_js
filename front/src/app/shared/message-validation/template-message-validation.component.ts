@@ -6,7 +6,7 @@ import { NgIf, NgFor } from '@angular/common';
     selector: 'app-template-message-validation',
     template: `
     <ng-content></ng-content>
-    <div *ngIf="hasError()" style="color: red;width: initial;" class="flex flex-column pt-2">
+    <div *ngIf="hasError()" style="color: red;width: initial;" class="flex flex-col pt-2">
       <small class="pb-1" *ngFor="let err of message()" >{{err}}</small>
     </div>
   `,

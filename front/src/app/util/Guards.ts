@@ -9,7 +9,11 @@ export class Guards {
   static CAN_ACTIVATE_CHILD_BREADCRUMB: CanActivateChildFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot,) => {
     let item: BreadCrumbMenuItem = route.data['breadMenuItem'];
     item.url = state.url;
-    return inject(BreadcrumbService).addItem(item);
+    const service = inject(BreadcrumbService);
+    if(route.data['resetBreadCrumb']){
+      service.reset()
+    }
+    return service.addItem(item);
   };
 
   static CAN_ACTIVATE_CHILD_PERMISSAO: CanActivateChildFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot,) => {

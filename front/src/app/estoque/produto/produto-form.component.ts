@@ -34,28 +34,28 @@ import {StatusService} from "../../service/status.service";
     <div>
       <p-panel header="{{labelForm}} Produto">
         <form autocomplete="off" [formGroup]="formGroup" (ngSubmit)="onSubmit($event)">
-          <div class="formgrid grid">
-            <div class="field col-12 md:col-6">
+          <div class="formgrid grid grid-cols-12 gap-4 grid-cols-12 gap-6">
+            <div class="field col-span-12 md:col-span-6">
               <app-react-message-validation >
                 <label>Nome</label>
                 <input pInputText type="text" formControlName="nome" class="full">
               </app-react-message-validation>
             </div>
-            <div class="field col-12 md:col-6">
+            <div class="field col-span-12 md:col-span-6">
               <app-react-message-validation >
                 <label>Valor de Venda</label>
                 <p-inputNumber [minFractionDigits]="2" class="full" inputId="locale-brasil" mode="decimal" locale="pt-br"
                                formControlName="valorVenda"/>
               </app-react-message-validation>
             </div>
-            <div class="field col-12 md:col-6">
+            <div class="field col-span-12 md:col-span-6">
               <app-react-message-validation>
                 <label>Valor</label>
                 <p-inputNumber [minFractionDigits]="2" class="full" inputId="locale-brasil" mode="decimal" locale="pt-br"formControlName="valorCusto"/>
               </app-react-message-validation>
             </div>
 
-            <div class="field col-12 md:col-6">
+            <div class="field col-span-12 md:col-span-6">
               <app-react-message-validation >
                 <label>Codígo de barras</label>
                 <p-inputNumber class="full" inputId="locale-brasil" locale="pt-br"
@@ -63,7 +63,7 @@ import {StatusService} from "../../service/status.service";
               </app-react-message-validation>
             </div>
 
-            <div class="field col-12 md:col-12">
+            <div class="field col-span-12 md:col-span-12">
               <!-- //    "quill": "^2.0.2", aguarta o primeng 18 e atualizar o quill-->
               <app-react-message-validation>
                 <label>Descrição</label>
@@ -71,7 +71,7 @@ import {StatusService} from "../../service/status.service";
               </app-react-message-validation>
             </div>
 
-            <div class="field col-12 md:col-6">
+            <div class="field col-span-12 md:col-span-6">
               <app-react-message-validation>
                 <label>Unidade Venda</label>
                 <p-dropdown [options]="listaUnidades" optionLabel="descricao" formControlName="unidadeVenda">
@@ -79,7 +79,7 @@ import {StatusService} from "../../service/status.service";
               </app-react-message-validation>
             </div>
 
-            <div class="field col-12 md:col-6">
+            <div class="field col-span-12 md:col-span-6">
               <app-react-message-validation>
                 <label>Unidade Compra</label>
                 <p-dropdown [options]="listaUnidades" optionLabel="descricao" formControlName="unidadeCompra">
@@ -88,21 +88,21 @@ import {StatusService} from "../../service/status.service";
             </div>
 
 
-            <div class="field col-12 md:col-6">
+            <div class="field col-span-12 md:col-span-6">
               <app-react-message-validation >
                 <label>Categoria</label>
                 <p-dropdown [options]="listaCategorias" optionLabel="nome" formControlName="categoria" filter="true"/>
               </app-react-message-validation>
             </div>
 
-            <div class="field col-12 md:col-6">
+            <div class="field col-span-12 md:col-span-6">
               <app-react-message-validation>
                 <label>Marca</label>
                 <p-dropdown [options]="listaMarcas" optionLabel="nome" formControlName="marca" filter="true"/>
               </app-react-message-validation>
             </div>
 
-            <div class="field col-12 md:col-6">
+            <div class="field col-span-12 md:col-span-6">
               <app-react-message-validation>
                 <label>Status</label>
                 <p-dropdown [options]="listaStatus" optionLabel="descricao" formControlName="status">
@@ -112,7 +112,7 @@ import {StatusService} from "../../service/status.service";
 
           </div>
 
-          <div class="grid mt-2 ">
+          <div class="grid grid-cols-12 gap-4 grid-cols-12 gap-6 mt-2 ">
             <div class="col-fixed">
               <p-button [raised]="true" type="submit" [disabled]="!formGroup.valid">
                 <i class="pi pi-check mr-2"></i>

@@ -21,20 +21,20 @@ import { PanelModule } from 'primeng/panel';
     <div class="">
       <p-panel header="Editar Unidade" >
         <form  autocomplete="off" [formGroup]="formGroup" (ngSubmit)="onSubmit()" >
-          <div class="formgrid grid">
-            <div class="field col-12 md:col-6">
+          <div class="formgrid grid grid-cols-12 gap-4 grid-cols-12 gap-6">
+            <div class="field col-span-12 md:col-span-6">
               <app-react-message-validation >
                 <label>Sigla</label>
                 <input pInputText  type="text" formControlName="sigla" >
               </app-react-message-validation>
             </div>
-            <div class="field col-12 md:col-6">
+            <div class="field col-span-12 md:col-span-6">
               <app-react-message-validation>
                 <label>Descrição</label>
                 <input pInputText  type="text" formControlName="descricao" >
               </app-react-message-validation>
             </div>
-            <div class="field col-12 md:col-6">
+            <div class="field col-span-12 md:col-span-6">
               <app-react-message-validation>
                 <label>Status</label>
                 <p-dropdown [options]="statusList" optionLabel="descricao" formControlName="status">
@@ -43,7 +43,7 @@ import { PanelModule } from 'primeng/panel';
             </div>
           </div>
 
-          <div class="grid mt-2 ">
+          <div class="grid grid-cols-12 gap-4 grid-cols-12 gap-6 mt-2 ">
             <div class="col-fixed">
               <p-button [raised]="true" type="submit" [disabled]="!formGroup.valid" >
                 <i class="pi pi-check mr-2"></i>

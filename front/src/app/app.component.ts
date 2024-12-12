@@ -6,7 +6,6 @@ import { HeaderComponent } from './template/header/header.component';
 import { ToastModule } from 'primeng/toast';
 import {Router} from "@angular/router";
 import {InjectSetupWrapper} from "@angular/core/testing";
-import { PrimeNGConfig } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -34,7 +33,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent implements OnInit{
 
-  config: PrimeNGConfig = inject(PrimeNGConfig);
+  // config: PrimeNGConfig = inject(PrimeNGConfig);
   translateService: TranslateService = inject(TranslateService);
 
   constructor() {}
@@ -42,7 +41,7 @@ export class AppComponent implements OnInit{
   ngOnInit() {
     this.translateService.use('pt-br')
     this.translateService.get('pt-br').subscribe(res =>{
-      this.config.setTranslation(res)
+      // this.config.setTranslation(res)
     });
   }
 

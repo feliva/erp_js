@@ -38,7 +38,7 @@ import {TableLazyLoadEvent} from "primeng/table/table.interface";
       </div>
     </div>
 
-    <div class="flex justify-content-center flex-wrap gap-3 mb-4 ">
+    <div class="flex justify-center flex-wrap gap-6 mb-12 ">
       <div>
         <button type="button" class="p-link p-disabled " aria-label="Primeira Página">
           <i class="pi pi-angle-left"></i>

@@ -7,10 +7,10 @@ import { NgFor, NgClass, KeyValuePipe } from '@angular/common';
     template: `
   <div class="grow">
     <div *ngFor="let item of this.showMessageService.msgs | keyvalue" class="flex flex-row" [ngClass]="item.value.type" style="animation: fade 1s">
-      <div class="icone flex align-items-center justify-content-center"  pAnimateOnScroll enterClass="fadein" leaveClass="fadeout" >
+      <div class="icone flex items-center justify-center"  pAnimateOnScroll enterClass="animate-fadein" leaveClass="animate-fadeout" >
       <i [ngClass]="item.value.icon"></i>
       </div>
-      <div class="flex flex-column">
+      <div class="flex flex-col">
         <h3 class="title"><b>{{item.value.title}}</b></h3>
         <span class="msg">{{item.value.msg}}</span>
       </div>

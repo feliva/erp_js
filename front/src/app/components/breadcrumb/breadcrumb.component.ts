@@ -6,14 +6,14 @@ import { NgFor } from '@angular/common';
 @Component({
     selector: 'app-breadcrumb',
     template: `
-    <div class="ui-panelmenu">
+    <div class="breadcrumb-panel p-3">
       <div class="p-element max-w-full">
         <div class="p-breadcrumb p-component">
           <ul class="p-breadcrumb-list" >
-            <li class="p-element p-breadcrumb-home ng-star-inserted">
+            <li class="pr-1">
               <a class="pi pi-home" href="/" ></a>
             </li>
-            <li *ngFor="let item of this.getMenuItens()" class="p-element p-breadcrumb-home ng-star-inserted {{item.styleClass}}">
+            <li *ngFor="let item of this.getMenuItens()" class="pr-1 pl-1 {{item.styleClass}}">
               <a class="{{item.icon}}" href="{{item.url}}" (click)="this.navigate($event,item)">{{item.label}}</a>
             </li>
           </ul>
@@ -22,6 +22,11 @@ import { NgFor } from '@angular/common';
     </div>
   `,
     styles: [`
+      .breadcrumb-panel{
+        border-radius: 5px;
+        border: 1px solid #dfdfdf;
+        background: #ffffff;
+      }
     .p-breadcrumb .p-breadcrumb-list {
       margin: 0;
       padding: 0;

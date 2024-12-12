@@ -12,6 +12,11 @@ import {PreloadAllModules, provideRouter, withPreloading} from "@angular/router"
 import {APP_ROUTES} from "./app/app.routes";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {providePrimeNG} from "primeng/config";
+
+import Lara from '@primeng/themes/lara';
+import {ThemeApp} from "./app/ThemeApp";
+
 
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -35,6 +40,11 @@ bootstrapApplication(AppComponent, {
         provideAnimationsAsync(),
         provideHttpClient(withInterceptorsFromDi()),
         provideNoopAnimations(),
+        providePrimeNG({
+            theme: {
+                preset: ThemeApp,
+            }
+        }),
         provideRouter(APP_ROUTES,withPreloading(PreloadAllModules))
     ]
 })

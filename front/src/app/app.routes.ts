@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouteReuseStrategy, RouterModule, Routes} from '@angular/router';
-import {TesteRouteReuseStrategy} from "./util/TesteReuseStrategy";
+
 
 export const APP_ROUTES: Routes = [
   {path:'estoque/movimentacao',loadChildren: () => import('./estoque/movimentacao/movimentacao.routes').then(m => m.BUILDER_MENU_MOVIMENTACAO.getRoutes())},

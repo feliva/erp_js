@@ -27,7 +27,7 @@ import {NgIf, NgFor} from '@angular/common';
             <span></span>
         }        
         <ng-content></ng-content>
-        <div *ngIf="this.menssagens.length > 0" style="color: red;width: initial;" class="flex flex-column pt-2">
+        <div *ngIf="this.menssagens.length > 0" style="color: red;width: initial;" class="flex flex-col pt-2">
             <small class="pb-1" *ngFor="let err of menssagens">{{ err }}</small>
         </div>
     `,

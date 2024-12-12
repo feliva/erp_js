@@ -28,6 +28,7 @@ export class NavComponent implements OnInit{
       {
         label:'Estoque',
         expanded:true,
+          styleClass:'rounded-none',
         items:BUILDER_MENU_UNIDADE.getMenuItems()
           .concat(BUILDER_MENU_PRODUTO.getMenuItems())
           .concat(BUILDER_MENU_MOVIMENTACAO.getMenuItems())

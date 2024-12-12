@@ -1,78 +1,90 @@
 import {inject, Injectable} from '@angular/core';
-import {ActivatedRoute, ActivatedRouteSnapshot, CanActivateChildFn, CanActivateFn, Router, RouterStateSnapshot} from '@angular/router';
+import {
+    ActivatedRoute,
+    ActivatedRouteSnapshot,
+    CanActivateChildFn,
+    CanActivateFn,
+    Router,
+    RouterStateSnapshot
+} from '@angular/router';
 import {BreadCrumbMenuItem, BreadCrumbUtil} from "./BreadCrumbMenuItem.class";
 import {Location} from "@angular/common";
+import {Observable, of} from "rxjs";
+import {list} from "postcss";
 
 
-@Injectable({providedIn:'root'})
-export class BreadcrumbService{
+@Injectable({providedIn: 'root'})
+export class BreadcrumbService {
 
-  mm:BreadCrumbMenuItem[] = [];
+    mm: BreadCrumbMenuItem[] = [];
 
-  constructor(private router: Router,
-    private activatedRoute: ActivatedRoute) {
-  }
-
-  addItem(bread:BreadCrumbMenuItem):boolean{
-    if(bread.first){//se for os primeiros componente, reinicia dos bradcrumbs
-      this.mm = []
+    constructor(private router: Router) {
     }
 
-    if(this.getTop() === bread){
-      return true;
+    reset(){
+        this.mm = [];
     }
 
-    this.mm.push(BreadCrumbUtil.SEPARATOR);
-    this.mm.push(bread);
-    return true;
-  }
+    addItem(bread: BreadCrumbMenuItem): boolean {
+        if (bread.first) {//se for os primeiros componente, reinicia dos bradcrumbs
+            this.mm = []
+        }
 
-  public pop():BreadCrumbMenuItem|undefined{
-    let item = this.mm.pop();//item
-    this.mm.pop();//separador
-    return item;
-  }
+        if (this.getTop() === bread) {
+            return true;
+        }
 
-  public navigate(item:BreadCrumbMenuItem){
-    console.log(this.activatedRoute)
-    console.log('BreadcrumbService.navigate');
-    let sub:BreadCrumbMenuItem[] = [];
-    for (let element of this.mm) {
-      sub.push(element);
-      if(element.url == item.url){
-        break;
-      }
+        this.mm.push(BreadCrumbUtil.SEPARATOR);
+        this.mm.push(bread);
+
+        return true;
     }
-    this.mm = sub;
-    this.router.navigate([item.url], { relativeTo: this.activatedRoute });
-  }
 
-  back(){
-    let item = this.mm.pop();//item
-    this.mm.pop();//separador
-
-    let menu = this.getTop()
-    if(menu?.url) {
-      this.router.navigateByUrl(menu?.url);
-      return true;
-    }else{
-      return false;
+    public pop(): BreadCrumbMenuItem | undefined {
+        let item = this.mm.pop();//item
+        this.mm.pop();//separador
+        return item;
     }
-  }
 
-  toTop(){
-    let menu = this.getTop()
-    if(menu?.url) {
-      this.router.navigateByUrl(menu?.url);
+    public navigate(item: BreadCrumbMenuItem) {
+        let sub: BreadCrumbMenuItem[] = [];
+        for (let element of this.mm) {
+            sub.push(element);
+            if (element.url == item.url) {
+                break;
+            }
+        }
+        this.mm = sub;
+        if(item.url)
+            this.router.navigateByUrl(item.url);
     }
-  }
 
-  getTop() {
-    console.log(this.mm)
-    if (this.mm !=undefined && this.mm.length != 0) {
-      return this.mm[this.mm.length - 1];
-    }else{
-      return undefined;
+    back() {
+        let item = this.mm.pop();//item
+        this.mm.pop();//separador
+
+        let menu = this.getTop()
+        if (menu?.url) {
+            this.router.navigateByUrl(menu?.url);
+            return true;
+        } else {
+            return false;
+        }
     }
-  }
+
+    toTop() {
+        let menu = this.getTop()
+        if (menu?.url) {
+            this.router.navigateByUrl(menu?.url);
+        }
+    }
+
+    getTop() {
+        console.log(this.mm)
+        if (this.mm != undefined && this.mm.length != 0) {
+            return this.mm[this.mm.length - 1];
+        } else {
+            return undefined;
+        }
+    }
 }

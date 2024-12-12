@@ -55,6 +55,7 @@ export class BuilderRoute{
       first:false,
       routerLink: this.masterPath + path,//para os links staticos
       routerLinkActiveOptions:'teste'
+      ,styleClass:'rounded-none',
     }
     return this;
   }
@@ -69,6 +70,20 @@ export class BuilderRoute{
     }else{
       throw new Error('Crie primeiro a rota antes de adicionar dados');
     }
+    return this;
+  }
+
+  resetFlag(){
+    if(this.localRoute != undefined) {//so pra para o erro do typescript
+      if (this.localRoute?.data != undefined) {
+        Object.assign(this.localRoute.data, {resetBreadCrumb:true})
+      } else {
+        this.localRoute.data = {resetBreadCrumb:true};
+      }
+    }else{
+      throw new Error('Crie primeiro a rota antes de adicionar dados');
+    }
+
     return this;
   }
 

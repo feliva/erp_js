@@ -35,33 +35,30 @@ import {CrmEmpresaService} from "../services/crm-empresa.service";
             </a>
         </div>
 
-        <div>
-            <p-fieldset styleClass="m-0 mb-2 filter-fildset" [collapsed]="!expandFiltro">
+        <div class="pb-2">
+            <p-fieldset styleClass="filter-fildset" [collapsed]="!expandFiltro">
                 <ng-template pTemplate="header">
 
                     <a pRipple tabindex="0" role="button" (click)="toggle($event)" (keydown)="toggle($event)">
                         Filtros <i class="pi pi-filter"></i>
                     </a>
                 </ng-template>
-                <div>
+                <div class="pt-5">
                     @if (expandFiltro) {
                         <form [formGroup]="serviceL.getFiltrosForm()" (ngSubmit)="filtrarBusca()">
-                            <div class="formgrid grid">
-                                <div class="field col-12 md:col-12">
-                                    <div class="flex flex-wrap gap-3">
-                                        <div class="flex align-items-center">
-                                            <label class="ml-2">Nome</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="field col-12 md:col-6">
+                            <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-2">
+                                <div class="md:col-span-1">
+                                    <label>Nome</label>
                                     <input type="text" pInputText formControlName="nome" class="w-full"/>
                                 </div>
                             </div>
-                            <div>
-                                <p-button label="Filtrar" icon="pi pi-filter" class="pr-3" type="submit"></p-button>
-                                <p-button label="Limpar" [outlined]="true" icon="pi pi-filter-slash" class="pr-3"
-                                          (onClick)="limpaFiltros()"></p-button>
+                            <div class="flex pt-5">
+                                <div class="pr-3">
+                                    <p-button label="Filtrar" icon="pi pi-filter" class="pr-6" type="submit"></p-button>
+                                </div>
+                                <div class="">
+                                    <p-button label="Limpar" [outlined]="true" icon="pi pi-filter-slash" class="pr-6" (onClick)="limpaFiltros()"></p-button>
+                                </div>
                             </div>
                         </form>
                     }
