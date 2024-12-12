@@ -6,7 +6,7 @@ import { NgFor } from '@angular/common';
 @Component({
     selector: 'app-breadcrumb',
     template: `
-    <div class="breadcrumb-panel p-3">
+    <div class="breadcrumb-panel p-2">
       <div class="p-element max-w-full">
         <div class="p-breadcrumb p-component">
           <ul class="p-breadcrumb-list" >

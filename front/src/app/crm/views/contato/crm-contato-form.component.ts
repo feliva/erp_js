@@ -28,29 +28,28 @@ import {Cidade, Estado} from "../../../model/Cidade";
         <div>
             <p-panel header="{{labelForm}} Contato">
                 <form autocomplete="off" [formGroup]="formGroup" (ngSubmit)="onSubmit($event)">
-                    <div class="formgrid grid grid-cols-12 gap-4 grid-cols-12 gap-6">
-                        <div class="field col-span-12 md:col-span-6">
+                    <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-2">
+                        <div class="md:col-span-1">
                             <app-react-message-validation label="Nome">
-                                <input pInputText type="text" formControlName="nome" class="full">
+                                <input pInputText type="text" formControlName="nome" class="w-full">
                             </app-react-message-validation>
                         </div>
-                        <div class="field col-span-12 md:col-span-6">
+                        <div class="md:col-span-1">
                             <app-react-message-validation label="E-mail">
-                                <input pInputText type="email" class="full" formControlName="email"/>
+                                <input pInputText type="email" class="w-full" formControlName="email"/>
                             </app-react-message-validation>
                         </div>
-                        <div class="field col-span-12 md:col-span-6">
+                        <div class="md:col-span-1">
                             <app-react-message-validation label="Celular">
-                                <p-inputMask mask="(99) 9999-9999" formControlName="celular"
-                                             placeholder="(99) 9999-9999"/>
+                                <p-inputMask mask="(99) 9999-9999" formControlName="celular" placeholder="(99) 9999-9999" class="grid"/>
                             </app-react-message-validation>
                         </div>
-                        <div class="field col-span-12 md:col-span-6">
+                        <div class="md:col-span-1">
                             <label>Estado</label>
-                            <p-dropdown [options]="listEstados" formControlName="estado" optionLabel="nome"
+                            <p-dropdown [options]="listEstados" formControlName="estado" optionLabel="nome" class="w-full"
                                         (onChange)="changeEstado($event.value)"/>
                         </div>
-                        <div class="field col-span-12 md:col-span-6">
+                        <div class="md:col-span-1">
                             <app-react-message-validation label="Cidade">
                                 <p-dropdown [options]="listCidades" formControlName="cidade" optionLabel="nome"
                                             [filter]="true"
@@ -58,14 +57,14 @@ import {Cidade, Estado} from "../../../model/Cidade";
                             </app-react-message-validation>
                         </div>
                     </div>
-                    <div class="grid grid-cols-12 gap-4 grid-cols-12 gap-6 mt-2 ">
-                        <div class="col-fixed">
+                    <div class="flex pt-10">
+                        <div class="pr-5">
                             <p-button [raised]="true" type="submit" [disabled]="!formGroup.valid">
                                 <i class="pi pi-check mr-2"></i>
                                 <span>Enviar</span>
                             </p-button>
                         </div>
-                        <div class="col-fixed">
+                        <div class="">
                             <p-button severity="secondary" [raised]="true" (onClick)="onCancelarForm($event)">
                                 <i class="pi pi-times mr-2"></i>
                                 <span>Cancelar</span>
