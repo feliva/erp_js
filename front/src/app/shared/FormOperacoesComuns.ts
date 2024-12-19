@@ -1,5 +1,5 @@
 
-import {inject, OnInit} from "@angular/core";
+import {Component, inject, OnInit} from "@angular/core";
 import {AppMessageService} from "../service/app-message.service";
 import {FiltroServices} from "../service/FiltroServices";
 import {BreadcrumbService} from "../components/breadcrumb/breadcrumb.service";
@@ -7,6 +7,7 @@ import {Contato} from "../model/Contato";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Resposta} from "../model/Resposta";
+
 
 export abstract class FormOperacoesComuns<T>{
     protected appMessage: AppMessageService = inject(AppMessageService);
@@ -20,8 +21,23 @@ export abstract class FormOperacoesComuns<T>{
     protected formGroup!: FormGroup;
     protected formBuilder!: FormBuilder;
 
+    protected ehNovo:boolean = false;
+
     constructor() {
         this.inicializaFormGroup(true);
+    }
+
+    onInit(): void {
+        this.setEhNovo(!!this.activatedRoute?.snapshot.data['ehNovo'])
+
+        if(this.isNovo()){
+            this.inicializaCamposForm(true);
+        }else{
+            this.getService().findById(this.activatedRoute.snapshot.params['id']).subscribe((result) => {
+                this.entity = result;
+                this.inicializaCamposForm(false);
+            })
+        }
     }
 
     //faz as chamada ajax necessrias
@@ -35,21 +51,15 @@ export abstract class FormOperacoesComuns<T>{
 
 
     isNovo(){
-        return (!!this.activatedRoute?.snapshot.data['ehNovo']);
+        return this.ehNovo;
     }
 
-    /**
-     * Chamar este metodo no ngOnInit
-     */
-    onInit() {
-        if(this.isNovo()){
-            this.labelForm = 'Novo';
-            this.inicializaCamposForm(true);
+    setEhNovo(ehNovo:boolean){
+        this.ehNovo = ehNovo;
+        if(this.ehNovo){
+            this.labelForm = 'Novo'
         }else{
-            this.getService().findById(this.activatedRoute.snapshot.params['id']).subscribe((result) => {
-                this.entity = result;
-                this.inicializaCamposForm(false);
-            })
+            this.labelForm = 'Editar'
         }
     }
 

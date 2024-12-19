@@ -38,10 +38,10 @@ public class Empresa extends Model<Integer> {
     @Column(length = 100,name = "inscricao_estadual")
     private String inscricaoEstadual;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
     @JoinTable(name="empresa_contato", joinColumns={@JoinColumn(name="id_empresa")},
             inverseJoinColumns= {@JoinColumn(name="id_contato")})
-    private Set<Contato> setContatos;
+    private Set<Contato> listContatos;
 
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "id_endereco")

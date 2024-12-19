@@ -21,8 +21,9 @@ public class ContatoDAO extends DAO<Contato> implements ComunDAO<Contato> {
         try {
             String hql = """
                         select c from Contato c
-                         left join fetch c.cidade ci
-                         left join fetch ci.estado e
+                        left join fetch c.endereco e
+                         left join fetch e.cidade ci
+                         left join fetch ci.estado es
                          where c.idContato = :idContato
                         """;
 

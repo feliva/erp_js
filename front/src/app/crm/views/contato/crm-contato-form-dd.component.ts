@@ -1,6 +1,6 @@
 import {
     Component,
-    inject,
+    inject, Input,
     OnInit
 } from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
@@ -21,9 +21,11 @@ import {FiltroServices} from "../../../service/FiltroServices";
 import {forkJoin} from "rxjs";
 import {CidadeService} from "../../../service/cidade.service";
 import {Cidade, Estado} from "../../../model/Cidade";
+import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {FormDynamicDialogOperacoesComuns} from "../../../shared/FormDynamicDialogOperacoesComuns";
 
 @Component({
-    selector: 'crm-contato-form',
+    selector: 'crm-contato-form-dd',
     template: `
         <div>
             <p-panel header="{{labelForm}} Contato">
@@ -93,7 +95,7 @@ import {Cidade, Estado} from "../../../model/Cidade";
         InputMaskModule
     ],
 })
-export class CrmContatoFormComponent extends FormOperacoesComuns<Contato> implements OnInit {
+export class CrmContatoFormDdComponent extends FormDynamicDialogOperacoesComuns<Contato> implements OnInit {
 
     contatoService: CrmContatoService = inject(CrmContatoService);
     cidadeService: CidadeService = inject(CidadeService);
@@ -102,7 +104,9 @@ export class CrmContatoFormComponent extends FormOperacoesComuns<Contato> implem
     listCidades: Cidade[] = [];
     listEstados: Estado[] = [];
 
-    constructor(private location: Location) {
+
+
+    constructor() {
         super();
     }
 
@@ -124,6 +128,13 @@ export class CrmContatoFormComponent extends FormOperacoesComuns<Contato> implem
         return 'Contato salvo com sucesso.';
     }
 
+    teste(){
+        this.getService().findById(1).subscribe((result) => {
+            this.entity = result;
+            this.inicializaCamposForm(false);
+        })
+    }
+
     public inicializaCamposForm(ehNovo: boolean) {
         if (ehNovo) {
             forkJoin({
@@ -134,7 +145,7 @@ export class CrmContatoFormComponent extends FormOperacoesComuns<Contato> implem
         } else {
             forkJoin({
                 lEstado: this.cidadeService.listAllEstados(),
-                lCidade: this.cidadeService.listAllByEstado(this.entity.cidade?.estado.idEstado),
+                lCidade: this.cidadeService.listAllByEstado(this.entity.cidade?.estado?.idEstado),
             }).subscribe(({lEstado,lCidade}) => {
                 this.listEstados = lEstado;
                 this.listCidades = lCidade;

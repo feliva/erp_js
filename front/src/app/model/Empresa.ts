@@ -8,6 +8,6 @@ export class Empresa{
   razaoSocial?:string
   telefone?:string
   inscricaoEstadual?:string
-  setContatos?:Contato[];
+  listContatos?:Contato[];
   endereco?:Endereco;
 }

@@ -1,6 +1,6 @@
 import {
     Component,
-    inject,
+    inject, Input, OnDestroy,
     OnInit
 } from '@angular/core';
 import {
@@ -33,6 +33,10 @@ import {Empresa} from "../../../model/Empresa";
 import {CrmEmpresaService} from "../services/crm-empresa.service";
 import {TableModule} from "primeng/table";
 import {Dialog} from "primeng/dialog";
+import {RouterLink} from "@angular/router";
+import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {CrmContatoFormDdComponent} from "../contato/crm-contato-form-dd.component";
+import {Select} from "primeng/select";
 
 @Component({
     selector: 'crm-contato-form',
@@ -76,12 +80,12 @@ import {Dialog} from "primeng/dialog";
                         </div>
                         <div class="md:col-span-1">
                             <label>Estado</label>
-                            <p-dropdown [options]="listEstados" formControlName="estado" optionLabel="nome"
+                            <p-select [options]="listEstados" formControlName="estado" optionLabel="nome"
                                         (onChange)="changeEstado($event.value)"/>
                         </div>
                         <div class="md:col-span-1">
                             <app-react-message-validation label="Cidade">
-                                <p-dropdown [options]="listCidades" formControlName="cidade" optionLabel="nome"
+                                <p-select [options]="listCidades" formControlName="cidade" optionLabel="nome"
                                             [filter]="true"
                                             filterBy="nome" placeholder=""/>
                             </app-react-message-validation>
@@ -107,7 +111,7 @@ import {Dialog} from "primeng/dialog";
                             </app-react-message-validation>
                         </div>
                     </div>
-                    <p-table [value]="this.entity.setContatos || []">
+                    <p-table [value]="this.entity.listContatos ?? []">
                         <ng-template pTemplate="caption">
                             <div class="flex items-center justify-between">
                                 <span class="text-xl font-bold">Contatos</span>
@@ -119,14 +123,22 @@ import {Dialog} from "primeng/dialog";
                                 <th>Name</th>
                                 <th>E-mail</th>
                                 <th>Celular</th>
+                                <th></th>
                             </tr>
                         </ng-template>
-                        <ng-template #body let-contato>
+                        <ng-template #body let-contato let-index>
                             <tr>
                                 <td>{{ contato.idContato }}</td>
                                 <td>{{ contato.nome }}</td>
                                 <td>{{ contato.email }}</td>
                                 <td>{{ contato.celular }}</td>
+                                <td>
+                                    <a class="p-ripple p-element p-button p-component p-button-icon-only p-button-rounded p-button-text" aria-label="Novo"
+                                       (click)="editarConato(contato,$event)">
+                                        <i class="pi pi-pencil"></i>
+                                    </a>
+                                    <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (onClick)="removerContato(contato,$event)"></p-button>
+                                </td>
                             </tr>
                         </ng-template>
                     </p-table>
@@ -148,6 +160,9 @@ import {Dialog} from "primeng/dialog";
                     </div>
                 </form>
             </p-panel>
+            <p-dialog>
+                
+            </p-dialog>
         </div>
     `,
     styles: [`
@@ -167,19 +182,25 @@ import {Dialog} from "primeng/dialog";
         AutoCompleteModule,
         InputMaskModule,
         TableModule,
-        Dialog
+        Dialog,
+        RouterLink,
+        Select
     ],
+    providers:[DialogService,DynamicDialogConfig]
 })
-export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> implements OnInit {
+export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> implements OnInit,OnDestroy {
 
     serviceF: CrmEmpresaService = inject(CrmEmpresaService);
     cidadeService: CidadeService = inject(CidadeService);
+
+    dialogService: DialogService = inject(DialogService);
+    dynamicDialogConfig:DynamicDialogConfig = inject(DynamicDialogConfig);
 
     estado: Estado | undefined;
     listCidades: Cidade[] = [];
     listEstados: Estado[] = [];
 
-    listContatos:Contato[] = [];
+    ref: DynamicDialogRef | undefined;
 
     constructor(private location: Location) {
         super();
@@ -190,6 +211,34 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
         this.cidadeService.listAllByEstado(estado?.idEstado).subscribe(data => {
             this.listCidades = data;
         });
+    }
+
+    removerContato(contato:Contato,$event:any) {
+        let lista = this.entity.listContatos ?? [];
+        this.entity.listContatos = lista.filter((cont:Contato)=>{
+            return contato.idContato !== cont.idContato;
+        })
+    }
+
+    editarConato(contato:Contato,event:any){
+        this.ref = this.dialogService.open(CrmContatoFormDdComponent, {
+            data:{
+                idEntity:contato.idContato
+            },
+            header: 'Contato',
+            width: '70%',
+            contentStyle: { overflow: 'auto' },
+            baseZIndex: 10000,
+            maximizable: true,
+            modal:true
+        });
+
+        this.ref.onClose.subscribe((data: any) => {
+            console.log("this.ref.onClose.")
+            console.log(data)
+        });
+
+
     }
 
     public override getService(): FiltroServices<Empresa> {
@@ -236,7 +285,7 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
     }
 
     ngOnInit() {
-        this.onInit();
+        super.onInit();
     }
 
     public inicializaFormGroup(clean:boolean): void{
@@ -263,5 +312,11 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
             })
         })
         this.formGroup.patchValue(this.entity);
+    }
+
+    ngOnDestroy(){
+        if(this.ref){
+            this.ref.close()
+        }
     }
 }

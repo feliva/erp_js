@@ -9,8 +9,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "contato")
-public class Contato extends Model<Integer> {
+@Table(name = "pessoa")
+public class Pessoa extends Model<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

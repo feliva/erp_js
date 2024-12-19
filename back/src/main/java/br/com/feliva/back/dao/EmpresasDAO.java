@@ -24,7 +24,7 @@ public class EmpresasDAO extends DAO<Empresa> implements ComunDAO<Empresa> {
                         select e from Empresa e
                         left join fetch e.endereco en
                          left join fetch en.cidade ci
-                         left join fetch e.setContatos cont
+                         left join fetch e.listContatos cont
                          where e.idEmpresa =:idEmpresa
                         """;
 

@@ -189,7 +189,7 @@ export class BuilderRoute{
       Object.assign(this.localRoute.data , {'breadMenuItem': this.localItem});
     }
 
-    console.log(this.localRoute.data)
+    // console.log(this.localRoute.data)
 
     this.rootRoute.push(this.localRoute);
 

@@ -17,6 +17,9 @@ export class CidadeService extends Services<Cidade> {
     }
 
     public listAllByEstado(idEstado:number|undefined): Observable<Cidade[]> {
+        if(!idEstado){
+            return of([]);
+        }
         return this.http.get<Cidade[]>(this.serverUrl + this.getPath() + "/listAllByEstado/"+idEstado);
     }
 
