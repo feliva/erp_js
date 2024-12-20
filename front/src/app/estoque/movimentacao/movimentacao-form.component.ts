@@ -37,8 +37,8 @@ import {FormUtil} from "../../util/FormUtil";
 import {MovimentacaoControlService} from "./movimentacao-control.service";
 
 @Component({
-  selector: 'movimentacao-form',
-  template: `
+    selector: 'movimentacao-form',
+    template: `
     <div>
       <p-panel header="{{labelForm}} Movimentação">
         <form autocomplete="off" [formGroup]="formGroupMovimentacao" (ngSubmit)="onSubmit($event)">
@@ -174,26 +174,25 @@ import {MovimentacaoControlService} from "./movimentacao-control.service";
       </p-dialog>
     </div>
   `,
-  styles: [`
+    styles: [`
 
   `],
-  standalone: true,
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    PanelModule,
-    InputTextModule,
-    ReactMessageValidationComponent,
-    InputNumberModule,
-    DropdownModule,
-    ButtonModule,
-    EditorModule,
-    AutoCompleteModule,
-    CalendarModule,
-    TableModule,
-    DialogModule,
-    NgIf
-  ],
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        PanelModule,
+        InputTextModule,
+        ReactMessageValidationComponent,
+        InputNumberModule,
+        DropdownModule,
+        ButtonModule,
+        EditorModule,
+        AutoCompleteModule,
+        CalendarModule,
+        TableModule,
+        DialogModule,
+        NgIf
+    ]
 })
 export class MovimentacaoFormComponent implements OnInit {
 

@@ -18,7 +18,6 @@ import {BUILDER_MENU_EMPRESAS} from "../../crm/views/empresas/empresas.router";
     styles: [`
       
     `],
-    standalone: true,
     imports: [PanelMenuModule]
 })
 export class NavComponent implements OnInit{

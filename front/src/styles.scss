@@ -1,3 +1,6 @@
+@use "app/template/template";
+@use "primeicons/primeicons.css";
+
 @layer tailwind-base, primeng, tailwind-utilities;
 
 @layer tailwind-base {
@@ -9,9 +12,6 @@
   @tailwind utilities;
 }
 
-
-@import "app/template/template";
-@import "primeicons/primeicons.css";
 
 /* You can add global styles to this file, and also import other style files */
 .p-element input{

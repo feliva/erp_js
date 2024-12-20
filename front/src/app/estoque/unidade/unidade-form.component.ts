@@ -64,7 +64,6 @@ import { PanelModule } from 'primeng/panel';
     styles: [`
 
   `],
-    standalone: true,
     imports: [PanelModule, FormsModule, ReactiveFormsModule, InputTextModule, ReactMessageValidationComponent, DropdownModule, ButtonModule]
 })
 export class UnidadeFormComponent implements OnInit{

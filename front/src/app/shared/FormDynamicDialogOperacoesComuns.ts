@@ -10,7 +10,10 @@ import {Resposta} from "../model/Resposta";
 import {FormOperacoesComuns} from "./FormOperacoesComuns";
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 
-@Component({template:''})
+@Component({
+    template: '',
+    standalone: false
+})
 export abstract class FormDynamicDialogOperacoesComuns<T> extends FormOperacoesComuns<T>{
 
     editando:boolean = false;
@@ -48,6 +51,10 @@ export abstract class FormDynamicDialogOperacoesComuns<T> extends FormOperacoesC
             super.onInit();
         }
 
+    }
+
+    select(){
+        this.ref.close(this.entity);
     }
 
     override onSubmit(event: SubmitEvent) {

@@ -29,8 +29,8 @@ import {Status} from "../../model/Status";
 import {StatusService} from "../../service/status.service";
 
 @Component({
-  selector: 'produto-busca',
-  template: `
+    selector: 'produto-busca',
+    template: `
     <div>
       <p-panel header="{{labelForm}} Produto">
         <form autocomplete="off" [formGroup]="formGroup" (ngSubmit)="onSubmit($event)">
@@ -130,22 +130,21 @@ import {StatusService} from "../../service/status.service";
       </p-panel>
     </div>
   `,
-  styles: [`
+    styles: [`
 
   `],
-  standalone: true,
-  imports: [
-    PanelModule,
-    FormsModule,
-    ReactiveFormsModule,
-    InputTextModule,
-    ReactMessageValidationComponent,
-    InputNumberModule,
-    DropdownModule,
-    ButtonModule,
-    EditorModule,
-    AutoCompleteModule
-  ],
+    imports: [
+        PanelModule,
+        FormsModule,
+        ReactiveFormsModule,
+        InputTextModule,
+        ReactMessageValidationComponent,
+        InputNumberModule,
+        DropdownModule,
+        ButtonModule,
+        EditorModule,
+        AutoCompleteModule
+    ]
 })
 export class ProdutoFormComponent implements OnInit {
 

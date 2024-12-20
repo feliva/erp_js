@@ -45,8 +45,7 @@ import { PanelModule } from 'primeng/panel';
     styles: [`
 
   `],
-    standalone: true,
-    imports: [PanelModule, NgIf, TableModule, SharedModule, ButtonModule, AsyncPipe],
+    imports: [PanelModule, NgIf, TableModule, SharedModule, ButtonModule, AsyncPipe]
 })
 export class UnidadeListComponent implements OnInit{
 

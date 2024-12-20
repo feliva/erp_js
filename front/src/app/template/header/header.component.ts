@@ -54,7 +54,6 @@ import { AvatarModule } from 'primeng/avatar';
       box-shadow: 0px 2px 5px 1px rgba(51, 51, 51, 0.36) ;
     }
   `],
-    standalone: true,
     imports: [AvatarModule, BadgeModule]
 })
 export class HeaderComponent {

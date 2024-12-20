@@ -57,7 +57,8 @@ import {CrmEmpresaService} from "../services/crm-empresa.service";
                                     <p-button label="Filtrar" icon="pi pi-filter" class="pr-6" type="submit"></p-button>
                                 </div>
                                 <div class="">
-                                    <p-button label="Limpar" [outlined]="true" icon="pi pi-filter-slash" class="pr-6" (onClick)="limpaFiltros()"></p-button>
+                                    <p-button label="Limpar" [outlined]="true" icon="pi pi-filter-slash" class="pr-6"
+                                              (onClick)="limpaFiltros()"></p-button>
                                 </div>
                             </div>
                         </form>
@@ -112,7 +113,7 @@ import {CrmEmpresaService} from "../services/crm-empresa.service";
 
     `],
     standalone: true,
-    imports: [PanelModule, NgIf, TableModule, SharedModule, ButtonModule, AsyncPipe, InputTextModule, PaginatorModule, FieldsetModule, ReactiveFormsModule, RouterLink, DataRowOutlet, ConfirmDialogModule],
+    imports: [PanelModule, TableModule, SharedModule, ButtonModule, InputTextModule, PaginatorModule, FieldsetModule, ReactiveFormsModule, RouterLink, ConfirmDialogModule]
 })
 export class CrmEmpresasListComponent extends ListarOperacoesComuns<Empresa> implements OnInit {
 

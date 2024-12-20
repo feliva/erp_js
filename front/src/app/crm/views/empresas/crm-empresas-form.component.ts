@@ -62,15 +62,15 @@ import {Select} from "primeng/select";
                             </app-react-message-validation>
                         </div>
                         <div class="md:col-span-1">
-                            <app-react-message-validation  label="Telefone">
-                                <p-inputMask mask="(99)99999-9999"   formControlName="telefone" class="grid w-full"/>
+                            <app-react-message-validation label="Telefone">
+                                <p-inputMask mask="(99)99999-9999" formControlName="telefone" class="grid w-full"/>
                             </app-react-message-validation>
                         </div>
                         <div class="md:col-span-1 ">
                             <app-react-message-validation label="Inscrisão Estadual">
                                 <input pInputText type="text" formControlName="inscricaoEstadual" class="w-full"/>
                             </app-react-message-validation>
-                        </div>                        
+                        </div>
                     </div>
                     <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-4 pt-4" formGroupName="endereco">
                         <div class="md:col-span-1">
@@ -81,13 +81,13 @@ import {Select} from "primeng/select";
                         <div class="md:col-span-1">
                             <label>Estado</label>
                             <p-select [options]="listEstados" formControlName="estado" optionLabel="nome"
-                                        (onChange)="changeEstado($event.value)"/>
+                                      (onChange)="changeEstado($event.value)"/>
                         </div>
                         <div class="md:col-span-1">
                             <app-react-message-validation label="Cidade">
                                 <p-select [options]="listCidades" formControlName="cidade" optionLabel="nome"
-                                            [filter]="true"
-                                            filterBy="nome" placeholder=""/>
+                                          [filter]="true"
+                                          filterBy="nome" placeholder=""/>
                             </app-react-message-validation>
                         </div>
                         <div class="md:col-span-1">
@@ -133,17 +133,19 @@ import {Select} from "primeng/select";
                                 <td>{{ contato.email }}</td>
                                 <td>{{ contato.celular }}</td>
                                 <td>
-                                    <a class="p-ripple p-element p-button p-component p-button-icon-only p-button-rounded p-button-text" aria-label="Novo"
+                                    <a class="p-ripple p-element p-button p-component p-button-icon-only p-button-rounded p-button-text"
+                                       aria-label="Novo"
                                        (click)="editarConato(contato,$event)">
                                         <i class="pi pi-pencil"></i>
                                     </a>
-                                    <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (onClick)="removerContato(contato,$event)"></p-button>
+                                    <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
+                                              (onClick)="removerContato(contato,$event)"></p-button>
                                 </td>
                             </tr>
                         </ng-template>
                     </p-table>
-                    
-                    
+
+
                     <div class="flex pt-10">
                         <div class="pr-5">
                             <p-button [raised]="true" type="submit" [disabled]="!formGroup.valid">
@@ -161,14 +163,13 @@ import {Select} from "primeng/select";
                 </form>
             </p-panel>
             <p-dialog>
-                
+
             </p-dialog>
         </div>
     `,
     styles: [`
 
     `],
-    standalone: true,
     imports: [
         PanelModule,
         FormsModule,
@@ -183,10 +184,10 @@ import {Select} from "primeng/select";
         InputMaskModule,
         TableModule,
         Dialog,
-        RouterLink,
         Select
     ],
-    providers:[DialogService,DynamicDialogConfig]
+    standalone: true,
+    providers: [DialogService, DynamicDialogConfig]
 })
 export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> implements OnInit,OnDestroy {
 

@@ -19,25 +19,25 @@ import {Router} from "@angular/router";
 import {Produto} from "../../model/Produto";
 
 @Component({
-    selector: 'movimentacao-busca',
-    template: `
-    <div >
-      <p-panel header="Busca movimentação" >
+  selector: 'movimentacao-busca',
+  template: `
+    <div>
+      <p-panel header="Busca movimentação">
 
         <div class="formgrid grid grid-cols-12 gap-4 grid-cols-12 gap-6">
           <div class="field col-span-12 md:col-span-6">
             <div class="flex flex-wrap gap-6">
               <label class="ml-2">Data</label>
-               <p-calendar [(ngModel)]="this.data"  class="w-full" placeholder="Data"></p-calendar>
+              <p-calendar [(ngModel)]="this.data" class="w-full" placeholder="Data"></p-calendar>
             </div>
           </div>
           <div class="field col-span-12 md:col-span-12">
             <div class="flex flex-wrap gap-6">
               <label class="ml-2">Tipo da movimentação</label>
               <div class="w-full">
-                @for (item of this.listaTipoMovimentacao;track item){
-                    <p-radioButton [inputId]="item.nome" [value]="item" [(ngModel)]="this.tipoMovimentacao"  class="pr-6" />
-                    <label>{{item.descricao}}</label>
+                @for (item of this.listaTipoMovimentacao; track item) {
+                  <p-radioButton [inputId]="item.nome" [value]="item" [(ngModel)]="this.tipoMovimentacao" class="pr-6"/>
+                  <label>{{ item.descricao }}</label>
                 }
               </div>
             </div>
@@ -45,15 +45,15 @@ import {Produto} from "../../model/Produto";
         </div>
         <div>
           <p-button label="Buscar" (click)="this.buscar()" icon="pi pi-search" class="pr-6"></p-button>
-          <p-button label="Nova" (click)="this.movimentacaoCS.novo()"  icon="pi pi-plus"></p-button>
+          <p-button label="Nova" (click)="this.movimentacaoCS.novo()" icon="pi pi-plus"></p-button>
         </div>
       </p-panel>
     </div>
   `,
-    styles: [`
+  styles: [`
 
   `],
-    standalone: true,
+  standalone: true,
   imports: [
     PanelModule,
     FormsModule,
@@ -62,7 +62,7 @@ import {Produto} from "../../model/Produto";
     CalendarModule,
     RadioButtonModule,
     DropdownModule
-  ],
+  ]
 })
 export class MovimentacaoBuscaComponent implements AfterViewInit,OnInit {
 

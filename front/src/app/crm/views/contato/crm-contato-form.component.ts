@@ -78,7 +78,6 @@ import {Cidade, Estado} from "../../../model/Cidade";
     styles: [`
 
     `],
-    standalone: true,
     imports: [
         PanelModule,
         FormsModule,
@@ -91,7 +90,7 @@ import {Cidade, Estado} from "../../../model/Cidade";
         EditorModule,
         AutoCompleteModule,
         InputMaskModule
-    ],
+    ]
 })
 export class CrmContatoFormComponent extends FormOperacoesComuns<Contato> implements OnInit {
 

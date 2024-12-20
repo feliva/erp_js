@@ -32,7 +32,6 @@ import { PanelModule } from 'primeng/panel';
     styles: [`
 
   `],
-    standalone: true,
     imports: [PanelModule, FormsModule, InputTextModule, ButtonModule]
 })
 export class UnidadeBuscaComponent implements OnDestroy{

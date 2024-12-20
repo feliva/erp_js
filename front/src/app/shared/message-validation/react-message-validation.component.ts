@@ -21,11 +21,11 @@ import {NgIf, NgFor} from '@angular/common';
     selector: 'app-react-message-validation',
     template: `
         <label>{{ this.label }}</label>
-        @if(this.formControl?.validator) {
+        @if (this.formControl?.validator) {
             <span style="color:red">*</span>
-        }@else {
+        } @else {
             <span></span>
-        }        
+        }
         <ng-content></ng-content>
         <div *ngIf="this.menssagens.length > 0" style="color: red;width: initial;" class="flex flex-col pt-2">
             <small class="pb-1" *ngFor="let err of menssagens">{{ err }}</small>
@@ -34,8 +34,8 @@ import {NgIf, NgFor} from '@angular/common';
     styles: [`
 
     `],
-    standalone: true,
     imports: [NgIf, NgFor],
+    standalone: true,
     viewProviders: [{provide: ControlContainer, useExisting: FormGroupDirective,}]
 })
 export class ReactMessageValidationComponent implements AfterContentChecked, OnInit {

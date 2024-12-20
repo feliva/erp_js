@@ -28,14 +28,14 @@ import {map} from "rxjs";
 import {DiretivasModule, Template} from "../../shared/diretivas";
 
 @Component({
-    selector: 'produto-busca',
-    template: `
-    <div >
+  selector: 'produto-busca',
+  template: `
+    <div>
 
-      <p-panel header="Lista de Produto" id="pnlListar" >
+      <p-panel header="Lista de Produto" id="pnlListar">
         <div *ngIf="false">
-          <p-table  [value]="this.listMovimentacoes"  [tableStyle]="{'min-width': '60rem'}"
-            [lazy]="true" dataKey="idProduto" sortMode="multiple"
+          <p-table [value]="this.listMovimentacoes" [tableStyle]="{'min-width': '60rem'}"
+                   [lazy]="true" dataKey="idProduto" sortMode="multiple"
                    [paginator]="true"
                    [rows]="rowsPage"
                    [totalRecords]="totalRegistros"
@@ -44,52 +44,52 @@ import {DiretivasModule, Template} from "../../shared/diretivas";
                    (firstChange)="firstChange($event)"
                    [rowsPerPageOptions]="[20,40,80,160]"
                    [globalFilterFields]="['produto.nome','dtMovimentacao']"
-                   >
+          >
             <ng-template pTemplate="header">
               <tr>
                 <th>Id</th>
-                <th pSortableColumn="produto.nome" >
+                <th pSortableColumn="produto.nome">
                   <div class="flex justify-between items-center">
                     Nome
-                    <p-sortIcon field="produto.nome" />
-                    <p-columnFilter type="text" field="produto.nome" display="menu" class="ml-auto" />
+                    <p-sortIcon field="produto.nome"/>
+                    <p-columnFilter type="text" field="produto.nome" display="menu" class="ml-auto"/>
                   </div>
                 </th>
-                <th pSortableColumn="dtMovimentacao" >
+                <th pSortableColumn="dtMovimentacao">
                   <div class="flex justify-between items-center">
                     Data
-                    <p-sortIcon field="dtMovimentacao" />
-                    <p-columnFilter type="date" field="dtMovimentacao" display="menu" class="ml-auto" />
+                    <p-sortIcon field="dtMovimentacao"/>
+                    <p-columnFilter type="date" field="dtMovimentacao" display="menu" class="ml-auto"/>
                   </div>
                 </th>
                 <th>V. Venda
-                  <p-columnFilter type="text" field="tipoMovimentacao" display="menu" class="ml-auto" />
+                  <p-columnFilter type="text" field="tipoMovimentacao" display="menu" class="ml-auto"/>
                 </th>
                 <th></th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item>
               <tr>
-                <th>{{item.idMovimentacao}}</th>
-                <th>{{item.produto.nome}}</th>
-                <th>{{item.dtMovimentacao | date:'dd/MM/yyyy'}}</th>
-                <th>{{item.tipoMovimentacao.descricao}}</th>
+                <th>{{ item.idMovimentacao }}</th>
+                <th>{{ item.produto.nome }}</th>
+                <th>{{ item.dtMovimentacao | date:'dd/MM/yyyy' }}</th>
+                <th>{{ item.tipoMovimentacao.descricao }}</th>
                 <th>
                   <p-button icon="pi pi-eye" [rounded]="true" [text]="true"
-                    (onClick)="this.mmovimetacaoCS.editar(item,$event)" ></p-button>
+                            (onClick)="this.mmovimetacaoCS.editar(item,$event)"></p-button>
                 </th>
               </tr>
             </ng-template>
           </p-table>
         </div>
       </p-panel>
-      <p-confirmDialog />
-    `,
-    styles: [`
+      <p-confirmDialog/>
+  `,
+  styles: [`
 
   `],
-    standalone: true,
-  imports: [CommonModule,PanelModule, TableModule, SharedModule, ButtonModule, ConfirmDialogModule, MovimentacaoBuscaComponent, DatePipe, DiretivasModule]
+  standalone: true,
+  imports: [CommonModule, PanelModule, TableModule, SharedModule, ButtonModule, ConfirmDialogModule, DatePipe, DiretivasModule]
 })
 export class MovimentacaoListarComponent implements OnInit,OperacoesExcluir<Movimentacao>{
 

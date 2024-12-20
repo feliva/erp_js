@@ -22,14 +22,13 @@ import { TranslateService } from '@ngx-translate/core';
   `,
     styles: [`
   `],
-    standalone: true,
     imports: [
         ToastModule,
         HeaderComponent,
         NavComponent,
         MainComponent,
         LoadingComponent,
-    ],
+    ]
 })
 export class AppComponent implements OnInit{
 

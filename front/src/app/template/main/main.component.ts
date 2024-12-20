@@ -18,7 +18,6 @@ import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.comp
       margin-bottom: 5px;
     }
   `],
-    standalone: true,
     imports: [BreadcrumbComponent, RouterOutlet]
 })
 export class MainComponent {

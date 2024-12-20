@@ -69,7 +69,6 @@ import { PanelModule } from 'primeng/panel';
     styles: [`
 
   `],
-    standalone: true,
     imports: [PanelModule, TableModule, SharedModule, ButtonModule, ConfirmDialogModule]
 })
 export class ProdutoListarComponent implements OnInit,OperacoesExcluir<Produto>{

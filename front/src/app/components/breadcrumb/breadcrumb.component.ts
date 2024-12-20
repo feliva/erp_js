@@ -38,7 +38,6 @@ import { NgFor } from '@angular/common';
 
 
   `],
-    standalone: true,
     imports: [NgFor]
 })
 export class BreadcrumbComponent {

@@ -1,25 +1,19 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {ConfirmationService, LazyLoadEvent, MessageService, SharedModule} from "primeng/api";
-import {Unidade} from "../../../model/Unidade";
 import { ButtonModule } from 'primeng/button';
 import {TableLazyLoadEvent, TableModule, TablePageEvent} from 'primeng/table';
 import { NgIf, AsyncPipe } from '@angular/common';
 import { PanelModule } from 'primeng/panel';
 import {CrmContatoService} from "../services/crm-contato.service";
-import {Observable} from "rxjs";
 import {Contato} from "../../../model/Contato";
 import {InputTextModule} from "primeng/inputtext";
 import {PaginatorModule} from "primeng/paginator";
 import {FieldsetModule} from "primeng/fieldset";
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {HttpParams} from "@angular/common/http";
 import {DataRowOutlet} from "@angular/cdk/table";
-import {Produto} from "../../../model/Produto";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
-import {AppMessageService} from "../../../service/app-message.service";
 import {ListarOperacoesComuns} from "../../../shared/ListarOperacoesComuns";
-import {Services} from "../../../service/services";
 import {FiltroServices} from "../../../service/FiltroServices";
 
 @Component({
@@ -110,10 +104,10 @@ import {FiltroServices} from "../../../service/FiltroServices";
         </p-panel>
     `,
     styles: [`
-      
-  `],
+
+    `],
     standalone: true,
-  imports: [PanelModule, NgIf, TableModule, SharedModule, ButtonModule, AsyncPipe, InputTextModule, PaginatorModule, FieldsetModule, ReactiveFormsModule, RouterLink, DataRowOutlet, ConfirmDialogModule],
+    imports: [PanelModule, TableModule, SharedModule, ButtonModule, InputTextModule, PaginatorModule, FieldsetModule, ReactiveFormsModule, RouterLink, ConfirmDialogModule]
 })
 export class CrmContatoListComponent extends ListarOperacoesComuns<Contato> implements OnInit{
 

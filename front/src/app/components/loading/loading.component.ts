@@ -5,7 +5,6 @@ import {delay, Observable, startWith, tap} from "rxjs";
 
 @Component({
     selector: 'app-loading',
-    standalone: true,
     imports: [CommonModule],
     template: `
         @if (this.loading) {
