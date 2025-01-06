@@ -9,7 +9,6 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "tipo_contato_empresa")
-@Deprecated
 public class TipoContatoEmpresa extends Model<Integer> {
 
     @Id

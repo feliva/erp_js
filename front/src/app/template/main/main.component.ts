@@ -6,18 +6,19 @@ import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.comp
 @Component({
     selector: 'app-main',
     template: `
-      <div class="pl-2 pt-2">
-        <app-breadcrumb ></app-breadcrumb>
-      </div>
-      <div class="pl-2 pt-2">
-        <router-outlet></router-outlet>
-      </div>
-  `,
+        <div class="pl-2 pt-2">
+            <app-breadcrumb></app-breadcrumb>
+        </div>
+        <div class="pl-2 pt-2">
+            <router-outlet></router-outlet>
+        </div>
+    `,
     styles: [`
-    .ssd > :not(marquee){
-      margin-bottom: 5px;
-    }
-  `],
+      .ssd > :not(marquee) {
+        margin-bottom: 5px;
+      }
+    `],
+    standalone: true,
     imports: [BreadcrumbComponent, RouterOutlet]
 })
 export class MainComponent {

@@ -10,7 +10,6 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "contato_empresa")
-@Deprecated
 public class ContatoEmpresa extends Model<Integer> {
 
     @Id
@@ -23,8 +22,8 @@ public class ContatoEmpresa extends Model<Integer> {
     private Empresa empresa;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_pessoa")
-    private Pessoa pessoa;
+    @JoinColumn(name = "id_contato")
+    private Contato contato;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_tipo_contato_empresa")

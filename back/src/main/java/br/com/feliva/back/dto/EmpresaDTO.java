@@ -1,33 +1,17 @@
 package br.com.feliva.back.dto;
 
 import br.com.feliva.back.models.Contato;
+import br.com.feliva.back.models.ContatoEmpresa;
 import br.com.feliva.back.models.Empresa;
 import br.com.feliva.back.models.Endereco;
-import br.com.feliva.sharedClass.db.Model;
 import br.com.feliva.sharedClass.db.ModelDTO;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
-
-//public record EmpresaDTO(Integer idEmpresa,
-//                         String nomeFantasia,
-//                         String email,
-//                         String razaoSocial,
-//                         String telefone,
-//                         String inscricaoEstadual,
-//                         Endereco endereco) {
-//}
-
-import br.com.feliva.sharedClass.db.Model;
-import jakarta.persistence.*;
-        import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -41,7 +25,7 @@ public class EmpresaDTO extends ModelDTO<Integer> {
     private String razaoSocial;
     private String telefone;//Comercial
     private String inscricaoEstadual;
-    private Set<Contato> setContatos;
+    List<ContatoEmpresaDTO> listContatosEmpresa = new ArrayList<>();
     private Endereco endereco;
 
     public EmpresaDTO(Empresa empresa) {
@@ -51,8 +35,21 @@ public class EmpresaDTO extends ModelDTO<Integer> {
         this.razaoSocial = empresa.getRazaoSocial();
         this.telefone = empresa.getTelefone();
         this.inscricaoEstadual = empresa.getInscricaoEstadual();
-//        this.setContatos = ;
         this.endereco = empresa.getEndereco();
+    }
+
+    public EmpresaDTO(Integer IdEmpresa) {
+        this.idEmpresa = IdEmpresa;
+    }
+
+    public void processaListEmpresaContado(Empresa empresa) {
+        empresa.getListContatosEmpresa().forEach(contatoEmpresa -> {
+            ContatoEmpresaDTO contatoEmpresaDTO = new ContatoEmpresaDTO(contatoEmpresa.getIdContatoEmpresa(),
+                    new EmpresaDTO(this.idEmpresa),
+                    contatoEmpresa.getContato(),
+                    contatoEmpresa.getTipoContatoEmpresa());
+            this.listContatosEmpresa.add(contatoEmpresaDTO);
+        });
     }
 
     public Integer getMMId() {

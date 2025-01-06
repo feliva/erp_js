@@ -11,17 +11,18 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
     selector: 'app-root',
     template: `
-      <p-toast />
-      <app-header/>
-      <main class="flex flex-row w-full">
-        <app-nav />
-        <app-main/>
-      </main>
-      <app-loading></app-loading>
-    <!--app-header></app-header-->
-  `,
+        <p-toast/>
+        <app-header/>
+        <main class="flex flex-row w-full">
+            <app-nav/>
+            <app-main/>
+        </main>
+        <app-loading></app-loading>
+        <!--app-header></app-header-->
+    `,
     styles: [`
-  `],
+    `],
+    standalone: true,
     imports: [
         ToastModule,
         HeaderComponent,

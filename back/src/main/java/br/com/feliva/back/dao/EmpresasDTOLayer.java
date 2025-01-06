@@ -1,21 +1,22 @@
 package br.com.feliva.back.dao;
 
-import br.com.feliva.back.interfaces.ComunDAO;
-import br.com.feliva.back.models.Contato;
-import br.com.feliva.back.models.Empresa;
 import br.com.feliva.back.dto.EmpresaDTO;
+import br.com.feliva.back.interfaces.ComunDAO;
+import br.com.feliva.back.models.Empresa;
 import br.com.feliva.sharedClass.db.DAO;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.inject.Default;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("all")
 @RequestScoped
 @Default
-public class EmpresasDAO extends DAO<Empresa> implements ComunDAO<Empresa> {
+public class EmpresasDTOLayer extends DAO<Empresa> implements ComunDAO<Empresa> {
 
     public Empresa findById(Integer id) {
         String hql = """

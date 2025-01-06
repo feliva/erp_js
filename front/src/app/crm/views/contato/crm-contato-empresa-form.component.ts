@@ -26,6 +26,8 @@ import {FormDynamicDialogOperacoesComuns} from "../../../shared/FormDynamicDialo
 import {Resposta} from "../../../model/Resposta";
 import {Select} from "primeng/select";
 import {ActivatedRoute} from "@angular/router";
+import {ContatoEmpresa} from "../../../model/ContatoEmpresa";
+import {CrmContatoEmpresaService} from "../services/crm-contato-empresa.service";
 
 @Component({
     selector: 'crm-contato-form-dd',
@@ -97,29 +99,16 @@ import {ActivatedRoute} from "@angular/router";
         Select
     ]
 })
-export class CrmContatoFormDdComponent extends FormDynamicDialogOperacoesComuns<Contato> implements OnInit {
+export class CrmContatoEmpresaFormComponent extends FormDynamicDialogOperacoesComuns<ContatoEmpresa> implements OnInit {
 
-    contatoService: CrmContatoService = inject(CrmContatoService);
-    cidadeService: CidadeService = inject(CidadeService);
-
-    estado: Estado | undefined;
-    listCidades: Cidade[] = [];
-    listEstados: Estado[] = [];
-
-    ss = inject(ActivatedRoute)
+    contatoEmpresaService:CrmContatoEmpresaService =  inject(CrmContatoEmpresaService);
 
     constructor() {
         super();
     }
 
-    changeEstado(estado: Estado | undefined) {
-        this.cidadeService.listAllByEstado(estado?.idEstado).subscribe(data => {
-            this.listCidades = data;
-        });
-    }
-
-    public override getService(): FiltroServices<Contato> {
-        return this.contatoService;
+    public override getService(): FiltroServices<ContatoEmpresa> {
+        return this.contatoEmpresaService;
     }
 
     getUrlOnCancelarForm(): string {
@@ -138,31 +127,31 @@ export class CrmContatoFormDdComponent extends FormDynamicDialogOperacoesComuns<
     }
 
     public inicializaCamposForm(ehNovo: boolean) {
-        if (ehNovo) {
-            forkJoin({
-                lEstado: this.cidadeService.listAllEstados(),
-            }).subscribe(({lEstado}) => {
-                this.listEstados = lEstado;
-            });
-        } else {
-            forkJoin({
-                lEstado: this.cidadeService.listAllEstados(),
-                lCidade: this.cidadeService.listAllByEstado(this.entity.cidade?.estado?.idEstado),
-            }).subscribe(({lEstado,lCidade}) => {
-                this.listEstados = lEstado;
-                this.listCidades = lCidade;
-                this.inicializaFormGroup(false);
-            });
-        }
+        // if (ehNovo) {
+        //     forkJoin({
+        //         lEstado: this.cidadeService.listAllEstados(),
+        //     }).subscribe(({lEstado}) => {
+        //         this.listEstados = lEstado;
+        //     });
+        // } else {
+        //     forkJoin({
+        //         lEstado: this.cidadeService.listAllEstados(),
+        //         lCidade: this.cidadeService.listAllByEstado(this.entity.cidade?.estado?.idEstado),
+        //     }).subscribe(({lEstado,lCidade}) => {
+        //         this.listEstados = lEstado;
+        //         this.listCidades = lCidade;
+        //         this.inicializaFormGroup(false);
+        //     });
+        // }
     }
 
-    public formToObject(): Contato {
+    public formToObject(): ContatoEmpresa {
         // let contatoForm: Contato = new Contato();
-        this.entity.idContato = this.formGroup.controls['idContato'].value;
-        this.entity.nome = this.formGroup.controls['nome'].value;
-        this.entity.email = this.formGroup.controls['email'].value;
-        this.entity.celular = this.formGroup.controls['celular'].value;
-        this.entity.cidade = this.formGroup.controls['cidade'].value;
+        // this.entity.idContato = this.formGroup.controls['idContato'].value;
+        // this.entity.nome = this.formGroup.controls['nome'].value;
+        // this.entity.email = this.formGroup.controls['email'].value;
+        // this.entity.celular = this.formGroup.controls['celular'].value;
+        // this.entity.cidade = this.formGroup.controls['cidade'].value;
         return this.entity;
     }
 
@@ -175,12 +164,12 @@ export class CrmContatoFormDdComponent extends FormDynamicDialogOperacoesComuns<
             this.entity = new Contato();
         }
         this.formGroup =  new FormGroup({
-            idContato: new FormControl(this.entity?.idContato),
-            nome:new FormControl(this.entity?.nome, [Validators.required]),
-            email:new FormControl(this.entity?.email, [Validators.required,Validators.email]),
-            celular:new FormControl(this.entity?.celular, [Validators.required]),
-            cidade:new FormControl(this.entity?.cidade, []),
-            estado:new FormControl(this.entity?.cidade?.estado, []),
+            // idContato: new FormControl(this.entity?.idContato),
+            // nome:new FormControl(this.entity?.nome, [Validators.required]),
+            // email:new FormControl(this.entity?.email, [Validators.required,Validators.email]),
+            // celular:new FormControl(this.entity?.celular, [Validators.required]),
+            // cidade:new FormControl(this.entity?.cidade, []),
+            // estado:new FormControl(this.entity?.cidade?.estado, []),
         });
     }
 }

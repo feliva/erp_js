@@ -37,6 +37,7 @@ import {RouterLink} from "@angular/router";
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {CrmContatoFormDdComponent} from "../contato/crm-contato-form-dd.component";
 import {Select} from "primeng/select";
+import {ContatoEmpresa} from "../../../model/ContatoEmpresa";
 
 @Component({
     selector: 'crm-contato-form',
@@ -111,7 +112,8 @@ import {Select} from "primeng/select";
                             </app-react-message-validation>
                         </div>
                     </div>
-                    <p-table [value]="this.entity.listContatos ?? []">
+                    {{console.log(this.entity.listContatosEmpresa)}}
+                    <p-table [value]="this.entity.listContatosEmpresa || []">
                         <ng-template pTemplate="caption">
                             <div class="flex items-center justify-between">
                                 <span class="text-xl font-bold">Contatos</span>
@@ -126,20 +128,20 @@ import {Select} from "primeng/select";
                                 <th></th>
                             </tr>
                         </ng-template>
-                        <ng-template #body let-contato let-index>
+                        <ng-template #body let-contatoE let-index>
                             <tr>
-                                <td>{{ contato.idContato }}</td>
-                                <td>{{ contato.nome }}</td>
-                                <td>{{ contato.email }}</td>
-                                <td>{{ contato.celular }}</td>
+                                <td>{{ contatoE.contato.idContato }}</td>
+                                <td>{{ contatoE.contato.nome }}</td>
+                                <td>{{ contatoE.contato.email }}</td>
+                                <td>{{ contatoE.contato.celular }}</td>
                                 <td>
                                     <a class="p-ripple p-element p-button p-component p-button-icon-only p-button-rounded p-button-text"
                                        aria-label="Novo"
-                                       (click)="editarConato(contato,$event)">
+                                       (click)="editarConato(contatoE,$event)">
                                         <i class="pi pi-pencil"></i>
                                     </a>
                                     <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
-                                              (onClick)="removerContato(contato,$event)"></p-button>
+                                              (onClick)="removerContato(contatoE,$event)"></p-button>
                                 </td>
                             </tr>
                         </ng-template>
@@ -214,11 +216,11 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
         });
     }
 
-    removerContato(contato:Contato,$event:any) {
-        let lista = this.entity.listContatos ?? [];
-        this.entity.listContatos = lista.filter((cont:Contato)=>{
-            return contato.idContato !== cont.idContato;
-        })
+    removerContato(contatoEmpresa:ContatoEmpresa,$event:any) {
+        let lista = this.entity.listContatosEmpresa ?? [];
+        // this.entity.listContatosEmpresa = lista.filter((cont:ContatoEmpresa)=>{
+        //     return contato.idContato !== cont.idContato;
+        // })
     }
 
     editarConato(contato:Contato,event:any){
@@ -226,11 +228,6 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
             data:{
                 idEntity:contato.idContato
             },
-            header: 'Contato',
-            width: '70%',
-            contentStyle: { overflow: 'auto' },
-            baseZIndex: 10000,
-            maximizable: true,
             modal:true
         });
 
@@ -238,8 +235,6 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
             console.log("this.ref.onClose.")
             console.log(data)
         });
-
-
     }
 
     public override getService(): FiltroServices<Empresa> {
@@ -301,6 +296,7 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
             razaoSocial : new FormControl('', []),
             telefone : new FormControl('', []),
             inscricaoEstadual : new FormControl('', []),
+            listContatosEmpresa : new FormControl([],[]),
             endereco : new FormGroup({
                 idEndereco : new FormControl('', []),
                 cep : new FormControl('', [Validators.required]),
@@ -312,6 +308,7 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
                 complemento : new FormControl('', [Validators.required]),
             })
         })
+        console.log(this.entity)
         this.formGroup.patchValue(this.entity);
     }
 
@@ -320,4 +317,6 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
             this.ref.close()
         }
     }
+
+    protected readonly console = console;
 }

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -38,10 +39,9 @@ public class Empresa extends Model<Integer> {
     @Column(length = 100,name = "inscricao_estadual")
     private String inscricaoEstadual;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
-    @JoinTable(name="empresa_contato", joinColumns={@JoinColumn(name="id_empresa")},
-            inverseJoinColumns= {@JoinColumn(name="id_contato")})
-    private Set<Contato> listContatos;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_empresa")
+    private List<ContatoEmpresa> listContatosEmpresa;
 
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "id_endereco")

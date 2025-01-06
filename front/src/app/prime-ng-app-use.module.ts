@@ -1,5 +1,6 @@
 import {importProvidersFrom, NgModule} from '@angular/core';
 import {ConfirmationService, MessageService} from 'primeng/api';
+import {DialogService, DynamicDialogConfig} from "primeng/dynamicdialog";
 
 @NgModule({
   declarations: [],
@@ -7,6 +8,6 @@ import {ConfirmationService, MessageService} from 'primeng/api';
   ],
   exports:[
   ],
-  providers:[MessageService,ConfirmationService]
+  providers:[MessageService,ConfirmationService,DialogService, DynamicDialogConfig]
 })
 export class PrimeNGAppUse { }

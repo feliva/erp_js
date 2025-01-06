@@ -62,8 +62,9 @@ public class ContatoDAO extends DAO<Contato> implements ComunDAO<Contato> {
             w = "where " + whereClause.delete(0, 3).toString();
         }
 
-        join.append("left join fetch c.cidade ci ")
-            .append("left join fetch ci.estado e ");
+        join.append("left join fetch c.endereco e ")
+            .append("left join fetch e.cidade ci ")
+            .append("left join fetch ci.estado es ");
 
         hql.append(join).append(w).append(" order by c.nome");
         return paramMap;

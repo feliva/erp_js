@@ -1,5 +1,6 @@
 import {Contato} from "./Contato";
 import {Endereco} from "./Endereco";
+import {ContatoEmpresa} from "./ContatoEmpresa";
 
 export class Empresa{
   idEmpresa?: number;
@@ -8,6 +9,6 @@ export class Empresa{
   razaoSocial?:string
   telefone?:string
   inscricaoEstadual?:string
-  listContatos?:Contato[];
+  listContatosEmpresa?:ContatoEmpresa[];
   endereco?:Endereco;
 }

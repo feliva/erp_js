@@ -13,6 +13,7 @@ import {delay, Observable, startWith, tap} from "rxjs";
             </div>
         }
     `,
+    standalone: true,
     styles: [`
       .cssload-container {
         position: fixed;

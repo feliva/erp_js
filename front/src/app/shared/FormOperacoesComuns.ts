@@ -63,7 +63,7 @@ export abstract class FormOperacoesComuns<T>{
         }
     }
 
-    onSubmit(event: SubmitEvent) {
+    onSubmit(event: SubmitEvent):void {
         if (!this.formGroup.valid) {
             this.appMessage.addError('Existem pendências no cadastro.')
             return;

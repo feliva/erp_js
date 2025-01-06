@@ -41,12 +41,14 @@ import {Cidade, Estado} from "../../../model/Cidade";
                         </div>
                         <div class="md:col-span-1">
                             <app-react-message-validation label="Celular">
-                                <p-inputMask mask="(99) 9999-9999" formControlName="celular" placeholder="(99) 9999-9999" class="grid"/>
+                                <p-inputMask mask="(99) 9999-9999" formControlName="celular"
+                                             placeholder="(99) 9999-9999" class="grid"/>
                             </app-react-message-validation>
                         </div>
                         <div class="md:col-span-1">
                             <label>Estado</label>
-                            <p-dropdown [options]="listEstados" formControlName="estado" optionLabel="nome" class="w-full"
+                            <p-dropdown [options]="listEstados" formControlName="estado" optionLabel="nome"
+                                        class="w-full"
                                         (onChange)="changeEstado($event.value)"/>
                         </div>
                         <div class="md:col-span-1">
@@ -78,6 +80,7 @@ import {Cidade, Estado} from "../../../model/Cidade";
     styles: [`
 
     `],
+    standalone: true,
     imports: [
         PanelModule,
         FormsModule,

@@ -88,7 +88,7 @@ import {FiltroServices} from "../../../service/FiltroServices";
                         <th>{{ contato.nome }}</th>
                         <th>{{ contato.email }}</th>
                         <th>{{ contato.celular }}</th>
-                        <th>{{ contato.cidade?.nome }}</th>
+                        <th></th>
                         <th>
                             <a class="p-ripple p-element p-button p-component p-button-icon-only p-button-rounded p-button-text"
                                routerLink="/crm/contato/editar/{{contato.idContato}}" aria-label="Novo">
@@ -112,6 +112,7 @@ import {FiltroServices} from "../../../service/FiltroServices";
 export class CrmContatoListComponent extends ListarOperacoesComuns<Contato> implements OnInit{
 
   contatoService:CrmContatoService = inject(CrmContatoService);
+  ss = inject(ActivatedRoute)
 
   constructor(){
     super();

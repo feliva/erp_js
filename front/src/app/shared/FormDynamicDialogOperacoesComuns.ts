@@ -18,11 +18,7 @@ export abstract class FormDynamicDialogOperacoesComuns<T> extends FormOperacoesC
 
     editando:boolean = false;
 
-    @Input()
-    dialog:boolean = true;
-
-    dialogService: DialogService = inject(DialogService);
-    ref: DynamicDialogRef = inject(DynamicDialogRef)
+    ref: DynamicDialogRef | null = inject(DynamicDialogRef,{ optional: true })
     dynamicDialogConfig:DynamicDialogConfig = inject(DynamicDialogConfig)
 
     constructor() {
@@ -33,10 +29,9 @@ export abstract class FormDynamicDialogOperacoesComuns<T> extends FormOperacoesC
      * Chamar este metodo no ngOnInit
      */
     override onInit() {
-        let idEntity = this.dynamicDialogConfig.data.idEntity;
-        this.setEhNovo((!idEntity));
-
-        if(this.dialog){
+        if(this.ref){
+            let idEntity = this.dynamicDialogConfig.data.idEntity;
+            this.setEhNovo((!idEntity));
             if(this.ehNovo) {
                 this.inicializaCamposForm(true);
             }else{
@@ -50,11 +45,10 @@ export abstract class FormDynamicDialogOperacoesComuns<T> extends FormOperacoesC
         }else{
             super.onInit();
         }
-
     }
 
     select(){
-        this.ref.close(this.entity);
+        this.ref?.close(this.entity);
     }
 
     override onSubmit(event: SubmitEvent) {
@@ -64,12 +58,13 @@ export abstract class FormDynamicDialogOperacoesComuns<T> extends FormOperacoesC
         }
         this.getService().save(this.formToObject()).subscribe((resp:Resposta<Contato>) => {
             this.onCancelarForm(null);
+            this.ref?.close(this.entity);
             this.appMessage.addSuccess(this.getMensagemSucessoSubmit())
         })
     }
 
     override onCancelarForm(event: any) {
-        if(!this.dialog){
+        if(!this.ref){
             super.onCancelarForm(event);
             return
         }

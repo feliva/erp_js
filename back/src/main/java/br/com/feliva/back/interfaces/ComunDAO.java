@@ -3,6 +3,7 @@ package br.com.feliva.back.interfaces;
 import br.com.feliva.sharedClass.db.Model;
 import jakarta.transaction.RollbackException;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -20,5 +21,4 @@ public interface ComunDAO<M extends Model<?>> {
     public <T> void mergeT(T entity) throws RollbackException;
 
     public void removeT (M entity)throws RollbackException;
-
 }
