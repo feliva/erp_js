@@ -1,17 +1,5 @@
-import {
-    Component,
-    inject, Input, OnDestroy,
-    OnInit
-} from '@angular/core';
-import {
-    EmailValidator,
-    FormBuilder,
-    FormControl,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators
-} from "@angular/forms";
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ButtonModule} from 'primeng/button';
 import {DropdownModule} from 'primeng/dropdown';
 import {InputNumberModule} from 'primeng/inputnumber';
@@ -19,10 +7,8 @@ import {InputTextModule} from 'primeng/inputtext';
 import {PanelModule} from 'primeng/panel';
 import {EditorModule} from "primeng/editor";
 import {AutoCompleteModule} from "primeng/autocomplete";
-import {Contato} from "../../../model/Contato";
 import {ReactMessageValidationComponent} from "../../../shared/message-validation/react-message-validation.component";
 import {InputMaskModule} from "primeng/inputmask";
-import {CrmContatoService} from "../services/crm-contato.service";
 import {Location} from "@angular/common";
 import {FormOperacoesComuns} from "../../../shared/FormOperacoesComuns";
 import {FiltroServices} from "../../../service/FiltroServices";
@@ -33,11 +19,10 @@ import {Empresa} from "../../../model/Empresa";
 import {CrmEmpresaService} from "../services/crm-empresa.service";
 import {TableModule} from "primeng/table";
 import {Dialog} from "primeng/dialog";
-import {RouterLink} from "@angular/router";
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
-import {CrmContatoFormDdComponent} from "../contato/crm-contato-form-dd.component";
 import {Select} from "primeng/select";
 import {ContatoEmpresa} from "../../../model/ContatoEmpresa";
+import {CrmContatoEmpresasForm} from "./CrmContatoEmpresaForm";
 
 @Component({
     selector: 'crm-contato-form',
@@ -112,10 +97,10 @@ import {ContatoEmpresa} from "../../../model/ContatoEmpresa";
                             </app-react-message-validation>
                         </div>
                     </div>
-                    {{console.log(this.entity.listContatosEmpresa)}}
                     <p-table [value]="this.entity.listContatosEmpresa || []">
                         <ng-template pTemplate="caption">
-                            <div class="flex items-center justify-between">
+                            <div class="flex items-center justify-items-start">
+                                <p-button  [rounded]="true" icon="pi pi-plus" styleClass="mr-3"/>
                                 <span class="text-xl font-bold">Contatos</span>
                             </div>
                         </ng-template>
@@ -125,7 +110,7 @@ import {ContatoEmpresa} from "../../../model/ContatoEmpresa";
                                 <th>Name</th>
                                 <th>E-mail</th>
                                 <th>Celular</th>
-                                <th></th>
+                                <th>Tipo/Função</th>
                             </tr>
                         </ng-template>
                         <ng-template #body let-contatoE let-index>
@@ -134,6 +119,7 @@ import {ContatoEmpresa} from "../../../model/ContatoEmpresa";
                                 <td>{{ contatoE.contato.nome }}</td>
                                 <td>{{ contatoE.contato.email }}</td>
                                 <td>{{ contatoE.contato.celular }}</td>
+                                <td>{{ contatoE.tipoContatoEmpresa.descrisao }}</td>
                                 <td>
                                     <a class="p-ripple p-element p-button p-component p-button-icon-only p-button-rounded p-button-text"
                                        aria-label="Novo"
@@ -165,7 +151,6 @@ import {ContatoEmpresa} from "../../../model/ContatoEmpresa";
                 </form>
             </p-panel>
             <p-dialog>
-
             </p-dialog>
         </div>
     `,
@@ -223,10 +208,10 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
         // })
     }
 
-    editarConato(contato:Contato,event:any){
-        this.ref = this.dialogService.open(CrmContatoFormDdComponent, {
+    editarConato(contato:ContatoEmpresa,event:any){
+        this.ref = this.dialogService.open(CrmContatoEmpresasForm, {
             data:{
-                idEntity:contato.idContato
+                idEntity:contato.idContatoEmpresa
             },
             modal:true
         });

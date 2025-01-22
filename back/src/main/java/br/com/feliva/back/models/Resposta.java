@@ -1,9 +1,6 @@
 package br.com.feliva.back.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonValue;
-import jakarta.transaction.RollbackException;
-import jakarta.validation.ConstraintViolationException;
 import jakarta.ws.rs.core.Response;
 
 import java.util.ArrayList;
@@ -30,6 +27,7 @@ public class Resposta<T> {
         VALIDACAO_ERRO(Response.Status.NOT_ACCEPTABLE,"Existem erros de validação."),
         ENTIDADE_NAO_ENCONTRADA(Response.Status.NOT_FOUND,"Entidade não foi encontrada."),
         INTERNAL_SERVER_ERROR(Response.Status.INTERNAL_SERVER_ERROR,"Internal Server Error."),
+        GENERIC_ERROR(Response.Status.INTERNAL_SERVER_ERROR,"Ocorreu um erro inesperado."),
         ;
 
         private final Response.Status status;
@@ -47,6 +45,10 @@ public class Resposta<T> {
         public String getMsg() {
             return msg;
         }
+    }
+
+    static public <T> Response buildResponse(Error erro) {
+        return Response.status(erro.status).entity(new Resposta<T>(null,erro,null)).build();
     }
 
     static public <T> Response buildResponse(T dados,Error erro) {

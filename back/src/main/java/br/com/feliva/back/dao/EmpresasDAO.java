@@ -1,21 +1,32 @@
 package br.com.feliva.back.dao;
 
-import br.com.feliva.back.interfaces.ComunDAO;
-import br.com.feliva.back.models.Contato;
-import br.com.feliva.back.models.Empresa;
 import br.com.feliva.back.dto.EmpresaDTO;
+import br.com.feliva.back.interfaces.ComunDAO;
+import br.com.feliva.back.models.Empresa;
+import br.com.feliva.back.util.primeng.LazyConsultConfig;
+import br.com.feliva.back.util.primeng.TableLazyLoadEvent;
 import br.com.feliva.sharedClass.db.DAO;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.inject.Default;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("all")
 @RequestScoped
 @Default
 public class EmpresasDAO extends DAO<Empresa> implements ComunDAO<Empresa> {
+
+    static final Map<String, LazyConsultConfig> lCConfigs = new HashMap<String, LazyConsultConfig>();
+
+    static{
+        lCConfigs.put("nome",new LazyConsultConfig("","e.nomeFantasia","e.nomeFantasia"));
+        lCConfigs.put("email",new LazyConsultConfig("","e.email","e.email"));
+    }
+
 
     public Empresa findById(Integer id) {
         String hql = """
@@ -30,7 +41,6 @@ public class EmpresasDAO extends DAO<Empresa> implements ComunDAO<Empresa> {
 
         return (Empresa)  this.em.createQuery(hql).setParameter("idEmpresa", id).getSingleResult();
     }
-
 
     public List<Empresa> listAll(){
         try {
@@ -112,6 +122,43 @@ public class EmpresasDAO extends DAO<Empresa> implements ComunDAO<Empresa> {
         }catch (Exception e){
             e.printStackTrace();
         }
+        return 0;
+    }
+
+    @Override
+    public List<Empresa> tableLazyLoad(TableLazyLoadEvent event) {
+        try {
+            StringBuffer hql = new StringBuffer("select e from Empresa e ");
+            StringBuffer where = new StringBuffer();
+
+            event.getFilters().forEach((String key, List value) -> {
+                value.forEach(o -> {
+                    System.out.println(key);
+                    System.out.println(o);
+                });
+            });
+
+            Map<String,String> paramMap =  new HashMap<>();
+
+            Query query = this.em.createQuery(hql.toString());
+            if(event.getFirst() != null) {
+                query.setFirstResult(event.getFirst()).setMaxResults(event.getRows());
+            }
+
+            paramMap.forEach((s, s2) -> {
+                query.setParameter(s, s2);
+            });
+
+            return query.getResultList();
+        }catch (NoResultException e){
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Integer tableLazyLoadCount(TableLazyLoadEvent filters) {
         return 0;
     }
 

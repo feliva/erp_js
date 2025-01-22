@@ -1,4 +1,3 @@
-
 import {inject} from "@angular/core";
 import {ConfirmationService} from "primeng/api";
 import {AppMessageService} from "../service/app-message.service";
@@ -15,6 +14,7 @@ export abstract class ListarOperacoesComuns<T> {
 
     protected entitys:T[] = [];
     protected tablePageEvent:TablePageEvent = {first:0,rows:20};
+    protected lastTableLazyLoadEvent:TableLazyLoadEvent = {};
 
     constructor() {
     }
@@ -27,8 +27,15 @@ export abstract class ListarOperacoesComuns<T> {
     }
 
     onLazyLoad(event: TableLazyLoadEvent){
-        this.getService().paginado(this.criaQueryParams()).subscribe((dados)=>{
-            this.entitys = dados;
+        this.lastTableLazyLoadEvent = event;
+        console.log(event)
+
+        forkJoin({
+            lCount:this.getService().tableLazyLoadCount(event),
+            lPaginado: this.getService().tableLazyLoad(event)
+        }).subscribe(({lCount,lPaginado}) => {
+            this.totalRegistros = lCount;
+            this.entitys = lPaginado;
         });
     }
 
@@ -50,39 +57,29 @@ export abstract class ListarOperacoesComuns<T> {
     }
 
     filtrarBusca() {
-        forkJoin({
-            lCount:this.getService().paginadoCount(this.criaQueryParams()),
-            lPaginado: this.getService().paginado(this.criaQueryParams())
-        }).subscribe(({lCount,lPaginado}) => {
-            this.totalRegistros = lCount;
-            this.entitys = lPaginado;
-        });
+        //remover depois
+        // forkJoin({
+        //     lCount:this.getService().paginadoCount(this.criaQueryParams()),
+        //     lPaginado: this.getService().paginado(this.criaQueryParams())
+        // }).subscribe(({lCount,lPaginado}) => {
+        //     this.totalRegistros = lCount;
+        //     this.entitys = lPaginado;
+        // });
     }
 
     excluir(id:number){
         this.getService().delete(id).subscribe(()=>{
             this.appMessage.addSuccess('Contato excluído com sucesso.')
-            this.filtrarBusca();
+            this.onLazyLoad(this.lastTableLazyLoadEvent)
         });
     }
 
     limpaFiltros(){
-        this.getService().limpaFiltros();
-        this.filtrarBusca();
+        // this.getService().limpaFiltros();
+        // this.filtrarBusca();
     }
 
     onPage(event:TablePageEvent){
         this.tablePageEvent = event
-    }
-
-    private criaQueryParams():string {
-        let param: string = "?"
-        Object.entries(this.tablePageEvent).forEach(([key, value], index, array) => {
-            param = param + `${key}=${value}&`;
-        });
-        Object.entries(this.getService().getFiltrosForm().controls).forEach(([key, formControl]) => {
-            param = param + `${key}=${formControl?.value}&`;
-        });
-        return param;
     }
 }

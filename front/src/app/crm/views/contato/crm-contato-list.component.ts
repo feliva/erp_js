@@ -1,17 +1,15 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute, Router, RouterLink} from "@angular/router";
-import {ConfirmationService, LazyLoadEvent, MessageService, SharedModule} from "primeng/api";
-import { ButtonModule } from 'primeng/button';
-import {TableLazyLoadEvent, TableModule, TablePageEvent} from 'primeng/table';
-import { NgIf, AsyncPipe } from '@angular/common';
-import { PanelModule } from 'primeng/panel';
+import {ActivatedRoute, RouterLink} from "@angular/router";
+import {SharedModule} from "primeng/api";
+import {ButtonModule} from 'primeng/button';
+import {TableModule} from 'primeng/table';
+import {PanelModule} from 'primeng/panel';
 import {CrmContatoService} from "../services/crm-contato.service";
 import {Contato} from "../../../model/Contato";
 import {InputTextModule} from "primeng/inputtext";
 import {PaginatorModule} from "primeng/paginator";
 import {FieldsetModule} from "primeng/fieldset";
-import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {DataRowOutlet} from "@angular/cdk/table";
+import {ReactiveFormsModule} from "@angular/forms";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ListarOperacoesComuns} from "../../../shared/ListarOperacoesComuns";
 import {FiltroServices} from "../../../service/FiltroServices";
@@ -27,38 +25,6 @@ import {FiltroServices} from "../../../service/FiltroServices";
             </a>
         </div>
 
-        <div class="pb-2">
-            <p-fieldset styleClass="m-0 mb-2 filter-fildset" [collapsed]="!expandFiltro">
-                <ng-template pTemplate="header">
-
-                    <a pRipple tabindex="0" role="button" (click)="toggle($event)" (keydown)="toggle($event)">
-                        Filtros <i class="pi pi-filter"></i>
-                    </a>
-                </ng-template>
-                <div class="pt-5">
-                    @if (expandFiltro) {
-                        <form [formGroup]="contatoService.getFiltrosForm()" (ngSubmit)="filtrarBusca()">
-                            <div class="rid gap-4  text-sm grid-cols-1 lg:grid-cols-2">
-                                <div class="md:col-span-1">
-                                    <label>Nome</label>
-                                    <input type="text" pInputText formControlName="nome" class="w-full"/>
-                                </div>
-                            </div>
-                            <div class="flex pt-5">
-                                <div class="pr-3">
-                                    <p-button label="Filtrar" icon="pi pi-filter" class="pr-6" type="submit"></p-button>
-                                </div>
-                                <div class="">
-                                    <p-button label="Limpar" [outlined]="true" icon="pi pi-filter-slash" class="pr-6"
-                                              (onClick)="limpaFiltros()"></p-button>
-                                </div>
-                            </div>
-                        </form>
-                    }
-                </div>
-            </p-fieldset>
-        </div>
-
         <p-panel header="Lista de Contatos">
             <p-table [value]="entitys" [tableStyle]="{'min-width': '60rem'}"
                      [lazy]="true"
@@ -70,15 +36,42 @@ import {FiltroServices} from "../../../service/FiltroServices";
                      (onLazyLoad)="onLazyLoad($event)"
                      (onPage)="onPage($event)"
                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                     [rowsPerPageOptions]="[20, 40, 80,160]">
-                <!--                   "-->
+                     [rowsPerPageOptions]="[20, 40, 80,160]"
+                     sortField="nome" [sortOrder]="-1"
+                     sortMode="multiple"
+            >
                 <ng-template pTemplate="header">
                     <tr>
-                        <th>id</th>
-                        <th>Nome</th>
-                        <th>E-mail</th>
+                        <th style="width:75px" class="p-0">
+                            <span pSortableColumn="id">
+                                Id
+                                <p-sortIcon field="id"/>
+                            </span>
+                        </th>
+                        <th>
+                            <span pSortableColumn="nome">
+                                Nome
+                                <p-sortIcon field="nome"/>
+                            </span>
+                            <p-columnFilter type="text" field="nome" placeholder="Nome"
+                                    ariaLabel="Filtro Nome" display="menu" showMenu="true" ></p-columnFilter>
+                        </th>
+                        <th>
+                            <span pSortableColumn="email">
+                                E-mail
+                                <p-sortIcon field="email"/>
+                            </span>
+                            <p-columnFilter type="text" field="email" placeholder="E-mail"
+                                            ariaLabel="Filter email" display="menu"></p-columnFilter>
+                        </th>
                         <th>Celular</th>
-                        <th>Cidade</th>
+                        <th>
+                            <span pSortableColumn="cidade">
+                                Cidade
+                                <p-sortIcon field="cidade"/>
+                            </span>
+                            <p-columnFilter type="text" field="cidade" placeholder="Cidade" ariaLabel="Filter cidade" display="menu"></p-columnFilter>
+                        </th>
                         <th></th>
                     </tr>
                 </ng-template>
@@ -119,7 +112,7 @@ export class CrmContatoListComponent extends ListarOperacoesComuns<Contato> impl
   }
 
   ngOnInit(): void {
-    this.filtrarBusca()
+
   }
 
   override getService(): FiltroServices<Contato> {

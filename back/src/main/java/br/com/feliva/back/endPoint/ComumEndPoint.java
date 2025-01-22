@@ -3,6 +3,7 @@ package br.com.feliva.back.endPoint;
 import br.com.feliva.back.interfaces.ComunDAO;
 import br.com.feliva.back.models.Resposta;
 import br.com.feliva.back.util.ValidadorUtill;
+import br.com.feliva.back.util.primeng.TableLazyLoadEvent;
 import br.com.feliva.sharedClass.db.DAO;
 import br.com.feliva.sharedClass.db.Model;
 import jakarta.inject.Inject;
@@ -63,6 +64,31 @@ public abstract class ComumEndPoint<I extends DAO<M>, M extends Model<?>> {
         }
         this.getDao().mergeT(obj);
         return Response.ok(Response.Status.ACCEPTED).build();
+    }
+
+    @Path("/tableLazyLoad")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public  Response  tableLazyLoad(TableLazyLoadEvent obj) throws RollbackException {
+        try {
+            List<M> list = this.getDao().tableLazyLoad(obj);
+            return Response.ok(list).build();
+        }catch (Exception e){
+            return Resposta.buildResponse(Resposta.Error.GENERIC_ERROR);
+        }
+    }
+
+    @Path("/tableLazyLoadCount")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public  Response  tableLazyLoadCount(TableLazyLoadEvent obj) throws RollbackException {
+        try {
+            return Response.ok(this.getDao().tableLazyLoadCount(obj)).build();
+        }catch (Exception e){
+            return Resposta.buildResponse(Resposta.Error.GENERIC_ERROR);
+        }
     }
 
 }

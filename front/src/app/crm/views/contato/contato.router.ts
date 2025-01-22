@@ -1,6 +1,5 @@
 import {BuilderRoute} from "../../../util/RouteUtil";
 import {CrmContatoListComponent} from "./crm-contato-list.component";
-import {CrmContatoFormComponent} from "./crm-contato-form.component";
 import {CrmContatoFormDdComponent} from "./crm-contato-form-dd.component";
 
 export const BUILDER_MENU_CONTATO:BuilderRoute = new BuilderRoute('crm/contato/')

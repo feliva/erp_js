@@ -1,14 +1,8 @@
-
-import {Component, Directive, inject, Input, OnInit} from "@angular/core";
-import {AppMessageService} from "../service/app-message.service";
-import {FiltroServices} from "../service/FiltroServices";
-import {BreadcrumbService} from "../components/breadcrumb/breadcrumb.service";
+import {Component, inject} from "@angular/core";
 import {Contato} from "../model/Contato";
-import {ActivatedRoute, Router} from "@angular/router";
-import {FormBuilder, FormGroup} from "@angular/forms";
 import {Resposta} from "../model/Resposta";
 import {FormOperacoesComuns} from "./FormOperacoesComuns";
-import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 
 @Component({
     template: '',
@@ -30,7 +24,7 @@ export abstract class FormDynamicDialogOperacoesComuns<T> extends FormOperacoesC
      */
     override onInit() {
         if(this.ref){
-            let idEntity = this.dynamicDialogConfig.data.idEntity;
+            let idEntity = this.dynamicDialogConfig.data?.idEntity;
             this.setEhNovo((!idEntity));
             if(this.ehNovo) {
                 this.inicializaCamposForm(true);

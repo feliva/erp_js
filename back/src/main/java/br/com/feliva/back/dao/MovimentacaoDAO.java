@@ -1,14 +1,12 @@
 package br.com.feliva.back.dao;
 
 import br.com.feliva.back.models.Movimentacao;
-import br.com.feliva.back.models.primeng.FilterMetadata;
-import br.com.feliva.back.models.primeng.TableLazyLoadEvent;
+import br.com.feliva.back.util.primeng.TableLazyLoadEvent;
 import br.com.feliva.sharedClass.db.DAO;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,18 +63,18 @@ public class MovimentacaoDAO extends DAO<Movimentacao> {
 
             StringBuffer where = new StringBuffer();
 
-        event.getFilters().forEach((var key, var value)->{
-            switch (key){
-                case "dtMovimentacao":
-                    Integer index = 0;
-                    for(FilterMetadata filter : value) {
-                        index++;
-                        where.append(filtersFilds.get(key) + filter.getMatchMode().getTypeOperador() + " :" + key + index);
-                        params.put(key + index,filter.geraValor());
-                    }
-
-            }
-        });
+//        event.getFilters().forEach((var key, var value)->{
+//            switch (key){
+//                case "dtMovimentacao":
+//                    Integer index = 0;
+////                    for(FilterMetaData filter : value) {
+////                        index++;
+////                        where.append(filtersFilds.get(key) + filter.getMatchMode().getTypeOperador() + " :" + key + index);
+////                        params.put(key + index,filter.geraValor());
+////                    }
+//
+//            }
+//        });
 
         if(where.length() >0){
             where.insert(0," where ");

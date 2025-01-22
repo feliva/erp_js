@@ -1,7 +1,7 @@
 package br.com.feliva.back.dao;
 
 import br.com.feliva.back.models.Produto;
-import br.com.feliva.back.models.primeng.TableLazyLoadEvent;
+import br.com.feliva.back.util.primeng.TableLazyLoadEvent;
 import br.com.feliva.sharedClass.db.DAO;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.NoResultException;

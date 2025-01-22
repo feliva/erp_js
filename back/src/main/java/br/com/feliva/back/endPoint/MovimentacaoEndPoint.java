@@ -2,9 +2,8 @@ package br.com.feliva.back.endPoint;
 
 import br.com.feliva.back.dao.MovimentacaoDAO;
 import br.com.feliva.back.models.Movimentacao;
-import br.com.feliva.back.models.Produto;
 import br.com.feliva.back.models.Resposta;
-import br.com.feliva.back.models.primeng.TableLazyLoadEvent;
+import br.com.feliva.back.util.primeng.TableLazyLoadEvent;
 import jakarta.inject.Inject;
 import jakarta.transaction.RollbackException;
 import jakarta.ws.rs.*;

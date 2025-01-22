@@ -1,12 +1,6 @@
-import {FormControl} from "@angular/forms";
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {map, Observable, take} from "rxjs";
-import {inject} from "@angular/core";
-import {TableLazyLoadEvent, TablePageEvent} from "primeng/table";
-import {Marca} from "../model/Marca";
-import {Movimentacao} from "../model/Movimentacao";
 import {FormGroup} from "@angular/forms";
-import {Contato} from "../model/Contato";
+import {Observable} from "rxjs";
+import {TableLazyLoadEvent} from "primeng/table";
 import {Services} from "./services";
 
 export abstract class FiltroServices<T> extends Services<T> {
@@ -21,5 +15,13 @@ export abstract class FiltroServices<T> extends Services<T> {
 
     public paginadoCount(queryParam: string): Observable<number> {
         return this.http.get<number>(this.serverUrl + this.getPath() + "/paginadoCount" + queryParam)
+    }
+
+    public tableLazyLoad(event:TableLazyLoadEvent): Observable<T[]> {
+        return this.send(event,'/tableLazyLoad')
+    }
+
+    public tableLazyLoadCount(event:TableLazyLoadEvent): Observable<number> {
+        return this.send(event,'/tableLazyLoadCount')
     }
 }

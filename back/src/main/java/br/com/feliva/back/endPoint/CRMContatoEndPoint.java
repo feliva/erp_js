@@ -4,11 +4,16 @@ import br.com.feliva.back.dao.ContatoDAO;
 import br.com.feliva.back.interfaces.ComunDAO;
 import br.com.feliva.back.models.Contato;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.*;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Path("/crm/contato")
@@ -17,6 +22,8 @@ public class CRMContatoEndPoint extends ComumEndPoint<ContatoDAO,Contato> {
 
     @Inject
     private ContatoDAO contatoDAO;
+
+    @Context UriInfo uriInfo;
 
     //    http://localhost:8081/unidade/listAll
     @Path("/listAll")
@@ -35,11 +42,12 @@ public class CRMContatoEndPoint extends ComumEndPoint<ContatoDAO,Contato> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response paginado(@QueryParam("first") Integer first,
                              @QueryParam("rows") Integer rows,
-                             @QueryParam("nome") String nome){
+                             @QueryParam("nome") String nome,
+                             @QueryParam("filter") String filter){
         Map<String,Object> param = new HashMap<>();
         param.put("nome",nome);
 
-        return Response.ok(this.getDao().listPaginado(first, rows, param)).build();
+        return Response.ok(this.contatoDAO.listPaginado(first, rows, param)).build();
     }
 
     @Path("/paginadoCount")
@@ -50,6 +58,6 @@ public class CRMContatoEndPoint extends ComumEndPoint<ContatoDAO,Contato> {
                                   @QueryParam("nome") String nome){
         Map<String,Object> param = new HashMap<>();
         param.put("nome",nome);
-        return Response.ok(this.getDao().paginadoCount(first,rows,param)).build();
+        return Response.ok(this.contatoDAO.paginadoCount(first,rows,param)).build();
     }
 }
