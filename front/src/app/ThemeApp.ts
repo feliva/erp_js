@@ -1,7 +1,5 @@
-import { definePreset } from '@primeng/themes';
+import {definePreset} from '@primeng/themes';
 import Aura from '@primeng/themes/aura';
-import Lara from "@primeng/themes/lara";
-import Material from "@primeng/themes/material";
 
 export const ThemeApp = definePreset(Aura, {
         // prefix: 'm',
@@ -18,6 +16,17 @@ export const ThemeApp = definePreset(Aura, {
                             }
                         }
                     }
+                },
+                //https://github.com/primefaces/primeng/blob/master/packages/themes/src/presets/aura/panel/index.ts
+                panel:{
+                    colorScheme: {
+                        light: {
+                            header: {
+                                background: '#f8fafc',
+                                padding: '.75rem',
+                            }
+                        }
+                    },
                 },
                 panelmenu:{
                     colorScheme: {

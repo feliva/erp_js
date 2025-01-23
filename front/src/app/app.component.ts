@@ -1,12 +1,10 @@
-import {Component, inject, Inject, OnInit} from '@angular/core';
-import { LoadingComponent } from './components/loading/loading.component';
-import { MainComponent } from './template/main/main.component';
-import { NavComponent } from './template/nav/nav.component';
-import { HeaderComponent } from './template/header/header.component';
-import { ToastModule } from 'primeng/toast';
-import {Router} from "@angular/router";
-import {InjectSetupWrapper} from "@angular/core/testing";
-import { TranslateService } from '@ngx-translate/core';
+import {Component, inject, OnInit} from '@angular/core';
+import {LoadingComponent} from './components/loading/loading.component';
+import {MainComponent} from './template/main/main.component';
+import {NavComponent} from './template/nav/nav.component';
+import {HeaderComponent} from './template/header/header.component';
+import {ToastModule} from 'primeng/toast';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-root',
@@ -14,7 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
         <p-toast/>
         <app-header/>
         <main class="flex flex-row w-full">
-            <app-nav/>
+            <app-nav class="size-app-nav" />
             <app-main/>
         </main>
         <app-loading></app-loading>

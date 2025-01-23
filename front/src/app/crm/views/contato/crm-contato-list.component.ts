@@ -81,7 +81,7 @@ import {FiltroServices} from "../../../service/FiltroServices";
                         <th>{{ contato.nome }}</th>
                         <th>{{ contato.email }}</th>
                         <th>{{ contato.celular }}</th>
-                        <th></th>
+                        <th>{{ contato.endereco?.cidade?.nome}}</th>
                         <th>
                             <a class="p-ripple p-element p-button p-component p-button-icon-only p-button-rounded p-button-text"
                                routerLink="/crm/contato/editar/{{contato.idContato}}" aria-label="Novo">

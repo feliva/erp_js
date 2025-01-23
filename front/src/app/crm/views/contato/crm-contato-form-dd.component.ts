@@ -1,9 +1,5 @@
-import {
-    Component,
-    inject, Input,
-    OnInit
-} from '@angular/core';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Component, inject, OnInit} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ButtonModule} from 'primeng/button';
 import {DropdownModule} from 'primeng/dropdown';
 import {InputNumberModule} from 'primeng/inputnumber';
@@ -15,67 +11,108 @@ import {Contato} from "../../../model/Contato";
 import {ReactMessageValidationComponent} from "../../../shared/message-validation/react-message-validation.component";
 import {InputMaskModule} from "primeng/inputmask";
 import {CrmContatoService} from "../services/crm-contato.service";
-import {Location} from "@angular/common";
-import {FormOperacoesComuns} from "../../../shared/FormOperacoesComuns";
 import {FiltroServices} from "../../../service/FiltroServices";
 import {forkJoin} from "rxjs";
 import {CidadeService} from "../../../service/cidade.service";
 import {Cidade, Estado} from "../../../model/Cidade";
-import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {FormDynamicDialogOperacoesComuns} from "../../../shared/FormDynamicDialogOperacoesComuns";
-import {Resposta} from "../../../model/Resposta";
 import {Select} from "primeng/select";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
     selector: 'crm-contato-form-dd',
     template: `
-        <div>
-            <p-panel header="{{labelForm}} Contato">
-                <form autocomplete="off" [formGroup]="formGroup" (ngSubmit)="onSubmit($event)">
-                    <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-2">
-                        <div class="md:col-span-1">
-                            <app-react-message-validation label="Nome">
-                                <input pInputText type="text" formControlName="nome" class="w-full">
-                            </app-react-message-validation>
+        <div class="p-panel p-component ">
+            <div class="p-panel-content-container">
+                <div class=" ">
+                    <form autocomplete="off" [formGroup]="formGroup" (ngSubmit)="onSubmit($event)">
+                        <p-panel header="{{labelForm}} Contato" styleClass="not-border">
+
+                            <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-2">
+                                <div class="md:col-span-1">
+                                    <app-react-message-validation label="Nome">
+                                        <input pInputText type="text" formControlName="nome" class="w-full">
+                                    </app-react-message-validation>
+                                </div>
+                                <div class="md:col-span-1">
+                                    <app-react-message-validation label="E-mail">
+                                        <input pInputText type="email" class="w-full" formControlName="email"/>
+                                    </app-react-message-validation>
+                                </div>
+                                <div class="md:col-span-1">
+                                    <app-react-message-validation label="Celular">
+                                        <p-inputMask mask="(99) 9999-9999" formControlName="celular"
+                                                     placeholder="(99) 9999-9999" class="grid"></p-inputMask>
+                                    </app-react-message-validation>
+                                </div>
+                            </div>
+
+                        </p-panel>
+
+                        <p-panel header="Endereço" styleClass="mt-2 not-border">
+                            <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-2" formGroupName="endereco">
+                                <div class="md:col-span-1">
+                                    <label>Estado</label>
+                                    <p-select [options]="listEstados" formControlName="estado" optionLabel="nome"
+                                              class="w-full" (onChange)="changeEstado($event.value)"/>
+                                </div>
+                                <div class="md:col-span-1">
+                                    <app-react-message-validation label="Cidade">
+                                        <p-select [options]="listCidades" formControlName="cidade" optionLabel="nome"
+                                                  [filter]="true" filterBy="nome" placeholder="Selecione uma cidade"
+                                                  class="w-full"/>
+                                    </app-react-message-validation>
+                                </div>
+                                <div class="md:col-span-1">
+                                    <label>Cep</label>
+                                    <p-inputMask mask="99999-999" formControlName="cep" class="grid"></p-inputMask>
+                                </div>
+
+                                <div class="md:col-span-1">
+                                    <label>Bairro</label>
+                                    <input pInputText type="text" class="w-full" formControlName="bairro"/>
+                                </div>
+                                <div class="md:col-span-1">
+                                    <label>Logradouro</label>
+                                    <input pInputText type="text" class="w-full" formControlName="logradouro"/>
+                                </div>
+
+                                <div class="md:col-span-1">
+                                    <label>Número</label>
+                                    <input pInputText type="text" class="w-full" formControlName="numero"/>
+                                </div>
+                                <div class="md:col-span-1">
+                                    <label>Complemento</label>
+                                    <input pInputText type="text" class="w-full" formControlName="complemento"/>
+                                </div>
+                            </div>
+                        </p-panel>
+
+
+                        <div class="p-panel p-component mt-2 not-border">
+                            <div class="p-panel-content-container">
+                                <div class="p-panel-content ">
+                                    <div class="flex pt-6">
+                                        <div class="pr-5">
+                                            <p-button [raised]="true" type="submit" [disabled]="!formGroup.valid">
+                                                <i class="pi pi-check mr-2"></i>
+                                                <span>Enviar</span>
+                                            </p-button>
+                                        </div>
+                                        <div class="">
+                                            <p-button severity="secondary" [raised]="true"
+                                                      (onClick)="onCancelarForm($event)">
+                                                <i class="pi pi-times mr-2"></i>
+                                                <span>Cancelar</span>
+                                            </p-button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="md:col-span-1">
-                            <app-react-message-validation label="E-mail">
-                                <input pInputText type="email" class="w-full" formControlName="email"/>
-                            </app-react-message-validation>
-                        </div>
-                        <div class="md:col-span-1">
-                            <app-react-message-validation label="Celular">
-                                <p-inputMask mask="(99) 9999-9999" formControlName="celular"
-                                             placeholder="(99) 9999-9999" class="grid"/>
-                            </app-react-message-validation>
-                        </div>
-                        <div class="md:col-span-1">
-                            <label>Estado</label>
-                            <p-select [options]="listEstados" formControlName="estado" optionLabel="nome" class="w-full" (onChange)="changeEstado($event.value)"/>
-                        </div>
-                        <div class="md:col-span-1">
-                            <app-react-message-validation label="Cidade">
-                                <p-select [options]="listCidades" formControlName="cidade" optionLabel="nome" [filter]="true" filterBy="nome" placeholder="Selecione uma cidade" class="w-full"/>
-                            </app-react-message-validation>
-                        </div>
-                    </div>
-                    <div class="flex pt-10">
-                        <div class="pr-5">
-                            <p-button [raised]="true" type="submit" [disabled]="!formGroup.valid">
-                                <i class="pi pi-check mr-2"></i>
-                                <span>Enviar</span>
-                            </p-button>
-                        </div>
-                        <div class="">
-                            <p-button severity="secondary" [raised]="true" (onClick)="onCancelarForm($event)">
-                                <i class="pi pi-times mr-2"></i>
-                                <span>Cancelar</span>
-                            </p-button>
-                        </div>
-                    </div>
-                </form>
-            </p-panel>
+                    </form>
+                </div>
+            </div>
         </div>
     `,
     styles: [`
@@ -94,7 +131,7 @@ import {ActivatedRoute} from "@angular/router";
         EditorModule,
         AutoCompleteModule,
         InputMaskModule,
-        Select
+        Select,
     ]
 })
 export class CrmContatoFormDdComponent extends FormDynamicDialogOperacoesComuns<Contato> implements OnInit {
@@ -147,7 +184,7 @@ export class CrmContatoFormDdComponent extends FormDynamicDialogOperacoesComuns<
         } else {
             forkJoin({
                 lEstado: this.cidadeService.listAllEstados(),
-                lCidade: this.cidadeService.listAllByEstado(this.entity.cidade?.estado?.idEstado),
+                lCidade: this.cidadeService.listAllByEstado(this.entity?.endereco?.cidade?.estado?.idEstado),
             }).subscribe(({lEstado,lCidade}) => {
                 this.listEstados = lEstado;
                 this.listCidades = lCidade;
@@ -158,12 +195,7 @@ export class CrmContatoFormDdComponent extends FormDynamicDialogOperacoesComuns<
 
     public formToObject(): Contato {
         // let contatoForm: Contato = new Contato();
-        this.entity.idContato = this.formGroup.controls['idContato'].value;
-        this.entity.nome = this.formGroup.controls['nome'].value;
-        this.entity.email = this.formGroup.controls['email'].value;
-        this.entity.celular = this.formGroup.controls['celular'].value;
-        this.entity.cidade = this.formGroup.controls['cidade'].value;
-        return this.entity;
+        return this.formGroup.getRawValue();
     }
 
     ngOnInit() {
@@ -174,13 +206,7 @@ export class CrmContatoFormDdComponent extends FormDynamicDialogOperacoesComuns<
         if(clean){
             this.entity = new Contato();
         }
-        this.formGroup =  new FormGroup({
-            idContato: new FormControl(this.entity?.idContato),
-            nome:new FormControl(this.entity?.nome, [Validators.required]),
-            email:new FormControl(this.entity?.email, [Validators.required,Validators.email]),
-            celular:new FormControl(this.entity?.celular, [Validators.required]),
-            cidade:new FormControl(this.entity?.cidade, []),
-            estado:new FormControl(this.entity?.cidade?.estado, []),
-        });
+        this.formGroup = Contato.CreateFormGroup(this.entity);
+        this.formGroup.patchValue(this.entity);
     }
 }

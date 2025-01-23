@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {BUILDER_MENU_UNIDADE} from "../../estoque/unidade/unidade.router";
 
-import { PanelMenuModule } from 'primeng/panelmenu';
+import {PanelMenuModule} from 'primeng/panelmenu';
 import {BUILDER_MENU_PRODUTO} from "../../estoque/produto/produto.routes";
 import {BUILDER_MENU_MOVIMENTACAO} from "../../estoque/movimentacao/movimentacao.routes";
 import {BUILDER_MENU_CONTATO} from "../../crm/views/contato/contato.router";
@@ -11,7 +11,7 @@ import {BUILDER_MENU_EMPRESAS} from "../../crm/views/empresas/empresas.router";
 @Component({
     selector: 'app-nav',
     template: `
-        <div class="size-app-nav">
+        <div class="size-app-nav ">
             <p-panelMenu [model]="menus" class="w-max"></p-panelMenu>
         </div>
     `,
