@@ -1,25 +1,16 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute, Router, RouterLink} from "@angular/router";
-import {ConfirmationService, LazyLoadEvent, MessageService, SharedModule} from "primeng/api";
-import {Unidade} from "../../../model/Unidade";
+import {RouterLink} from "@angular/router";
+import {SharedModule} from "primeng/api";
 import {ButtonModule} from 'primeng/button';
-import {TableLazyLoadEvent, TableModule, TablePageEvent} from 'primeng/table';
-import {NgIf, AsyncPipe} from '@angular/common';
+import {TableModule} from 'primeng/table';
 import {PanelModule} from 'primeng/panel';
-import {CrmContatoService} from "../services/crm-contato.service";
-import {Observable} from "rxjs";
 import {Contato} from "../../../model/Contato";
 import {InputTextModule} from "primeng/inputtext";
 import {PaginatorModule} from "primeng/paginator";
 import {FieldsetModule} from "primeng/fieldset";
-import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {HttpParams} from "@angular/common/http";
-import {DataRowOutlet} from "@angular/cdk/table";
-import {Produto} from "../../../model/Produto";
+import {ReactiveFormsModule} from "@angular/forms";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
-import {AppMessageService} from "../../../service/app-message.service";
 import {ListarOperacoesComuns} from "../../../shared/ListarOperacoesComuns";
-import {Services} from "../../../service/services";
 import {FiltroServices} from "../../../service/FiltroServices";
 import {Empresa} from "../../../model/Empresa";
 import {CrmEmpresaService} from "../services/crm-empresa.service";
@@ -78,12 +69,20 @@ import {CrmEmpresaService} from "../services/crm-empresa.service";
                      (onLazyLoad)="onLazyLoad($event)"
                      (onPage)="onPage($event)"
                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                     [rowsPerPageOptions]="[20, 40, 80,160]">
+                     [rowsPerPageOptions]="[20, 40, 80,160]"
+                     sortField="nomeFantasia" [sortOrder]="-1"
+                     sortMode="multiple">
                 <!--                   "-->
                 <ng-template pTemplate="header">
                     <tr>
                         <th>id</th>
-                        <th>Nome Fantasia</th>
+                        <th>
+                            <span pSortableColumn="nomeFantasia">
+                                Nome Fantasia
+                                <p-sortIcon field="nomenomeFantasia"/>
+                            </span>
+                            <p-columnFilter type="text" field="nomeFantasia" placeholder="Nome"
+                                            ariaLabel="Filtro Nome" display="menu" showMenu="true" ></p-columnFilter></th>
                         <th>E-mail</th>
                         <th>Razao Social</th>
                         <th></th>

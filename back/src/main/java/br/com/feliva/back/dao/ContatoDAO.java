@@ -1,11 +1,9 @@
 package br.com.feliva.back.dao;
 
 import br.com.feliva.back.interfaces.ComunDAO;
-import br.com.feliva.back.interfaces.PaginadoDAO;
 import br.com.feliva.back.models.Contato;
 import br.com.feliva.back.util.primeng.FilterMetaData;
 import br.com.feliva.back.util.primeng.LazyConsultConfig;
-import br.com.feliva.back.util.primeng.SortMeta;
 import br.com.feliva.back.util.primeng.TableLazyLoadEvent;
 import br.com.feliva.sharedClass.db.DAO;
 import jakarta.enterprise.context.RequestScoped;
@@ -21,7 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @SuppressWarnings("all")
 @RequestScoped
 @Default
-public class ContatoDAO extends DAO<Contato> implements ComunDAO<Contato>, PaginadoDAO<Contato> {
+public class ContatoDAO extends DAO<Contato> implements ComunDAO<Contato> {
 
     static final Map<String, LazyConsultConfig> lCConfigs = new HashMap<String, LazyConsultConfig>();
 
@@ -48,29 +46,6 @@ public class ContatoDAO extends DAO<Contato> implements ComunDAO<Contato>, Pagin
         } catch (NoResultException e) {
             return null;
         }
-    }
-
-    public String geraOrderBy(TableLazyLoadEvent event){
-        StringBuffer orderBy = new StringBuffer(" order by ");
-
-        if(event.getMultiSortMeta() == null){
-            LazyConsultConfig lcc = lCConfigs.get(event.getSortField());
-            orderBy.append(lcc.getOrderBy());
-            orderBy.append(event.getSortOrderDesc());
-            return orderBy.toString();
-        }
-
-        for(SortMeta sort : event.getMultiSortMeta()){
-            LazyConsultConfig lcc = lCConfigs.get(sort.getField());
-
-            if(lcc != null){
-                orderBy.append(lcc.getOrderBy());
-                orderBy.append(sort.getOrderDesc());
-                orderBy.append(", ");
-            }
-        }
-
-        return orderBy.toString().substring(0, orderBy.length()-2);
     }
 
     @Override
@@ -104,7 +79,7 @@ public class ContatoDAO extends DAO<Contato> implements ComunDAO<Contato>, Pagin
                 hql.append(where);
             }
 
-            hql.append(this.geraOrderBy(event));
+            hql.append(this.geraOrderBy(event,lCConfigs));
 
             Query query = this.em.createQuery(hql.toString());
 
@@ -169,37 +144,4 @@ public class ContatoDAO extends DAO<Contato> implements ComunDAO<Contato>, Pagin
         hql.append(join).append(w).append(" order by c.nome");
         return paramMap;
     }
-
-    public List<Contato> listPaginado(Integer first, Integer rows, Map<String, Object> filter) {
-        try {
-            StringBuffer hql = new StringBuffer("select c from Contato c ");
-            Map<String, String> paramMap = this.criaQueryPaginando(hql, filter);
-
-            Query query = this.em.createQuery(hql.toString());
-            if (first != null) {
-                query.setFirstResult(first).setMaxResults(rows);
-            }
-
-            paramMap.forEach((s, s2) -> {
-                query.setParameter(s, s2);
-            });
-
-            return query.getResultList();
-        } catch (NoResultException e) {
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public Integer paginadoCount(Integer first, Integer rows, Map<String, Object> filter) {
-        try {
-            return this.listPaginado(null, null, filter).size();
-        } catch (NoResultException e) {
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
 }

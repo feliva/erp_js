@@ -7,13 +7,12 @@ import br.com.feliva.back.interfaces.ComunDAO;
 import br.com.feliva.back.models.Empresa;
 import br.com.feliva.back.models.Resposta;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Path("/crm/empresa")
 @SuppressWarnings("all")
@@ -44,34 +43,6 @@ public class CRMEmpresaEndPoint extends ComumEndPoint<EmpresasDAO, Empresa> {
         return (ComunDAO<Empresa>) empresasDAO;
     }
 
-    @Path("/paginado")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response paginado(@QueryParam("first") Integer first,
-                             @QueryParam("rows") Integer rows,
-                             @QueryParam("nomeFantasia") String nome){
-        Map<String,Object> param = new HashMap<>();
-        param.put("nome",nome);
-
-        List<Empresa> listEmpresa = this.empresasDAO.listPaginado(first, rows, param);
-
-
-        List<EmpresaDTO> listEmpresaDTO = (List<EmpresaDTO>) this.dtoUtil.toDTO(listEmpresa);
-
-        return Response.ok(listEmpresaDTO).build();
-    }
-
-    @Path("/paginadoCount")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response paginadoCount(@QueryParam("first") Integer first,
-                                  @QueryParam("rows") Integer rows,
-                                  @QueryParam("nomeFantasia") String nome){
-        Map<String,Object> param = new HashMap<>();
-        param.put("nomeFantasia",nome);
-        return Response.ok(this.empresasDAO.paginadoCount(first, rows, param)).build();
-    }
-
 
     @Path("/{id}")
     @GET
@@ -90,5 +61,10 @@ public class CRMEmpresaEndPoint extends ComumEndPoint<EmpresasDAO, Empresa> {
             System.out.println(e.getMessage());
             return Resposta.buildResponse(id, Resposta.Error.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @Override
+    public DTOUtil getDTOUtil() {
+        return this.dtoUtil;
     }
 }

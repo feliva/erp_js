@@ -1,6 +1,7 @@
 package br.com.feliva.back.endPoint;
 
 import br.com.feliva.back.dao.TipoContatoEmpresaDAO;
+import br.com.feliva.back.dto.DTOUtil;
 import br.com.feliva.back.interfaces.ComunDAO;
 import br.com.feliva.back.models.TipoContatoEmpresa;
 import jakarta.inject.Inject;
@@ -27,6 +28,11 @@ public class CRMTipoContatoEmpresaEndPoint extends ComumEndPoint<TipoContatoEmpr
 
     protected ComunDAO<TipoContatoEmpresa> getDao() {
         return (ComunDAO<TipoContatoEmpresa>) dao;
+    }
+
+    @Override
+    public DTOUtil getDTOUtil() {
+        return null;
     }
 
 }

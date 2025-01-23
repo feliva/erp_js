@@ -3,6 +3,7 @@ package br.com.feliva.back.dao;
 import br.com.feliva.back.dto.EmpresaDTO;
 import br.com.feliva.back.interfaces.ComunDAO;
 import br.com.feliva.back.models.Empresa;
+import br.com.feliva.back.util.primeng.FilterMetaData;
 import br.com.feliva.back.util.primeng.LazyConsultConfig;
 import br.com.feliva.back.util.primeng.TableLazyLoadEvent;
 import br.com.feliva.sharedClass.db.DAO;
@@ -14,6 +15,7 @@ import jakarta.persistence.Query;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @SuppressWarnings("all")
 @RequestScoped
@@ -23,7 +25,7 @@ public class EmpresasDAO extends DAO<Empresa> implements ComunDAO<Empresa> {
     static final Map<String, LazyConsultConfig> lCConfigs = new HashMap<String, LazyConsultConfig>();
 
     static{
-        lCConfigs.put("nome",new LazyConsultConfig("","e.nomeFantasia","e.nomeFantasia"));
+        lCConfigs.put("nomeFantasia",new LazyConsultConfig("","e.nomeFantasia","e.nomeFantasia"));
         lCConfigs.put("email",new LazyConsultConfig("","e.email","e.email"));
     }
 
@@ -93,65 +95,61 @@ public class EmpresasDAO extends DAO<Empresa> implements ComunDAO<Empresa> {
         return paramMap;
     }
 
-    public List<Empresa> listPaginado(Integer first, Integer rows, Map<String, Object> filter){
-        try {
-            StringBuffer hql = new StringBuffer("select e from Empresa e ");
-            Map<String,String> paramMap =  this.criaQueryPaginando(hql,filter);
 
-            Query query = this.em.createQuery(hql.toString());
-            if(first != null) {
-                query.setFirstResult(first).setMaxResults(rows);
-            }
 
-            paramMap.forEach((s, s2) -> {
-                query.setParameter(s, s2);
-            });
-
-            return query.getResultList();
-        }catch (NoResultException e){
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public Integer paginadoCount(Integer first, Integer rows,Map<String, Object> filter){
-        try {
-            return this.listPaginado(null,null,filter).size();
-        }catch (NoResultException e){
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return 0;
-    }
 
     @Override
     public List<Empresa> tableLazyLoad(TableLazyLoadEvent event) {
         try {
-            StringBuffer hql = new StringBuffer("select e from Empresa e ");
-            StringBuffer where = new StringBuffer();
+            final StringBuffer hql = new StringBuffer("select e from Empresa e ");
+            hql.append("left join fetch e.endereco en ")
+                    .append("left join fetch en.cidade ci ")
+                    .append("left join fetch ci.estado es ");
+            final StringBuffer where = new StringBuffer();
 
-            event.getFilters().forEach((String key, List value) -> {
-                value.forEach(o -> {
-                    System.out.println(key);
-                    System.out.println(o);
-                });
+            final AtomicInteger seq = new AtomicInteger();
+
+            event.getFilters().forEach((String key, List list) -> {
+                LazyConsultConfig tj = lCConfigs.get(key);
+                if (tj != null) {
+                    list.forEach(o -> {
+                        FilterMetaData fd = (FilterMetaData) o;
+                        if (!where.isEmpty()) {
+                            where.append(fd.getOperator().getOperador());
+                        }
+
+                        fd.geraPSName(seq.get());
+                        where.append(tj.getWhere() + fd.getMatchMode().getTypeOperador() + ":" + fd.getPsName());
+                    });
+                }
             });
 
-            Map<String,String> paramMap =  new HashMap<>();
+            if (!where.isEmpty()) {
+                hql.append(" where ");
+                hql.append(where);
+            }
+
+            hql.append(this.geraOrderBy(event,lCConfigs));
 
             Query query = this.em.createQuery(hql.toString());
-            if(event.getFirst() != null) {
+
+            event.getFilters().forEach((String key, List value) -> {
+                LazyConsultConfig tj = lCConfigs.get(key);
+                if (tj != null) {
+                    value.forEach(o -> {
+                        FilterMetaData fd = (FilterMetaData) o;
+                        query.setParameter(fd.getPsName(), fd.geraValor());
+                    });
+                }
+            });
+
+            if (event.getFirst() != null) {
                 query.setFirstResult(event.getFirst()).setMaxResults(event.getRows());
             }
 
-            paramMap.forEach((s, s2) -> {
-                query.setParameter(s, s2);
-            });
-
             return query.getResultList();
-        }catch (NoResultException e){
-        }catch (Exception e){
+        } catch (NoResultException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -159,7 +157,8 @@ public class EmpresasDAO extends DAO<Empresa> implements ComunDAO<Empresa> {
 
     @Override
     public Integer tableLazyLoadCount(TableLazyLoadEvent filters) {
-        return 0;
+        return this.tableLazyLoad(filters).size();
     }
+
 
 }

@@ -1,5 +1,6 @@
 package br.com.feliva.back.endPoint;
 
+import br.com.feliva.back.dto.DTOUtil;
 import br.com.feliva.back.interfaces.ComunDAO;
 import br.com.feliva.back.models.Resposta;
 import br.com.feliva.back.util.ValidadorUtill;
@@ -20,6 +21,8 @@ public abstract class ComumEndPoint<I extends DAO<M>, M extends Model<?>> {
     ValidadorUtill validadorUtill;
 
     protected abstract ComunDAO<M> getDao();
+
+
 
     @Path("/{id}")
     @GET
@@ -73,7 +76,11 @@ public abstract class ComumEndPoint<I extends DAO<M>, M extends Model<?>> {
     public  Response  tableLazyLoad(TableLazyLoadEvent obj) throws RollbackException {
         try {
             List<M> list = this.getDao().tableLazyLoad(obj);
-            return Response.ok(list).build();
+            if(this.tableLazyReturnModel()) {
+                return Response.ok(list).build();
+            }else{
+                return Response.ok(this.getDTOUtil().toDTO(list)).build();
+            }
         }catch (Exception e){
             return Resposta.buildResponse(Resposta.Error.GENERIC_ERROR);
         }
@@ -91,4 +98,11 @@ public abstract class ComumEndPoint<I extends DAO<M>, M extends Model<?>> {
         }
     }
 
+    public boolean tableLazyReturnModel(){
+        return false;
+    }
+
+    public DTOUtil getDTOUtil(){
+        return null;
+    }
 }
