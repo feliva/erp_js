@@ -48,6 +48,21 @@ public class ContatoDAO extends DAO<Contato> implements ComunDAO<Contato> {
         }
     }
 
+    public List<Contato> findByNome(String nome) {
+        try {
+            String hql = """
+                    select c from Contato c where c.nome ilike :nome order by c.nome asc
+                    """;
+            Query query = this.em.createQuery(hql);
+            query.setParameter("nome", "%" + nome + "%");
+            return (List<Contato>) query.getResultList();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        return null;
+    }
+
     @Override
     public List<Contato> tableLazyLoad(TableLazyLoadEvent event) {
         try {
@@ -96,8 +111,8 @@ public class ContatoDAO extends DAO<Contato> implements ComunDAO<Contato> {
             if (event.getFirst() != null) {
                 query.setFirstResult(event.getFirst()).setMaxResults(event.getRows());
             }
-
-            return query.getResultList();
+            List<Contato> l = query.getResultList();
+            return l;
         } catch (NoResultException e) {
         } catch (Exception e) {
             e.printStackTrace();
@@ -121,27 +136,27 @@ public class ContatoDAO extends DAO<Contato> implements ComunDAO<Contato> {
         }
     }
 
-    private Map<String, String> criaQueryPaginando(StringBuffer hql, Map<String, Object> filter) {
-        Map<String, String> paramMap = new HashMap<>();
-
-        StringBuffer join = new StringBuffer("");
-        StringBuffer whereClause = new StringBuffer("and ");
-        String w = "";
-
-        String string = (String) filter.get("nome");
-
-        if (string != null && !string.isEmpty()) {
-            whereClause.append("and c.nome like :nome ");
-            paramMap.put("nome", string + "%");
-        }
-        //proximo
-
-        if (!paramMap.isEmpty()) {
-            w = "where " + whereClause.delete(0, 3).toString();
-        }
-
-
-        hql.append(join).append(w).append(" order by c.nome");
-        return paramMap;
-    }
+//    private Map<String, String> criaQueryPaginando(StringBuffer hql, Map<String, Object> filter) {
+//        Map<String, String> paramMap = new HashMap<>();
+//
+//        StringBuffer join = new StringBuffer("");
+//        StringBuffer whereClause = new StringBuffer("and ");
+//        String w = "";
+//
+//        String string = (String) filter.get("nome");
+//
+//        if (string != null && !string.isEmpty()) {
+//            whereClause.append("and c.nome like :nome ");
+//            paramMap.put("nome", string + "%");
+//        }
+//        //proximo
+//
+//        if (!paramMap.isEmpty()) {
+//            w = "where " + whereClause.delete(0, 3).toString();
+//        }
+//
+//
+//        hql.append(join).append(w).append(" order by c.nome");
+//        return paramMap;
+//    }
 }

@@ -82,6 +82,7 @@ public abstract class ComumEndPoint<I extends DAO<M>, M extends Model<?>> {
                 return Response.ok(this.getDTOUtil().toDTO(list)).build();
             }
         }catch (Exception e){
+            System.out.println(e.getMessage());
             return Resposta.buildResponse(Resposta.Error.GENERIC_ERROR);
         }
     }
@@ -94,6 +95,7 @@ public abstract class ComumEndPoint<I extends DAO<M>, M extends Model<?>> {
         try {
             return Response.ok(this.getDao().tableLazyLoadCount(obj)).build();
         }catch (Exception e){
+            System.out.println(e.getMessage());
             return Resposta.buildResponse(Resposta.Error.GENERIC_ERROR);
         }
     }
@@ -103,6 +105,6 @@ public abstract class ComumEndPoint<I extends DAO<M>, M extends Model<?>> {
     }
 
     public DTOUtil getDTOUtil(){
-        return null;
+        throw new RuntimeException(String.format("DTOTransformer não esta definido em %s.", this.getClass().toString()));
     }
 }

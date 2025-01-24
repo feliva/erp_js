@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http'
 import {Observable} from "rxjs";
 import {Contato} from "../../../model/Contato";
-import {Services} from "../../../service/services";
 import {FormControl, FormGroup} from "@angular/forms";
 import {FiltroServices} from "../../../service/FiltroServices";
 
@@ -32,9 +30,15 @@ export class CrmContatoService extends FiltroServices<Contato> {
   public converteToIntance(observable:Observable<any>):Observable<any>{
     return observable
   }
+
   public converteToArrayIntance(observable:Observable<any>):Observable<any>{
     return observable
   }
+
+  public listByNome(param: string): Observable<Contato[]> {
+    return this.http.get<Contato[]>(this.serverUrl + this.getPath() + "/listByNome/"+param);
+  }
+
 
   static inicializaFiltro():FormGroup{
     return new FormGroup({

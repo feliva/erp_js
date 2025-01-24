@@ -1,12 +1,12 @@
 package br.com.feliva.back.endPoint;
 
 import br.com.feliva.back.dao.ContatoDAO;
-import br.com.feliva.back.dto.DTOUtil;
 import br.com.feliva.back.interfaces.ComunDAO;
 import br.com.feliva.back.models.Contato;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
@@ -34,9 +34,14 @@ public class CRMContatoEndPoint extends ComumEndPoint<ContatoDAO,Contato> {
         return (ComunDAO<Contato>) contatoDAO;
     }
 
-    @Override
-    public DTOUtil getDTOUtil() {
-        return null;
+    @Path("/listByNome/{param}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listAll(@PathParam("param") String param){
+        return Response.ok(this.contatoDAO.findByNome(param)).build();
     }
 
+    public boolean tableLazyReturnModel(){
+        return true;
+    }
 }

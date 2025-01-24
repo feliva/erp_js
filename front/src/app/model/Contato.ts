@@ -8,6 +8,9 @@ export class Contato {
   celular?: string;
   endereco?: Endereco;
 
+  get teste(){
+    return "teste";
+  }
 
   static CreateFormGroup(entity: Contato) {
     return new FormGroup({

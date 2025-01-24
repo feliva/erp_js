@@ -43,22 +43,8 @@ import {FormDynamicDialogOperacoesComuns} from "../../../shared/FormDynamicDialo
                     <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-4">
                         <div class="md:col-span-2">
                             <app-react-message-validation label="Contato">
-<!--                                <p-autocomplete (ngModel)]="selectedCountryAdvanced" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" optionLabel="name">-->
-<!--                                    <ng-template let-country #item>-->
-<!--                                        <div class="flex items-center gap-2">-->
-<!--                                            <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + country.code.toLowerCase()" style="width: 18px" />-->
-<!--                                            <div>{{ country.name }}</div>-->
-<!--                                        </div>-->
-<!--                                    </ng-template>-->
-<!--                                    <ng-template #header>-->
-<!--                                        <div class="font-medium px-3 py-2">Available Countries</div>-->
-<!--                                    </ng-template>-->
-<!--                                    <ng-template #footer>-->
-<!--                                        <div class="px-3 py-3">-->
-<!--                                            <p-button label="Add New" fluid severity="secondary" text size="small" icon="pi pi-plus" />-->
-<!--                                        </div>-->
-<!--                                    </ng-template>-->
-<!--                                </p-autocomplete>-->
+                                <p-autocomplete [suggestions]="lConatos" (completeMethod)="filterContato($event)" optionLabel="teste" formControlName="contato">
+                                </p-autocomplete>
                             </app-react-message-validation>
                         </div>
                     </div>
@@ -113,25 +99,38 @@ export class CrmContatoEmpresasForm extends FormDynamicDialogOperacoesComuns<Con
     tipoCEService:CrmTipoContatoEmpresaService = inject(CrmTipoContatoEmpresaService);
     contatoService:CrmContatoService =  inject(CrmContatoService);
 
-    lTipoCE:TipoContatoEmpresa[] = []
+    lTipoCE?:TipoContatoEmpresa[] = []
     lConatos:Contato[] = [];
 
     constructor(private location: Location) {
         super();
     }
 
-    filterContato(event: AutoCompleteCompleteEvent) {
+    filterContato(event:AutoCompleteCompleteEvent) {
         let filtered: any[] = [];
         let query = event.query;
+        this.lConatos = [];
+        this.contatoService.listByNome(event.query).subscribe(res => {
+            res.forEach(value => {
+                let c =  new Contato()
+                c.nome = value.nome;
+                c.idContato= value.idContato;
+                // @ts-ignore
+                this.lConatos.push(c);
+            });
+            this.lConatos = res;
+            console.log(this.lConatos)
+        });
+    }
 
-        // this.contatoService.findByNome()
-        //
-        // this.filteredCountries = filtered;
+    display(contato:Contato){
+        return contato.idContato;
     }
 
     public override getService(): FiltroServices<ContatoEmpresa> {
         return this.service;
     }
+
 
     getUrlOnCancelarForm(): string {
         return '/crm/empresa/listar';

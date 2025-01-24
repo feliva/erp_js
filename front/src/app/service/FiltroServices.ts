@@ -9,14 +9,6 @@ export abstract class FiltroServices<T> extends Services<T> {
 
     public abstract limpaFiltros(): void;
 
-    public paginado(queryParam: string): Observable<T[]> {
-        return this.http.get<T[]>(this.serverUrl + this.getPath() + "/paginado" + queryParam);
-    }
-
-    public paginadoCount(queryParam: string): Observable<number> {
-        return this.http.get<number>(this.serverUrl + this.getPath() + "/paginadoCount" + queryParam)
-    }
-
     public tableLazyLoad(event:TableLazyLoadEvent): Observable<T[]> {
         return this.send(event,'/tableLazyLoad')
     }
@@ -24,4 +16,12 @@ export abstract class FiltroServices<T> extends Services<T> {
     public tableLazyLoadCount(event:TableLazyLoadEvent): Observable<number> {
         return this.send(event,'/tableLazyLoadCount')
     }
+
+    // getlazy(){
+    //     let e:TableLazyLoadEvent = {filters: {
+    //             nome:{value:"",operator:"or",matchMode:""},
+    //             cpf:{}
+    //         }
+    //     };
+    // }
 }
