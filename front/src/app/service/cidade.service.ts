@@ -13,14 +13,14 @@ export class CidadeService extends Services<Cidade> {
     }
 
     public listAllEstados(): Observable<Estado[]> {
-        return this.http.get<Estado[]>(this.serverUrl + this.getPath() + "/listAllEstados");
+        return this.http.getAndMap<Estado>(this.serverUrl + this.getPath() + "/listAllEstados", Cidade);
     }
 
-    public listAllByEstado(idEstado:number|undefined): Observable<Cidade[]> {
-        if(!idEstado){
+    public listAllByEstado(idEstado: number | undefined): Observable<Cidade[]> {
+        if (!idEstado) {
             return of([]);
         }
-        return this.http.get<Cidade[]>(this.serverUrl + this.getPath() + "/listAllByEstado/"+idEstado);
+        return this.http.getAndMap<Cidade>(this.serverUrl + this.getPath() + "/listAllByEstado/" + idEstado, Cidade);
     }
 
     public converteToIntance(observable: Observable<any>): Observable<any> {
@@ -34,4 +34,9 @@ export class CidadeService extends Services<Cidade> {
     constructor() {
         super();
     }
+
+    public getEntityType(): new () => Cidade {
+        return Cidade; // Retorna o tipo da entidade
+    }
+
 }

@@ -3,7 +3,7 @@ import {Observable} from "rxjs";
 import {TableLazyLoadEvent} from "primeng/table";
 import {Services} from "./services";
 
-export abstract class FiltroServices<T> extends Services<T> {
+export abstract class FiltroServices<T extends object> extends Services<T> {
 
     public abstract getFiltrosForm(): FormGroup;
 

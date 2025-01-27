@@ -36,7 +36,7 @@ export class CrmContatoService extends FiltroServices<Contato> {
   }
 
   public listByNome(param: string): Observable<Contato[]> {
-    return this.http.get<Contato[]>(this.serverUrl + this.getPath() + "/listByNome/"+param);
+    return this.http.getAndMap<Contato>(this.serverUrl + this.getPath() + "/listByNome/"+param, this.getEntityType());
   }
 
 
@@ -44,6 +44,10 @@ export class CrmContatoService extends FiltroServices<Contato> {
     return new FormGroup({
       nome: new FormControl(''),
     });
+  }
+
+  public getEntityType(): new () => Contato {
+    return Contato; // Retorna o tipo da entidade
   }
 
 }

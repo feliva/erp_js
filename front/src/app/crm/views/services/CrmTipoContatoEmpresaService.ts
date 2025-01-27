@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
 import {FormControl, FormGroup} from "@angular/forms";
 import {FiltroServices} from "../../../service/FiltroServices";
 import {TipoContatoEmpresa} from "../../../model/TipoContatoEmpresa";
@@ -27,17 +26,14 @@ export class CrmTipoContatoEmpresaService extends FiltroServices<TipoContatoEmpr
     return "/back/crm/tipoContatoEmpresa";
   }
 
-  public converteToIntance(observable:Observable<any>):Observable<any>{
-    return observable
-  }
-  public converteToArrayIntance(observable:Observable<any>):Observable<any>{
-    return observable
-  }
-
   public inicializaFiltro():FormGroup{
     return new FormGroup({
       nome: new FormControl(''),
     });
   }
+  public getEntityType(): new () => TipoContatoEmpresa {
+    return TipoContatoEmpresa; // Retorna o tipo da entidade
+  }
+
 
 }

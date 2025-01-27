@@ -1,11 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http'
-import {Usuario} from "../model/Usuario";
 import {Services} from "./services";
-import {Unidade} from "../model/Unidade";
 import {Observable} from "rxjs";
-import {Produto} from "../model/Produto";
-import {TableLazyLoadEvent} from "primeng/table";
 import {Categoria} from "../model/Categoria";
 import {FormControl, FormGroup} from "@angular/forms";
 
@@ -40,5 +35,9 @@ export class CategoriaService extends Services<Categoria> {
   // public findById(idCategoria: number): Observable<Categoria> {
   //   return this.getByUrl('/findById/' + idCategoria)
   // }
+
+  public getEntityType(): new () => Categoria {
+    return Categoria; // Retorna o tipo da entidade
+  }
 
 }

@@ -1,5 +1,4 @@
-
-import {Component, inject, OnInit} from "@angular/core";
+import {inject} from "@angular/core";
 import {AppMessageService} from "../service/app-message.service";
 import {FiltroServices} from "../service/FiltroServices";
 import {BreadcrumbService} from "../components/breadcrumb/breadcrumb.service";
@@ -9,7 +8,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {Resposta} from "../model/Resposta";
 
 
-export abstract class FormOperacoesComuns<T>{
+export abstract class FormOperacoesComuns<T extends object>{
     protected appMessage: AppMessageService = inject(AppMessageService);
     protected breadservice:BreadcrumbService = inject(BreadcrumbService);
     protected activatedRoute: ActivatedRoute = inject(ActivatedRoute);

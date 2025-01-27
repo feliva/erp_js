@@ -14,11 +14,17 @@ export class CustomHttpClient extends HttpClient {
      * @param url URL da requisição
      * @param type Classe para a qual os objetos JSON serão transformados
      */
-    get<T>(url: string, type: new () => T): Observable<T[]> {
+    getAndMap<T extends object>(url: string, type: new () => T): Observable<T[]> {
         return super.get<T[]>(url).pipe(
-            map((data: T[]) => data.map(item => Object.assign(new type(), item)))
+            map((data: T[]) => data.map(item => Object.assign((new type()), item)))
         );
     }
+
+    // getArray<T[]>(url: string, type: new () => T): Observable<T[]> {
+    //     return super.get<T[]>(url).pipe(
+    //         map((data: T[]) => data.map(item => Object.assign((new type()), item)))
+    //     );
+    // }
 
     /**
      * Método para transformar um único objeto JSON em uma instância de classe.
@@ -26,7 +32,7 @@ export class CustomHttpClient extends HttpClient {
      * @param url URL da requisição
      * @param type Classe para a qual o objeto JSON será transformado
      */
-    getSingle<T>(url: string, type: new () => T): Observable<T> {
+    getSingle<T extends object >(url: string, type: new () => T): Observable<T> {
         return super.get<T>(url).pipe(
             map((data: T) => Object.assign(new type(), data))
         );

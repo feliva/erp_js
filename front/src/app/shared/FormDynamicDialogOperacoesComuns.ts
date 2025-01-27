@@ -8,7 +8,7 @@ import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
     template: '',
     standalone: false
 })
-export abstract class FormDynamicDialogOperacoesComuns<T> extends FormOperacoesComuns<T>{
+export abstract class FormDynamicDialogOperacoesComuns<T extends object> extends FormOperacoesComuns<T>{
 
     editando:boolean = false;
 

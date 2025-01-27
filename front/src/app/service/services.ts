@@ -1,62 +1,31 @@
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import {map, Observable, take} from "rxjs";
+import {HttpHeaders, HttpParams} from "@angular/common/http";
+import {Observable} from "rxjs";
 import {inject} from "@angular/core";
 import {TableLazyLoadEvent} from "primeng/table";
-import {Marca} from "../model/Marca";
-import {Movimentacao} from "../model/Movimentacao";
-import {FormGroup} from "@angular/forms";
-import {Contato} from "../model/Contato";
+import {CustomHttpClient} from "./CustomHttpClient";
 
-export abstract class Services<T>{
+export abstract class Services<T extends object>{
 
   serverUrl:string = 'http://localhost:8080';
-  http = inject(HttpClient)
   static headersForm = new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded',
     'Accept': 'application/json',
     'content-type': 'application/json'
   });
 
+  http = inject(CustomHttpClient);
+
   constructor(){
   }
 
   public abstract getPath():string;
 
-  public abstract converteToArrayIntance(observable:Observable<T[]>):Observable<T[]>;
-  public abstract converteToIntance(observable:Observable<T>):Observable<T>;
-
-  public listAll(): Observable<T[]>{
-    return this.http.get<T[]>(this.serverUrl + this.getPath() + "/listAll");
-  }
-
-  // public find(url:string): Observable<T[]>{
-  //   return this.http.get<T[]>(this.serverUrl + this.getPath() + '/' + url);
-  // }
-
-  public find(url:string,obj:any = undefined ): Observable<T[]>{
-    console.log('teste')
-    console.log(JSON.stringify(obj));
-    if(obj == undefined){
-      return this.http.get<T[]>(this.serverUrl + this.getPath() + '/' + url);
-    }else {
-      return this.http.get<T[]>(this.serverUrl + this.getPath() + '/' + url);
+  public find(url: string, obj: any = undefined): Observable<T[]> {
+    if (obj == undefined) {
+      return this.http.getAndMap(`${this.serverUrl}${this.getPath()}/${url}`, this.getEntityType());
+    } else {
+      return this.http.getAndMap(`${this.serverUrl}${this.getPath()}/${url}`, this.getEntityType());
     }
-  }
-
-  public raw(url:string,obj:any = undefined ): Observable<any>{
-    if(obj == undefined){
-      return this.http.get<any>(this.serverUrl + this.getPath() + '/' + url);
-    }else {
-      return this.http.get<any>(this.serverUrl + this.getPath() + '/' + url);
-    }
-  }
-
-  public dataListAll(arrow:(value: T[]) => void):void{
-    this.listAll().subscribe(arrow);
-  }
-
-  public getByUrl(url:string): Observable<T>{
-    return this.http.get<T>(this.serverUrl + this.getPath() + url);
   }
 
   /**
@@ -74,15 +43,18 @@ export abstract class Services<T>{
     ).subscribe(arrow);
   }
 
-  public save(obj:T):Observable<any>{
-    const headers = { 'content-type': 'application/json'}
-    return this.http.post(this.serverUrl + this.getPath(),JSON.stringify(obj),{'headers':headers});
-    // .subscribe(result => console.log(result));
+  public save(obj: T): Observable<any> {
+    const headers = { 'content-type': 'application/json' };
+    return this.http.post(
+        `${this.serverUrl}${this.getPath()}`,
+        JSON.stringify(obj),
+        { headers }
+    );
   }
 
   /**
    * criado para envio de array de dados por post
-   * @param obj
+   * @param id
    */
   public saveArray(obj:T[]):Observable<any>{
     const headers = { 'content-type': 'application/json'}
@@ -90,9 +62,8 @@ export abstract class Services<T>{
     // .subscribe(result => console.log(result));
   }
 
-  public delete(id:number): Observable<any>{
-    const headers = { 'content-type': 'application/json'}
-    return this.http.delete(this.serverUrl + this.getPath() +"/"+ id);//,{'headers':headers});
+  public delete(id: number): Observable<any> {
+    return this.http.delete(`${this.serverUrl}${this.getPath()}/${id}`);
   }
 
   public send(obj:any, url?:string): Observable<any>{
@@ -103,18 +74,25 @@ export abstract class Services<T>{
       {'headers':Services.headersForm}
     );
   }
+  public listAll(): Observable<T[]> {
+    return this.http.getAndMap(`${this.serverUrl}${this.getPath()}/listAll`, this.getEntityType());
+  }
 
-  //TODO remover esse metodo e criar um generico sem o parametro nome
-  public findByNome(nome: string, paginacao: TableLazyLoadEvent): Observable<T[]> {
-    return this.send(paginacao, '/findByNome/' + nome);
+  public findById(id: number): Observable<T> {
+    return this.http.getSingle(`${this.serverUrl}${this.getPath()}/${id}`, this.getEntityType());
   }
 
   public listByFilter(event: TableLazyLoadEvent): Observable<T[]> {
     return this.send(event, '/listByFilter');
   }
 
-  public findById(id: number): Observable<T> {
-    return this.converteToIntance(this.getByUrl('/' + id));
-  }
-
+  /**
+   * retorna o typo que o service atende
+   * uma implementação:
+   *
+   *   public getEntityType(): new () => Contato {
+   *     return Contato;
+   *   }
+   */
+  public abstract getEntityType(): new () => T;
 }

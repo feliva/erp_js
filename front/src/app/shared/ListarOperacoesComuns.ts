@@ -5,7 +5,7 @@ import {TableLazyLoadEvent, TablePageEvent} from "primeng/table";
 import {FiltroServices} from "../service/FiltroServices";
 import {forkJoin} from "rxjs";
 
-export abstract class ListarOperacoesComuns<T> {
+export abstract class ListarOperacoesComuns<T extends object> {
 
     protected confirmationService: ConfirmationService = inject(ConfirmationService);
     protected appMessage:AppMessageService = inject(AppMessageService);
