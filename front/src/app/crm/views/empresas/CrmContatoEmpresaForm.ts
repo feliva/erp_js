@@ -43,7 +43,7 @@ import {FormDynamicDialogOperacoesComuns} from "../../../shared/FormDynamicDialo
                     <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-4">
                         <div class="md:col-span-2">
                             <app-react-message-validation label="Contato">
-                                <p-autocomplete [suggestions]="lConatos" (completeMethod)="filterContato($event)" optionLabel="teste" formControlName="contato">
+                                <p-autocomplete [suggestions]="lConatos" (completeMethod)="filterContato($event)" optionLabel="label" formControlName="contato">
                                 </p-autocomplete>
                             </app-react-message-validation>
                         </div>
@@ -107,19 +107,9 @@ export class CrmContatoEmpresasForm extends FormDynamicDialogOperacoesComuns<Con
     }
 
     filterContato(event:AutoCompleteCompleteEvent) {
-        let filtered: any[] = [];
-        let query = event.query;
         this.lConatos = [];
         this.contatoService.listByNome(event.query).subscribe(res => {
-            res.forEach(value => {
-                let c =  new Contato()
-                c.nome = value.nome;
-                c.idContato= value.idContato;
-                // @ts-ignore
-                this.lConatos.push(c);
-            });
             this.lConatos = res;
-            console.log(this.lConatos)
         });
     }
 

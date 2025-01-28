@@ -8,8 +8,8 @@ export class Contato {
   celular?: string;
   endereco?: Endereco;
 
-  get teste(){
-    return "teste";
+  get label(){
+    return `${this.idContato} - ${this.nome}`;
   }
 
   static CreateFormGroup(entity: Contato) {
