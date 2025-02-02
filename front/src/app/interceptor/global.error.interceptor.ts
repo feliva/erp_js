@@ -1,6 +1,6 @@
-import {HttpErrorResponse, HttpInterceptorFn} from '@angular/common/http';
+import {HttpInterceptorFn} from '@angular/common/http';
 import {inject} from "@angular/core";
-import {catchError, finalize, of} from "rxjs";
+import {catchError, of} from "rxjs";
 import {ShowMessageService} from "../components/show-message/show-message.service";
 import {MessageService} from "primeng/api";
 import {Resposta} from "../model/Resposta";

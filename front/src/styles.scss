@@ -60,9 +60,7 @@ a{
 .p-calendar{
   width: 100%;
 }
-.p-autocomplete{
-  width: 100% ;
-}
+
 .obrigatorio{
   color:red;
 }
@@ -76,6 +74,10 @@ a{
 
 .filter-fildset legend {
   padding: .4rem !important;
+}
+
+.w-full .p-autocomplete-input{
+  width: 100%;
 }
 
 //begin nav

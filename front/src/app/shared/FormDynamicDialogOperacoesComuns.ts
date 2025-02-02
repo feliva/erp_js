@@ -1,14 +1,14 @@
 import {Component, inject} from "@angular/core";
-import {Contato} from "../model/Contato";
 import {Resposta} from "../model/Resposta";
 import {FormOperacoesComuns} from "./FormOperacoesComuns";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {Model} from "../model/Model";
 
 @Component({
     template: '',
     standalone: false
 })
-export abstract class FormDynamicDialogOperacoesComuns<T extends object> extends FormOperacoesComuns<T>{
+export abstract class FormDynamicDialogOperacoesComuns<T extends Model> extends FormOperacoesComuns<T>{
 
     editando:boolean = false;
 
@@ -25,6 +25,8 @@ export abstract class FormDynamicDialogOperacoesComuns<T extends object> extends
     override onInit() {
         if(this.ref){
             let idEntity = this.dynamicDialogConfig.data?.idEntity;
+            let entity = this.dynamicDialogConfig.data?.entity;
+            console.log(this.dynamicDialogConfig.data)
             this.setEhNovo((!idEntity));
             if(this.ehNovo) {
                 this.inicializaCamposForm(true);
@@ -41,7 +43,7 @@ export abstract class FormDynamicDialogOperacoesComuns<T extends object> extends
         }
     }
 
-    select(){
+    closeDinamyc(){
         this.ref?.close(this.entity);
     }
 
@@ -50,7 +52,7 @@ export abstract class FormDynamicDialogOperacoesComuns<T extends object> extends
             this.appMessage.addError('Existem pendências no cadastro.')
             return;
         }
-        this.getService().save(this.formToObject()).subscribe((resp:Resposta<Contato>) => {
+        this.getService().save(this.formToObject()).subscribe((resp:Resposta<T>) => {
             this.onCancelarForm(null);
             this.ref?.close(this.entity);
             this.appMessage.addSuccess(this.getMensagemSucessoSubmit())

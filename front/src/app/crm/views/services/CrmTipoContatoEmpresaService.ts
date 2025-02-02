@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {FiltroServices} from "../../../service/FiltroServices";
 import {TipoContatoEmpresa} from "../../../model/TipoContatoEmpresa";
+import {Observable} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +37,13 @@ export class CrmTipoContatoEmpresaService extends FiltroServices<TipoContatoEmpr
     return TipoContatoEmpresa; // Retorna o tipo da entidade
   }
 
-
+  getModel<Empresa>(url: string): Observable<Empresa> {
+    // @ts-ignore
+    return this.http.get<Empresa>(url).pipe(
+        map((json:Empresa) => {
+          // @ts-ignore
+          return new Empresa(json);
+        })
+    );
+  }
 }

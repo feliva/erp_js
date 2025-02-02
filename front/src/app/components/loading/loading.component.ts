@@ -1,7 +1,7 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LoadingService} from "../loading.service";
 import {CommonModule} from "@angular/common";
-import {delay, Observable, startWith, tap} from "rxjs";
+import {delay} from "rxjs";
 
 @Component({
     selector: 'app-loading',

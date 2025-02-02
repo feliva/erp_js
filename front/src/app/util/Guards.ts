@@ -1,4 +1,4 @@
-import {ActivatedRouteSnapshot, CanActivateChildFn, CanActivateFn, RouterStateSnapshot} from "@angular/router";
+import {ActivatedRouteSnapshot, CanActivateChildFn, RouterStateSnapshot} from "@angular/router";
 import {inject} from "@angular/core";
 import {BreadcrumbService} from "../components/breadcrumb/breadcrumb.service";
 import {BreadCrumbMenuItem} from "../components/breadcrumb/BreadCrumbMenuItem.class";

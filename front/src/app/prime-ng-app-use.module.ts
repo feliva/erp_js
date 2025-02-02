@@ -1,4 +1,4 @@
-import {importProvidersFrom, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {DialogService, DynamicDialogConfig} from "primeng/dynamicdialog";
 

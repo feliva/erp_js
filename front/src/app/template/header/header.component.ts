@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import { BadgeModule } from 'primeng/badge';
-import { AvatarModule } from 'primeng/avatar';
+import {BadgeModule} from 'primeng/badge';
+import {AvatarModule} from 'primeng/avatar';
 
 @Component({
     selector: 'app-header',

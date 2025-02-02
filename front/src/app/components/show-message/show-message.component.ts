@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {ShowMessageService} from './show-message.service';
-import { NgFor, NgClass, KeyValuePipe } from '@angular/common';
+import {KeyValuePipe, NgClass, NgFor} from '@angular/common';
 
 @Component({
     selector: 'app-show-message',

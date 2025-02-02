@@ -1,7 +1,5 @@
 import {inject, Injectable} from '@angular/core';
 import {MessageService} from "primeng/api";
-import {FormGroup, ValidationErrors} from "@angular/forms";
-import {LFormControl} from "../model/Movimentacao";
 
 @Injectable({
   providedIn: 'root'

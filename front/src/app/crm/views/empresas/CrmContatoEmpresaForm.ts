@@ -15,8 +15,7 @@ import {Location} from "@angular/common";
 import {FiltroServices} from "../../../service/FiltroServices";
 import {forkJoin} from "rxjs";
 import {TableModule} from "primeng/table";
-import {Dialog} from "primeng/dialog";
-import {DialogService, DynamicDialogConfig} from "primeng/dynamicdialog";
+import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Select} from "primeng/select";
 import {ContatoEmpresa} from "../../../model/ContatoEmpresa";
 import {CrmContatoEmpresaService} from "../services/CrmContatoEmpresaService";
@@ -34,26 +33,24 @@ import {FormDynamicDialogOperacoesComuns} from "../../../shared/FormDynamicDialo
                     <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-4">
                         <div class="md:col-span-2">
                             <app-react-message-validation label="Tipo/Função Contato">
-                                <p-select [options]="this.lTipoCE" optionLabel="descrisao" formControlName="tipoContatoEmpresa">
+                                <p-select [options]="this.lTipoCE" optionLabel="descrisao" formControlName="tipoContatoEmpresa" styleClass="w-full">
                                 </p-select>
                             </app-react-message-validation>
                         </div>
-                    </div>
-
-                    <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-4">
                         <div class="md:col-span-2">
                             <app-react-message-validation label="Contato">
-                                <p-autocomplete [suggestions]="lConatos" (completeMethod)="filterContato($event)" optionLabel="label" formControlName="contato">
+                                <p-autocomplete [suggestions]="lConatos" (completeMethod)="filterContato($event)" optionLabel="label" formControlName="contato" styleClass="w-full">
                                 </p-autocomplete>
                             </app-react-message-validation>
                         </div>
                     </div>
 
+
                     <div class="flex pt-10">
                         <div class="pr-5">
-                            <p-button [raised]="true" type="submit" [disabled]="!formGroup.valid">
-                                <i class="pi pi-check mr-2"></i>
-                                <span>Enviar</span>
+                            <p-button [raised]="true" type="submit" [disabled]="!formGroup.valid" >
+                                <i class="pi pi-plus mr-2"></i>
+                                <span>Adicionar</span>
                             </p-button>
                         </div>
                         <div class="">
@@ -65,13 +62,12 @@ import {FormDynamicDialogOperacoesComuns} from "../../../shared/FormDynamicDialo
                     </div>
                 </form>
             </p-panel>
-            <p-dialog>
-
-            </p-dialog>
         </div>
     `,
     styles: [`
-
+      .w-full .p-autocomplete-input{
+        width: 100%;
+      }
     `],
     imports: [
         PanelModule,
@@ -86,7 +82,6 @@ import {FormDynamicDialogOperacoesComuns} from "../../../shared/FormDynamicDialo
         AutoCompleteModule,
         InputMaskModule,
         TableModule,
-        Dialog,
         Select
     ],
     standalone: true,
@@ -94,13 +89,15 @@ import {FormDynamicDialogOperacoesComuns} from "../../../shared/FormDynamicDialo
 })
 export class CrmContatoEmpresasForm extends FormDynamicDialogOperacoesComuns<ContatoEmpresa> implements OnInit,OnDestroy {
 
-
     service:CrmContatoEmpresaService = inject(CrmContatoEmpresaService);
     tipoCEService:CrmTipoContatoEmpresaService = inject(CrmTipoContatoEmpresaService);
     contatoService:CrmContatoService =  inject(CrmContatoService);
 
     lTipoCE?:TipoContatoEmpresa[] = []
     lConatos:Contato[] = [];
+
+    _ref: DynamicDialogRef | null = inject(DynamicDialogRef,{ optional: true })
+    _dynamicDialogConfig:DynamicDialogConfig = inject(DynamicDialogConfig)
 
     constructor(private location: Location) {
         super();
@@ -113,21 +110,27 @@ export class CrmContatoEmpresasForm extends FormDynamicDialogOperacoesComuns<Con
         });
     }
 
-    display(contato:Contato){
-        return contato.idContato;
-    }
-
     public override getService(): FiltroServices<ContatoEmpresa> {
         return this.service;
     }
 
+    override onSubmit(event: SubmitEvent) {
+        if (!this.formGroup.valid) {
+            this.appMessage.addError('Existem pendências no cadastro.')
+            return;
+        }
+        this.formToObject()
+        this.onCancelarForm(null);
+        this.ref?.close(this.entity);
+        this.appMessage.addSuccess("Contato da empresa devolvido a lista.")
+    }
 
     getUrlOnCancelarForm(): string {
         return '/crm/empresa/listar';
     }
 
     getMensagemSucessoSubmit(): string {
-        return 'Empresa salva com sucesso.';
+        return 'Contato da empresa salva com sucesso.';
     }
 
     public inicializaCamposForm(ehNovo: boolean) {
@@ -147,12 +150,14 @@ export class CrmContatoEmpresasForm extends FormDynamicDialogOperacoesComuns<Con
     }
 
     public formToObject(): ContatoEmpresa {
-
-        this.entity = this.formGroup.getRawValue();
+       // this.entity = new ContatoEmpresa();
+        Object.assign(this.entity,this.formGroup.getRawValue());
         return this.entity;
     }
 
     ngOnInit() {
+        console.log(this._dynamicDialogConfig.data)
+        console.log(this.dynamicDialogConfig.data?.entity)
         super.onInit();
     }
 

@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input} from '@angular/core';
 import {FormGroup, ValidationErrors} from "@angular/forms";
-import { NgIf, NgFor } from '@angular/common';
+import {NgFor, NgIf} from '@angular/common';
 
 @Component({
     selector: 'app-template-message-validation',

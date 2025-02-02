@@ -1,6 +1,4 @@
-import {Unidade} from "./Unidade";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Fornecedor} from "./Fornecedor";
 
 export class Armazenagem {
   idArmazen: number | undefined = undefined;

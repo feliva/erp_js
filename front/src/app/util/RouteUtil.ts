@@ -1,7 +1,6 @@
-import {Route, ROUTES, Routes} from "@angular/router";
+import {Route, Routes} from "@angular/router";
 import {BreadCrumbMenuItem} from "../components/breadcrumb/BreadCrumbMenuItem.class";
 import {Guards} from "./Guards";
-import {MenuItem} from "primeng/api";
 import {Type} from "@angular/core";
 
 

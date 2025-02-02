@@ -1,16 +1,6 @@
-import {inject, Injectable} from '@angular/core';
-import {
-    ActivatedRoute,
-    ActivatedRouteSnapshot,
-    CanActivateChildFn,
-    CanActivateFn,
-    Router,
-    RouterStateSnapshot
-} from '@angular/router';
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
 import {BreadCrumbMenuItem, BreadCrumbUtil} from "./BreadCrumbMenuItem.class";
-import {Location} from "@angular/common";
-import {Observable, of} from "rxjs";
-import {list} from "postcss";
 
 
 @Injectable({providedIn: 'root'})

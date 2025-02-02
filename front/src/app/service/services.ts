@@ -79,7 +79,7 @@ export abstract class Services<T extends object>{
   }
 
   public findById(id: number): Observable<T> {
-    return this.http.getSingle(`${this.serverUrl}${this.getPath()}/${id}`, this.getEntityType());
+    return this.http.getModel(`${this.serverUrl}${this.getPath()}/${id}`,this.getEntityType());
   }
 
   public listByFilter(event: TableLazyLoadEvent): Observable<T[]> {
@@ -95,4 +95,5 @@ export abstract class Services<T extends object>{
    *   }
    */
   public abstract getEntityType(): new () => T;
+  // public abstract getModel(url:string): Observable<T>;
 }

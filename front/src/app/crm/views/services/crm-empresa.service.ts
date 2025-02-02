@@ -1,12 +1,14 @@
 import {Injectable} from '@angular/core';
-import {Contato} from "../../../model/Contato";
 import {FormControl, FormGroup} from "@angular/forms";
 import {FiltroServices} from "../../../service/FiltroServices";
+import {Observable} from "rxjs";
+import {map} from "rxjs/operators";
+import {Empresa} from "../../../model/Empresa";
 
 @Injectable({
   providedIn: 'root'
 })
-export class CrmEmpresaService extends FiltroServices<Contato> {
+export class CrmEmpresaService extends FiltroServices<Empresa> {
 
   protected filtroForm:FormGroup = CrmEmpresaService.inicializaFiltro();
 
@@ -32,9 +34,15 @@ export class CrmEmpresaService extends FiltroServices<Contato> {
     });
   }
 
-  public getEntityType(): new () => Contato {
-    return Contato; // Retorna o tipo da entidade
+  public getEntityType(): new (data?:any) => Empresa {
+    return Empresa; // Retorna o tipo da entidade
   }
 
-
+  getModel(url: string): Observable<Empresa> {
+    return this.http.get<Empresa>(url).pipe(
+        map((json:Empresa) => {
+          return new Empresa(json);
+        })
+    );
+  }
 }

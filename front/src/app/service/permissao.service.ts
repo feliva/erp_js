@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Services} from './services';
 import {Permissao} from '../model/Permissao';
@@ -26,6 +25,10 @@ export class PermissaoService extends Services<Permissao>{
   }
   public override getPath(): string {
     return '/auth/permissao';
+  }
+
+  getEntityType(): { new(): Permissao } {
+    return Permissao;
   }
 
 }

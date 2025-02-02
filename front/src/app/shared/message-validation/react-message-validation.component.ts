@@ -1,21 +1,6 @@
-import {
-    AfterContentChecked,
-    AfterContentInit,
-    AfterViewInit,
-    Component,
-    ElementRef,
-    Input,
-    OnInit, Self
-} from '@angular/core';
-import {
-    ControlContainer,
-    ControlValueAccessor,
-    FormControl,
-    FormGroup,
-    FormGroupDirective,
-    ValidationErrors
-} from "@angular/forms";
-import {NgIf, NgFor} from '@angular/common';
+import {AfterContentChecked, Component, ElementRef, Input, OnInit} from '@angular/core';
+import {ControlContainer, FormControl, FormGroup, FormGroupDirective, ValidationErrors} from "@angular/forms";
+import {NgFor, NgIf} from '@angular/common';
 
 @Component({
     selector: 'app-react-message-validation',

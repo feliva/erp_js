@@ -18,7 +18,6 @@ import {Cidade, Estado} from "../../../model/Cidade";
 import {Empresa} from "../../../model/Empresa";
 import {CrmEmpresaService} from "../services/crm-empresa.service";
 import {TableModule} from "primeng/table";
-import {Dialog} from "primeng/dialog";
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Select} from "primeng/select";
 import {ContatoEmpresa} from "../../../model/ContatoEmpresa";
@@ -100,7 +99,7 @@ import {CrmContatoEmpresasForm} from "./CrmContatoEmpresaForm";
                     <p-table [value]="this.entity.listContatosEmpresa || []">
                         <ng-template pTemplate="caption">
                             <div class="flex items-center justify-items-start">
-                                <p-button  [rounded]="true" icon="pi pi-plus" styleClass="mr-3"/>
+                                <p-button  [rounded]="true" icon="pi pi-plus" styleClass="mr-3" (click)="this.novoContatoEmpresa()" />
                                 <span class="text-xl font-bold">Contatos</span>
                             </div>
                         </ng-template>
@@ -123,11 +122,11 @@ import {CrmContatoEmpresasForm} from "./CrmContatoEmpresaForm";
                                 <td>
                                     <a class="p-ripple p-element p-button p-component p-button-icon-only p-button-rounded p-button-text"
                                        aria-label="Novo"
-                                       (click)="editarConato(contatoE,$event)">
+                                       (click)="editarContato(contatoE,$event)">
                                         <i class="pi pi-pencil"></i>
                                     </a>
                                     <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
-                                              (onClick)="removerContato(contatoE,$event)"></p-button>
+                                              (onClick)="btnRemoverContato(contatoE,$event)"></p-button>
                                 </td>
                             </tr>
                         </ng-template>
@@ -150,8 +149,6 @@ import {CrmContatoEmpresasForm} from "./CrmContatoEmpresaForm";
                     </div>
                 </form>
             </p-panel>
-            <p-dialog>
-            </p-dialog>
         </div>
     `,
     styles: [`
@@ -170,7 +167,6 @@ import {CrmContatoEmpresasForm} from "./CrmContatoEmpresaForm";
         AutoCompleteModule,
         InputMaskModule,
         TableModule,
-        Dialog,
         Select
     ],
     standalone: true,
@@ -189,36 +185,55 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
     listEstados: Estado[] = [];
 
     ref: DynamicDialogRef | undefined;
+    listaRemoverCE:ContatoEmpresa[] = [];
+    listaEnviarCE:ContatoEmpresa[] = [];
 
     constructor(private location: Location) {
         super();
     }
 
     changeEstado(estado: Estado | undefined) {
-        console.log(estado)
         this.cidadeService.listAllByEstado(estado?.idEstado).subscribe(data => {
             this.listCidades = data;
         });
     }
 
-    removerContato(contatoEmpresa:ContatoEmpresa,$event:any) {
+    btnRemoverContato(contatoEmpresa:ContatoEmpresa,$event:any) {
         let lista = this.entity.listContatosEmpresa ?? [];
-        // this.entity.listContatosEmpresa = lista.filter((cont:ContatoEmpresa)=>{
-        //     return contato.idContato !== cont.idContato;
-        // })
+        this.entity.listContatosEmpresa = lista.filter((cont:ContatoEmpresa)=>{
+            const retorno = (contatoEmpresa.getTransientId() !== cont.getTransientId())
+            if(retorno && !contatoEmpresa.idContatoEmpresa ){
+                this.listaRemoverCE.push(cont);
+            }
+            return retorno;
+        })
     }
 
-    editarConato(contato:ContatoEmpresa,event:any){
+    editarAddContato(contatoEmpresa:ContatoEmpresa) {
+        let lista = this.entity.listContatosEmpresa ?? [];
+        this.entity.listContatosEmpresa = lista.filter((cont:ContatoEmpresa)=>{
+            const retorno = (contatoEmpresa.getTransientId() !== cont.getTransientId())
+            return retorno;
+        })
+        this.entity?.listContatosEmpresa?.push(contatoEmpresa)
+    }
+
+    novoContatoEmpresa(){
+        this.editarContato(new ContatoEmpresa(),null);
+    }
+
+    editarContato(contatoEmpresa:ContatoEmpresa,event:any){
+        console.log(contatoEmpresa.idContatoEmpresa)
+
         this.ref = this.dialogService.open(CrmContatoEmpresasForm, {
             data:{
-                idEntity:contato.idContatoEmpresa
+                idEntity : contatoEmpresa.idContatoEmpresa
             },
             modal:true
         });
 
-        this.ref.onClose.subscribe((data: any) => {
-            console.log("this.ref.onClose.")
-            console.log(data)
+        this.ref.onClose.subscribe((data: ContatoEmpresa) => {
+            this.editarAddContato(data);
         });
     }
 
@@ -254,13 +269,6 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
     }
 
     public formToObject(): Empresa {
-        // this.entity.idEmpresa = this.formGroup.controls['idEmpresa'].value;
-        // this.entity.nomeFantasia = this.formGroup.controls['nomeFantasia'].value;
-        // this.entity.email = this.formGroup.controls['email'].value;
-        // this.entity.razaoSocial = this.formGroup.controls['razaoSocial'].value;
-        // this.entity.telefone = this.formGroup.controls['telefone'].value;
-        // this.entity.inscricaoEstadual = this.formGroup.controls['inscricaoEstadual'].value;
-
         this.entity = this.formGroup.getRawValue();
         return this.entity;
     }
@@ -293,8 +301,20 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
                 complemento : new FormControl('', [Validators.required]),
             })
         })
-        console.log(this.entity)
+
         this.formGroup.patchValue(this.entity);
+        this.assignObject();
+    }
+
+    private assignObject(){
+        let lCE:ContatoEmpresa[] = [];
+        this.entity.listContatosEmpresa?.forEach(value =>{
+            let ce = new ContatoEmpresa();
+            Object.assign(ce,value);
+            lCE.push(ce);
+        });
+
+        this.entity.listContatosEmpresa = lCE;
     }
 
     ngOnDestroy(){
@@ -302,6 +322,4 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
             this.ref.close()
         }
     }
-
-    protected readonly console = console;
 }
