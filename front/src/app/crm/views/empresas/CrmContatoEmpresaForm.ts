@@ -15,7 +15,7 @@ import {Location} from "@angular/common";
 import {FiltroServices} from "../../../service/FiltroServices";
 import {forkJoin} from "rxjs";
 import {TableModule} from "primeng/table";
-import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Select} from "primeng/select";
 import {ContatoEmpresa} from "../../../model/ContatoEmpresa";
 import {CrmContatoEmpresaService} from "../services/CrmContatoEmpresaService";
@@ -85,7 +85,6 @@ import {FormDynamicDialogOperacoesComuns} from "../../../shared/FormDynamicDialo
         Select
     ],
     standalone: true,
-    providers: [DialogService, DynamicDialogConfig]
 })
 export class CrmContatoEmpresasForm extends FormDynamicDialogOperacoesComuns<ContatoEmpresa> implements OnInit,OnDestroy {
 
@@ -147,6 +146,7 @@ export class CrmContatoEmpresasForm extends FormDynamicDialogOperacoesComuns<Con
                 this.lTipoCE = lTipoCE;
             });
         }
+        this.inicializaFormGroup(ehNovo);
     }
 
     public formToObject(): ContatoEmpresa {
@@ -156,8 +156,8 @@ export class CrmContatoEmpresasForm extends FormDynamicDialogOperacoesComuns<Con
     }
 
     ngOnInit() {
-        console.log(this._dynamicDialogConfig.data)
-        console.log(this.dynamicDialogConfig.data?.entity)
+        console.log(this._dynamicDialogConfig)
+        console.log(this.dynamicDialogConfig.data)
         super.onInit();
     }
 
@@ -178,8 +178,5 @@ export class CrmContatoEmpresasForm extends FormDynamicDialogOperacoesComuns<Con
     }
 
     ngOnDestroy(){
-
     }
-
-    protected readonly console = console;
 }

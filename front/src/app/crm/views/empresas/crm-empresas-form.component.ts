@@ -22,6 +22,7 @@ import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dyna
 import {Select} from "primeng/select";
 import {ContatoEmpresa} from "../../../model/ContatoEmpresa";
 import {CrmContatoEmpresasForm} from "./CrmContatoEmpresaForm";
+import {Resposta} from "../../../model/Resposta";
 
 @Component({
     selector: 'crm-contato-form',
@@ -170,7 +171,6 @@ import {CrmContatoEmpresasForm} from "./CrmContatoEmpresaForm";
         Select
     ],
     standalone: true,
-    providers: [DialogService, DynamicDialogConfig]
 })
 export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> implements OnInit,OnDestroy {
 
@@ -186,7 +186,6 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
 
     ref: DynamicDialogRef | undefined;
     listaRemoverCE:ContatoEmpresa[] = [];
-    listaEnviarCE:ContatoEmpresa[] = [];
 
     constructor(private location: Location) {
         super();
@@ -215,6 +214,7 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
             const retorno = (contatoEmpresa.getTransientId() !== cont.getTransientId())
             return retorno;
         })
+        contatoEmpresa.empresa = {idEmpresa:this.entity.idEmpresa};
         this.entity?.listContatosEmpresa?.push(contatoEmpresa)
     }
 
@@ -223,11 +223,11 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
     }
 
     editarContato(contatoEmpresa:ContatoEmpresa,event:any){
-        console.log(contatoEmpresa.idContatoEmpresa)
 
         this.ref = this.dialogService.open(CrmContatoEmpresasForm, {
             data:{
-                idEntity : contatoEmpresa.idContatoEmpresa
+                entity : contatoEmpresa,
+                idEntidade: undefined
             },
             modal:true
         });
@@ -269,7 +269,7 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
     }
 
     public formToObject(): Empresa {
-        this.entity = this.formGroup.getRawValue();
+        Object.assign(this.entity,this.formGroup.getRawValue())
         return this.entity;
     }
 
@@ -289,7 +289,7 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
             razaoSocial : new FormControl('', []),
             telefone : new FormControl('', []),
             inscricaoEstadual : new FormControl('', []),
-            listContatosEmpresa : new FormControl([],[]),
+            // listContatosEmpresa : new FormControl([],[]),
             endereco : new FormGroup({
                 idEndereco : new FormControl('', []),
                 cep : new FormControl('', [Validators.required]),
@@ -315,6 +315,18 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
         });
 
         this.entity.listContatosEmpresa = lCE;
+    }
+
+    override onSubmit(event: SubmitEvent):void {
+        if (!this.formGroup.valid) {
+            this.appMessage.addError('Existem pendências no cadastro.')
+            return;
+        }
+
+        this.getService().save(this.formToObject()).subscribe((resp:Resposta<Empresa>) => {
+            this.onCancelarForm(null);
+            this.appMessage.addSuccess(this.getMensagemSucessoSubmit())
+        })
     }
 
     ngOnDestroy(){

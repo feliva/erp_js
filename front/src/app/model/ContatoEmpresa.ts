@@ -23,7 +23,8 @@ export class ContatoEmpresa extends Model{
         return this.transientId;
     }
 
-    constructor(data?: any) {
+    constructor(data?: Partial<ContatoEmpresa>) {
         super(data);
+        this.contato = new Contato(data?.contato)
     }
 }

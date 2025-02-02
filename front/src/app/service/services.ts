@@ -3,8 +3,9 @@ import {Observable} from "rxjs";
 import {inject} from "@angular/core";
 import {TableLazyLoadEvent} from "primeng/table";
 import {CustomHttpClient} from "./CustomHttpClient";
+import {Model} from "../model/Model";
 
-export abstract class Services<T extends object>{
+export abstract class Services<T extends Model>{
 
   serverUrl:string = 'http://localhost:8080';
   static headersForm = new HttpHeaders({

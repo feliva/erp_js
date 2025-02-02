@@ -2,13 +2,13 @@ import {inject} from "@angular/core";
 import {AppMessageService} from "../service/app-message.service";
 import {FiltroServices} from "../service/FiltroServices";
 import {BreadcrumbService} from "../components/breadcrumb/breadcrumb.service";
-import {Contato} from "../model/Contato";
+import {Resposta} from "../model/Resposta";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {Resposta} from "../model/Resposta";
+import {Model} from "../model/Model";
 
 
-export abstract class FormOperacoesComuns<T extends object>{
+export abstract class FormOperacoesComuns<T extends Model>{
     protected appMessage: AppMessageService = inject(AppMessageService);
     protected breadservice:BreadcrumbService = inject(BreadcrumbService);
     protected activatedRoute: ActivatedRoute = inject(ActivatedRoute);
@@ -67,7 +67,7 @@ export abstract class FormOperacoesComuns<T extends object>{
             this.appMessage.addError('Existem pendências no cadastro.')
             return;
         }
-        this.getService().save(this.formToObject()).subscribe((resp:Resposta<Contato>) => {
+        this.getService().save(this.formToObject()).subscribe((resp:Resposta<T>) => {
             this.onCancelarForm(null);
             this.appMessage.addSuccess(this.getMensagemSucessoSubmit())
         })

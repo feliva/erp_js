@@ -6,9 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -39,7 +37,7 @@ public class Empresa extends Model<Integer> {
     @Column(length = 100,name = "inscricao_estadual")
     private String inscricaoEstadual;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_empresa")
     private List<ContatoEmpresa> listContatosEmpresa;
 

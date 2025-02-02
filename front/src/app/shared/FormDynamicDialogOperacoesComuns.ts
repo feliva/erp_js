@@ -1,13 +1,9 @@
-import {Component, inject} from "@angular/core";
+import {inject} from "@angular/core";
 import {Resposta} from "../model/Resposta";
 import {FormOperacoesComuns} from "./FormOperacoesComuns";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Model} from "../model/Model";
 
-@Component({
-    template: '',
-    standalone: false
-})
 export abstract class FormDynamicDialogOperacoesComuns<T extends Model> extends FormOperacoesComuns<T>{
 
     editando:boolean = false;
@@ -26,17 +22,23 @@ export abstract class FormDynamicDialogOperacoesComuns<T extends Model> extends 
         if(this.ref){
             let idEntity = this.dynamicDialogConfig.data?.idEntity;
             let entity = this.dynamicDialogConfig.data?.entity;
-            console.log(this.dynamicDialogConfig.data)
-            this.setEhNovo((!idEntity));
-            if(this.ehNovo) {
-                this.inicializaCamposForm(true);
-            }else{
-                // setInterval(()=> {
+            if(idEntity) { //se veio o id busca
+                this.setEhNovo((!idEntity));
+                if (this.ehNovo) {
+                    this.inicializaCamposForm(true);
+                } else {
+                    // setInterval(()=> {
                     this.getService().findById(idEntity).subscribe((result) => {
                         this.entity = result;
                         this.inicializaCamposForm(false);
-                    // }),0
-                })
+                        // }),0
+                    })
+                }
+            }else{
+                //se veio uma entidade é edição
+                this.entity = entity
+                this.setEhNovo(false);
+                this.inicializaCamposForm(false);
             }
         }else{
             super.onInit();

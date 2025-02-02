@@ -70,7 +70,6 @@ export class BreadcrumbService {
     }
 
     getTop() {
-        console.log(this.mm)
         if (this.mm != undefined && this.mm.length != 0) {
             return this.mm[this.mm.length - 1];
         } else {

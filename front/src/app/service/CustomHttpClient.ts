@@ -15,7 +15,7 @@ export class CustomHttpClient extends HttpClient {
      * @param url URL da requisição
      * @param type Classe para a qual os objetos JSON serão transformados
      */
-    getAndMap<T extends object>(url: string, type: new () => T): Observable<T[]> {
+    getAndMap<T extends Model>(url: string, type: new () => T): Observable<T[]> {
         return super.get<T[]>(url).pipe(
             map((data: T[]) => data.map(item => Object.assign((new type()), item)))
         );
