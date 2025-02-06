@@ -185,7 +185,6 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
     listEstados: Estado[] = [];
 
     ref: DynamicDialogRef | undefined;
-    listaRemoverCE:ContatoEmpresa[] = [];
 
     constructor(private location: Location) {
         super();
@@ -202,7 +201,7 @@ export class CrmEmpresasFormComponent extends FormOperacoesComuns<Empresa> imple
         this.entity.listContatosEmpresa = lista.filter((cont:ContatoEmpresa)=>{
             const retorno = (contatoEmpresa.getTransientId() !== cont.getTransientId())
             if(retorno && !contatoEmpresa.idContatoEmpresa ){
-                this.listaRemoverCE.push(cont);
+                this.listDelite.push(cont);
             }
             return retorno;
         })

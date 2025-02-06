@@ -22,8 +22,21 @@ export abstract class FormOperacoesComuns<T extends Model>{
 
     protected ehNovo:boolean = false;
 
+
+    listUpdate:any[] = [];
+    listInsert:any[] = [];
+    listDelite:any[] = [];
+
     constructor() {
         this.inicializaFormGroup(true);
+    }
+
+    createPostEntity(){
+        return{
+            listUpdate: this.listUpdate,
+            listInsert: this.listInsert,
+            listDelite: this.listDelite,
+        };
     }
 
     onInit(): void {

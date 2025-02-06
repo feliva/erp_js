@@ -25,39 +25,7 @@ import {CrmEmpresaService} from "../services/crm-empresa.service";
                 <i class="pi pi-plus"></i>
             </a>
         </div>
-
-        <div class="pb-2">
-            <p-fieldset styleClass="filter-fildset" [collapsed]="!expandFiltro">
-                <ng-template pTemplate="header">
-
-                    <a pRipple tabindex="0" role="button" (click)="toggle($event)" (keydown)="toggle($event)">
-                        Filtros <i class="pi pi-filter"></i>
-                    </a>
-                </ng-template>
-                <div class="pt-5">
-                    @if (expandFiltro) {
-                        <form [formGroup]="serviceL.getFiltrosForm()" (ngSubmit)="filtrarBusca()">
-                            <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-2">
-                                <div class="md:col-span-1">
-                                    <label>Nome</label>
-                                    <input type="text" pInputText formControlName="nome" class="w-full"/>
-                                </div>
-                            </div>
-                            <div class="flex pt-5">
-                                <div class="pr-3">
-                                    <p-button label="Filtrar" icon="pi pi-filter" class="pr-6" type="submit"></p-button>
-                                </div>
-                                <div class="">
-                                    <p-button label="Limpar" [outlined]="true" icon="pi pi-filter-slash" class="pr-6"
-                                              (onClick)="limpaFiltros()"></p-button>
-                                </div>
-                            </div>
-                        </form>
-                    }
-                </div>
-            </p-fieldset>
-        </div>
-
+        
         <p-panel header="Lista de Empresas">
             <p-table [value]="entitys" [tableStyle]="{'min-width': '60rem'}"
                      [lazy]="true"
