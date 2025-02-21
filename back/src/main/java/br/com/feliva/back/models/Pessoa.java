@@ -14,8 +14,8 @@ public class Pessoa extends Model<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_contato")
-    private Integer idContato;
+    @Column(name = "id_pessoa")
+    private Integer idPessoa;
 
     @Column(length = 100)
     @NotNull(message = "Informe um contato.")
@@ -29,13 +29,9 @@ public class Pessoa extends Model<Integer> {
     @Column(length = 100)
     private String celular;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_endereco")
-    private Endereco endereco;
-
     @Override
     public Integer getMMId() {
-        return this.idContato;
+        return this.idPessoa;
     }
 }
 

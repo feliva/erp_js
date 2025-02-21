@@ -1,6 +1,5 @@
 package br.com.feliva.back.dao;
 
-import br.com.feliva.back.models.Categoria;
 import br.com.feliva.back.models.Cidade;
 import br.com.feliva.back.models.Estado;
 import br.com.feliva.sharedClass.db.DAO;
@@ -18,6 +17,18 @@ public class CidadeDAO extends DAO<Cidade> {
             return this.em.createQuery("""
                         select c from Cidade c order by c.nome asc
                     """).getResultList();
+        }catch (NoResultException e){
+            return null;
+        }
+    }
+
+    public List<Cidade> autocomplete(String query){
+        try {
+            return this.em.createQuery("""
+                        select c from Cidade c where c.nome ilike :query or c.idCidade = :query
+                    """)
+                    .setParameter("query", query)
+                    .getResultList();
         }catch (NoResultException e){
             return null;
         }

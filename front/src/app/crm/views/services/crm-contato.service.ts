@@ -36,7 +36,7 @@ export class CrmContatoService extends FiltroServices<Contato> {
   }
 
   public listByNome(param: string): Observable<Contato[]> {
-    return this.http.getAndMap<Contato>(this.serverUrl + this.getPath() + "/listByNome/"+param, this.getEntityType());
+    return this.http.get<Contato[]>(this.serverUrl + this.getPath() + "/listByNome/"+param);
   }
 
 

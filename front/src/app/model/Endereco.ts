@@ -1,7 +1,8 @@
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Cidade} from "./Cidade";
+import {Model} from "./Model";
 
-export class Endereco{
+export class Endereco extends Model{
   idEndereco?: number;
   cep?: string;
   cidade?:Cidade
@@ -9,6 +10,11 @@ export class Endereco{
   logradouro?:string
   numero?:string
   complemento?:string;
+
+  constructor(entity?: Partial<Endereco>) {
+    super(entity);
+  }
+
 
   static CreateFormGroup(entity?:Endereco){
     return new FormGroup({

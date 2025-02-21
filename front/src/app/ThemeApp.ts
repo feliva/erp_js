@@ -24,6 +24,11 @@ export const ThemeApp = definePreset(Aura, {
                             header: {
                                 background: '#f8fafc',
                                 padding: '.75rem',
+                                borderColor: '#d6dde7',
+                            },
+                            root:{
+                                borderColor:'#d6dde7'
+
                             }
                         }
                     },

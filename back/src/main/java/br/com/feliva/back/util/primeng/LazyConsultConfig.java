@@ -14,10 +14,18 @@ public class LazyConsultConfig {
 
     String where;
     String orderBy;
+    MatchMode matchMode;
 
     public LazyConsultConfig(String join, String where, String orderBy) {
         this.join = join;
         this.where = where;
         this.orderBy = orderBy;
+    }
+
+    public LazyConsultConfig(String join, String where, String orderBy,MatchMode matchMode) {
+        this.join = join;
+        this.where = where;
+        this.orderBy = orderBy;
+        this.matchMode = matchMode;
     }
 }

@@ -1,5 +1,5 @@
 export class Resposta<T>{
-  dados:T|undefined;
-  erro:any;
-  mensagenErros:string[]|undefined;
+  dados?:T;
+  erro?:any;
+  mensagenErros?:string[];
 }

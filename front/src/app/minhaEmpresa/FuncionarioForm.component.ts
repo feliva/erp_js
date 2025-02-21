@@ -7,17 +7,15 @@ import {InputTextModule} from 'primeng/inputtext';
 import {PanelModule} from 'primeng/panel';
 import {EditorModule} from "primeng/editor";
 import {AutoCompleteModule} from "primeng/autocomplete";
-import {Contato} from "../../../model/Contato";
-import {ReactMessageValidationComponent} from "../../../shared/message-validation/react-message-validation.component";
 import {InputMaskModule} from "primeng/inputmask";
-import {CrmContatoService} from "../services/crm-contato.service";
-import {FiltroServices} from "../../../service/FiltroServices";
-import {forkJoin} from "rxjs";
-import {CidadeService} from "../../../service/cidade.service";
-import {Cidade, Estado} from "../../../model/Cidade";
-import {FormDynamicDialogOperacoesComuns} from "../../../shared/FormDynamicDialogOperacoesComuns";
-import {Select} from "primeng/select";
 import {ActivatedRoute} from "@angular/router";
+import {ReactMessageValidationComponent} from "../shared/message-validation/react-message-validation.component";
+import {FormDynamicDialogOperacoesComuns} from "../shared/FormDynamicDialogOperacoesComuns";
+import {Funcionario} from "../model/Funcionario";
+import {FuncionarioService} from "./FuncionarioService";
+import {FiltroServices} from "../service/FiltroServices";
+import {EnderecoFormComponent} from "../crm/views/empresas/endereco-form.component";
+import {TabPanel, TabsModule} from "primeng/tabs";
 
 @Component({
     selector: 'minha-emprsa-form',
@@ -26,69 +24,28 @@ import {ActivatedRoute} from "@angular/router";
             <div class="p-panel-content-container">
                 <div class=" ">
                     <form autocomplete="off" [formGroup]="formGroup" (ngSubmit)="onSubmit($event)">
-                        <p-panel header="{{labelForm}} Contato" styleClass="not-border">
-
-                            <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-2">
-                                <div class="md:col-span-1">
-                                    <app-react-message-validation label="Nome">
-                                        <input pInputText type="text" formControlName="nome" class="w-full">
-                                    </app-react-message-validation>
-                                </div>
-                                <div class="md:col-span-1">
-                                    <app-react-message-validation label="E-mail">
-                                        <input pInputText type="email" class="w-full" formControlName="email"/>
-                                    </app-react-message-validation>
-                                </div>
-                                <div class="md:col-span-1">
-                                    <app-react-message-validation label="Celular">
-                                        <p-inputMask mask="(99) 9999-9999" formControlName="celular"
-                                                     placeholder="(99) 9999-9999" class="grid"></p-inputMask>
-                                    </app-react-message-validation>
-                                </div>
-                            </div>
-
-                        </p-panel>
-
-                        <p-panel header="Endereço" styleClass="mt-2 not-border">
-                            <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-2" formGroupName="endereco">
-                                <div class="md:col-span-1">
-                                    <label>Estado</label>
-                                    <p-select [options]="listEstados" formControlName="estado" optionLabel="nome"
-                                              class="w-full" (onChange)="changeEstado($event.value)"/>
-                                </div>
-                                <div class="md:col-span-1">
-                                    <app-react-message-validation label="Cidade">
-                                        <p-select [options]="listCidades" formControlName="cidade" optionLabel="nome"
-                                                  [filter]="true" filterBy="nome" placeholder="Selecione uma cidade"
-                                                  class="w-full"/>
-                                    </app-react-message-validation>
-                                </div>
-                                <div class="md:col-span-1">
-                                    <label>Cep</label>
-                                    <p-inputMask mask="99999-999" formControlName="cep" class="grid"></p-inputMask>
-                                </div>
-
-                                <div class="md:col-span-1">
-                                    <label>Bairro</label>
-                                    <input pInputText type="text" class="w-full" formControlName="bairro"/>
-                                </div>
-                                <div class="md:col-span-1">
-                                    <label>Logradouro</label>
-                                    <input pInputText type="text" class="w-full" formControlName="logradouro"/>
-                                </div>
-
-                                <div class="md:col-span-1">
-                                    <label>Número</label>
-                                    <input pInputText type="text" class="w-full" formControlName="numero"/>
-                                </div>
-                                <div class="md:col-span-1">
-                                    <label>Complemento</label>
-                                    <input pInputText type="text" class="w-full" formControlName="complemento"/>
-                                </div>
-                            </div>
-                        </p-panel>
-
-
+                        
+                        <p-tabs>
+                            <p-tablist>
+                                <p-tab value="0">Dados Funcionais</p-tab>
+                                <p-tab value="1">Dados Pessoas</p-tab>
+                                <p-tab value="5">Contato</p-tab>
+                                <p-tab value="2">Endereço</p-tab>
+                                <p-tab value="3">Permissões</p-tab>
+                            </p-tablist>
+                            <p-tabpanels>
+                                <p-tabpanel value="0"></p-tabpanel>
+                                <p-tabpanel value="1"></p-tabpanel>
+                                <p-tabpanel value="2">
+                                    <endereco-form fgName="endereco" [formGroup]="formGroup" />
+                                </p-tabpanel>
+                                <p-tabpanel value="5">
+                                    <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-2">
+                                    </div>
+                                </p-tabpanel>
+                            </p-tabpanels>
+                        </p-tabs>
+                        
                         <div class="p-panel p-component mt-2 not-border">
                             <div class="p-panel-content-container">
                                 <div class="p-panel-content ">
@@ -131,17 +88,14 @@ import {ActivatedRoute} from "@angular/router";
         EditorModule,
         AutoCompleteModule,
         InputMaskModule,
-        Select,
+        EnderecoFormComponent,
+        TabPanel,
+        TabsModule
     ]
 })
-export class FuncionarioFormComponent extends FormDynamicDialogOperacoesComuns<Contato> implements OnInit {
+export class FuncionarioFormComponent extends FormDynamicDialogOperacoesComuns<Funcionario> implements OnInit {
 
-    contatoService: CrmContatoService = inject(CrmContatoService);
-    cidadeService: CidadeService = inject(CidadeService);
-
-    estado: Estado | undefined;
-    listCidades: Cidade[] = [];
-    listEstados: Estado[] = [];
+    funcionarioService: FuncionarioService = inject(FuncionarioService);
 
     ss = inject(ActivatedRoute)
 
@@ -149,14 +103,9 @@ export class FuncionarioFormComponent extends FormDynamicDialogOperacoesComuns<C
         super();
     }
 
-    changeEstado(estado: Estado | undefined) {
-        this.cidadeService.listAllByEstado(estado?.idEstado).subscribe(data => {
-            this.listCidades = data;
-        });
-    }
 
-    public override getService(): FiltroServices<Contato> {
-        return this.contatoService;
+    public override getService(): FiltroServices<Funcionario> {
+        return this.funcionarioService;
     }
 
     getUrlOnCancelarForm(): string {
@@ -176,24 +125,24 @@ export class FuncionarioFormComponent extends FormDynamicDialogOperacoesComuns<C
 
     public inicializaCamposForm(ehNovo: boolean) {
         if (ehNovo) {
-            forkJoin({
-                lEstado: this.cidadeService.listAllEstados(),
-            }).subscribe(({lEstado}) => {
-                this.listEstados = lEstado;
-            });
+            // forkJoin({
+            //     lEstado: this.cidadeService.listAllEstados(),
+            // }).subscribe(({lEstado}) => {
+            //     this.listEstados = lEstado;
+            // });
         } else {
-            forkJoin({
-                lEstado: this.cidadeService.listAllEstados(),
-                lCidade: this.cidadeService.listAllByEstado(this.entity?.endereco?.cidade?.estado?.idEstado),
-            }).subscribe(({lEstado,lCidade}) => {
-                this.listEstados = lEstado;
-                this.listCidades = lCidade;
+            // forkJoin({
+            //     lEstado: this.cidadeService.listAllEstados(),
+            //     lCidade: this.cidadeService.listAllByEstado(this.entity?.endereco?.cidade?.estado?.idEstado),
+            // }).subscribe(({lEstado,lCidade}) => {
+            //     this.listEstados = lEstado;
+            //     this.listCidades = lCidade;
                 this.inicializaFormGroup(false);
-            });
+            // });
         }
     }
 
-    public formToObject(): Contato {
+    public formToObject(): Funcionario {
         // let contatoForm: Contato = new Contato();
         return this.formGroup.getRawValue();
     }
@@ -204,9 +153,9 @@ export class FuncionarioFormComponent extends FormDynamicDialogOperacoesComuns<C
 
     public inicializaFormGroup(clean:boolean): void{
         if(clean){
-            this.entity = new Contato();
+            this.entity = new Funcionario();
         }
-        this.formGroup = Contato.CreateFormGroup(this.entity);
+        this.formGroup = Funcionario.CreateFormGroup(this.entity);
         this.formGroup.patchValue(this.entity);
     }
 }

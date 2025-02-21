@@ -39,7 +39,7 @@ import {FormDynamicDialogOperacoesComuns} from "../../../shared/FormDynamicDialo
                         </div>
                         <div class="md:col-span-2">
                             <app-react-message-validation label="Contato">
-                                <p-autocomplete [suggestions]="lConatos" (completeMethod)="filterContato($event)" optionLabel="label" formControlName="contato" styleClass="w-full">
+                                <p-autocomplete [suggestions]="lConatos" (completeMethod)="filterContato($event)" optionLabel="{label}" formControlName="contato" styleClass="w-full">
                                 </p-autocomplete>
                             </app-react-message-validation>
                         </div>

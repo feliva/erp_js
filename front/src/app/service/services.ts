@@ -1,11 +1,9 @@
-import {HttpHeaders, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {inject} from "@angular/core";
 import {TableLazyLoadEvent} from "primeng/table";
-import {CustomHttpClient} from "./CustomHttpClient";
-import {Model} from "../model/Model";
 
-export abstract class Services<T extends Model>{
+export abstract class Services<T>{
 
   serverUrl:string = 'http://localhost:8080';
   static headersForm = new HttpHeaders({
@@ -14,7 +12,7 @@ export abstract class Services<T extends Model>{
     'content-type': 'application/json'
   });
 
-  http = inject(CustomHttpClient);
+  http = inject(HttpClient);
 
   constructor(){
   }
@@ -22,11 +20,7 @@ export abstract class Services<T extends Model>{
   public abstract getPath():string;
 
   public find(url: string, obj: any = undefined): Observable<T[]> {
-    if (obj == undefined) {
-      return this.http.getAndMap(`${this.serverUrl}${this.getPath()}/${url}`, this.getEntityType());
-    } else {
-      return this.http.getAndMap(`${this.serverUrl}${this.getPath()}/${url}`, this.getEntityType());
-    }
+      return this.http.get<T[]>(`${this.serverUrl}${this.getPath()}/${url}`);
   }
 
   /**
@@ -76,25 +70,14 @@ export abstract class Services<T extends Model>{
     );
   }
   public listAll(): Observable<T[]> {
-    return this.http.getAndMap(`${this.serverUrl}${this.getPath()}/listAll`, this.getEntityType());
+    return this.http.get<T[]>(`${this.serverUrl}${this.getPath()}/listAll`);
   }
 
   public findById(id: number): Observable<T> {
-    return this.http.getModel(`${this.serverUrl}${this.getPath()}/${id}`,this.getEntityType());
+    return this.http.get<T>(`${this.serverUrl}${this.getPath()}/${id}`);
   }
 
   public listByFilter(event: TableLazyLoadEvent): Observable<T[]> {
     return this.send(event, '/listByFilter');
   }
-
-  /**
-   * retorna o typo que o service atende
-   * uma implementação:
-   *
-   *   public getEntityType(): new () => Contato {
-   *     return Contato;
-   *   }
-   */
-  public abstract getEntityType(): new () => T;
-  // public abstract getModel(url:string): Observable<T>;
 }

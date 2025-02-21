@@ -51,7 +51,7 @@ public class CRMEmpresaEndPoint extends ComumEndPoint<EmpresasDAO, Empresa> {
         try {
             Empresa entity = this.getDao().findById(id);
             if(entity == null){
-                return Resposta.buildResponse(id, Resposta.Error.ENTIDADE_NAO_ENCONTRADA);
+                return Resposta.buildResponse(id, Resposta.Status.ENTIDADE_NAO_ENCONTRADA);
             }
             EmpresaDTO dto = new EmpresaDTO(entity);
             dto.processaListEmpresaContado(entity);
@@ -59,7 +59,7 @@ public class CRMEmpresaEndPoint extends ComumEndPoint<EmpresasDAO, Empresa> {
             return Response.ok(dto).build();
         }catch (Exception e){
             System.out.println(e.getMessage());
-            return Resposta.buildResponse(id, Resposta.Error.INTERNAL_SERVER_ERROR);
+            return Resposta.buildResponse(id, Resposta.Status.INTERNAL_SERVER_ERROR);
         }
     }
 

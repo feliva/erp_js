@@ -1,13 +1,15 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
-import {Contato} from "../../../model/Contato";
 import {FormControl, FormGroup} from "@angular/forms";
-import {FiltroServices} from "../../../service/FiltroServices";
+import {Contato} from "../model/Contato";
+import {FiltroServices} from "../service/FiltroServices";
+import {CrmContatoService} from "../crm/views/services/crm-contato.service";
+import {Funcionario} from "../model/Funcionario";
 
 @Injectable({
   providedIn: 'root'
 })
-export class FuncionarioService extends FiltroServices<Contato> {
+export class FuncionarioService extends FiltroServices<Funcionario> {
 
   protected filtroForm:FormGroup = CrmContatoService.inicializaFiltro();
 
@@ -24,7 +26,7 @@ export class FuncionarioService extends FiltroServices<Contato> {
   }
 
   public override getPath(): string {
-    return "/back/crm/contato";
+    return "/back/funcionarios";
   }
 
   public converteToIntance(observable:Observable<any>):Observable<any>{
@@ -35,8 +37,8 @@ export class FuncionarioService extends FiltroServices<Contato> {
     return observable
   }
 
-  public listByNome(param: string): Observable<Contato[]> {
-    return this.http.getAndMap<Contato>(this.serverUrl + this.getPath() + "/listByNome/"+param, this.getEntityType());
+  public listByNome(param: string): Observable<Funcionario[]> {
+    return this.http.get<Contato[]>(this.serverUrl + this.getPath() + "/listByNome/"+param);
   }
 
 

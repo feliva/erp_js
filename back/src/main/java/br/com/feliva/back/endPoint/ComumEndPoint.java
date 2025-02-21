@@ -1,8 +1,10 @@
 package br.com.feliva.back.endPoint;
 
+import br.com.feliva.back.dao.FuncionarioDAO;
 import br.com.feliva.back.dto.DTOUtil;
 import br.com.feliva.back.interfaces.ComunDAO;
 import br.com.feliva.back.models.Resposta;
+import br.com.feliva.back.util.FormFilter;
 import br.com.feliva.back.util.ValidadorUtill;
 import br.com.feliva.back.util.primeng.TableLazyLoadEvent;
 import br.com.feliva.sharedClass.db.DAO;
@@ -31,12 +33,12 @@ public abstract class ComumEndPoint<I extends DAO<M>, M extends Model<?>> {
         try {
             M entity = (M) this.getDao().findById(id);
             if(entity == null){
-                return Resposta.buildResponse(id, Resposta.Error.ENTIDADE_NAO_ENCONTRADA);
+                return Resposta.buildResponse(id, Resposta.Status.ENTIDADE_NAO_ENCONTRADA);
             }
             return Response.ok(entity).build();
         }catch (Exception e){
             System.out.println(e.getMessage());
-            return Resposta.buildResponse(id, Resposta.Error.INTERNAL_SERVER_ERROR);
+            return Resposta.buildResponse(id, Resposta.Status.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -47,12 +49,12 @@ public abstract class ComumEndPoint<I extends DAO<M>, M extends Model<?>> {
         try {
             M p = (M) this.getDao().findById(id);
             if(p == null){
-                return Resposta.buildResponse(id, Resposta.Error.ENTIDADE_NAO_ENCONTRADA);
+                return Resposta.buildResponse(id, Resposta.Status.ENTIDADE_NAO_ENCONTRADA);
             }
             this.getDao().removeT(p);
             return Response.ok().build();
         } catch (Exception e) {
-            return Resposta.buildResponse(id, Resposta.Error.INTERNAL_SERVER_ERROR);
+            return Resposta.buildResponse(id, Resposta.Status.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -83,7 +85,7 @@ public abstract class ComumEndPoint<I extends DAO<M>, M extends Model<?>> {
             }
         }catch (Exception e){
             System.out.println(e.getMessage());
-            return Resposta.buildResponse(Resposta.Error.GENERIC_ERROR);
+            return Resposta.buildResponse(Resposta.Status.GENERIC_ERROR);
         }
     }
 
@@ -96,7 +98,22 @@ public abstract class ComumEndPoint<I extends DAO<M>, M extends Model<?>> {
             return Response.ok(this.getDao().tableLazyLoadCount(obj)).build();
         }catch (Exception e){
             System.out.println(e.getMessage());
-            return Resposta.buildResponse(Resposta.Error.GENERIC_ERROR);
+            return Resposta.buildResponse(Resposta.Status.GENERIC_ERROR);
+        }
+    }
+
+    @Path("/formFilter")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public  Response  formFilter(FormFilter formFilter) throws RollbackException {
+        try {
+            FuncionarioDAO fDao = (FuncionarioDAO) this.getDao();
+            List l = fDao.formFilter(formFilter);
+            return Response.ok(l).build();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return Resposta.buildResponse(Resposta.Status.GENERIC_ERROR);
         }
     }
 

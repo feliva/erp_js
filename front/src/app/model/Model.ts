@@ -4,4 +4,5 @@ export abstract class Model {
       Object.assign(this, data);
     }
   }
+
 }

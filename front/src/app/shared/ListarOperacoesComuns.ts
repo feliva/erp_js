@@ -4,8 +4,9 @@ import {AppMessageService} from "../service/app-message.service";
 import {TableLazyLoadEvent, TablePageEvent} from "primeng/table";
 import {FiltroServices} from "../service/FiltroServices";
 import {forkJoin} from "rxjs";
+import {FormGroup} from "@angular/forms";
 
-export abstract class ListarOperacoesComuns<T extends object> {
+export abstract class ListarOperacoesComuns<T> {
 
     protected confirmationService: ConfirmationService = inject(ConfirmationService);
     protected appMessage:AppMessageService = inject(AppMessageService);
@@ -15,6 +16,8 @@ export abstract class ListarOperacoesComuns<T extends object> {
     protected entitys:T[] = [];
     protected tablePageEvent:TablePageEvent = {first:0,rows:20};
     protected lastTableLazyLoadEvent:TableLazyLoadEvent = {};
+
+    protected formGroupFilter:FormGroup = new FormGroup({})
 
     constructor() {
     }
@@ -35,6 +38,24 @@ export abstract class ListarOperacoesComuns<T extends object> {
             lPaginado: this.getService().tableLazyLoad(event)
         }).subscribe(({lCount,lPaginado}) => {
             this.totalRegistros = lCount;
+            this.entitys = lPaginado;
+        });
+    }
+
+    onLazyLoadFilterForm(event: TableLazyLoadEvent){
+        this.lastTableLazyLoadEvent = event;
+        console.log(event)
+
+        forkJoin({
+            // lCount:this.getService().tableLazyLoadCount(event),
+            lPaginado: this.getService().formFilter({
+                first:event.first,
+                rows: event.rows,
+                listFilter: this.formGroupFilter?.getRawValue(),
+                listSort:{}
+            })
+        }).subscribe(({lPaginado}) => {
+            // this.totalRegistros = lCount;
             this.entitys = lPaginado;
         });
     }
