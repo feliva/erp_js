@@ -1,5 +1,5 @@
-import {Component, inject, Input, OnInit} from '@angular/core';
-import {FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {Component, EventEmitter, inject, Input, OnInit} from '@angular/core';
+import {FormGroup, FormGroupDirective, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ButtonModule} from 'primeng/button';
 import {DropdownModule} from 'primeng/dropdown';
 import {InputNumberModule} from 'primeng/inputnumber';
@@ -9,17 +9,17 @@ import {EditorModule} from "primeng/editor";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {ReactMessageValidationComponent} from "../../../shared/message-validation/react-message-validation.component";
 import {InputMaskModule} from "primeng/inputmask";
-import {Location} from "@angular/common";
 import {CidadeService} from "../../../service/cidade.service";
 import {Cidade, Estado} from "../../../model/Cidade";
 import {TableModule} from "primeng/table";
 import {Select} from "primeng/select";
+import {LoadEnd} from "../../../model/events/LoadEnd";
 
 @Component({
     selector: 'endereco-form',
     template: `
         <div [formGroup]="formGroup">
-        <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-4 pt-4" [formGroupName]="this.fgName">
+        <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-4 pt-4">
             <div class="md:col-span-1">
                 <app-react-message-validation label="Cep">
                     <input pInputText type="text" formControlName="cep" class="w-full"/>
@@ -84,17 +84,20 @@ import {Select} from "primeng/select";
 export class EnderecoFormComponent implements OnInit {
 
     cidadeService: CidadeService = inject(CidadeService);
+    // formGroupDirective:FormGroupDirective = inject(FormGroupDirective)
+
+    @Input({required:true})
+    loadEmitter ?: EventEmitter<LoadEnd>;
 
     listCidades?: Cidade[] = []
     listEstados?: Estado[] = []
 
-    @Input({required: true})
-    formGroup: FormGroup = new FormGroup({});
+    formGroup!: FormGroup;
 
     @Input({required: true})
     fgName:string = ""
 
-    constructor(private location: Location) {
+    constructor(private formGroupDirective:FormGroupDirective) {
     }
 
     changeEstado(estado: Estado | undefined) {
@@ -105,17 +108,23 @@ export class EnderecoFormComponent implements OnInit {
 
 
     public ngOnInit() {
-        let estado = this.formGroup?.get("endereco.estado")?.value;
+        this.formGroup = this.formGroupDirective.control.get(this.fgName) as FormGroup;
 
         this.cidadeService.listAllEstados().subscribe((lEstado) => {
             this.listEstados = lEstado;
         });
 
-        if (estado?.idEstado) {
-            this.cidadeService.listAllByEstado(estado?.idEstado).subscribe((lCidade) => {
-                this.listCidades = lCidade;
-            });
-        }
+
+        this.loadEmitter?.subscribe(()=>{
+            let cidade = this.formGroup.get('cidade')?.value;
+
+            if (cidade) {
+                this.formGroup.get('estado')?.setValue(cidade.estado);
+                this.cidadeService.listAllByEstado(cidade.estado?.idEstado).subscribe((lCidade) => {
+                    this.listCidades = lCidade;
+                });
+            }
+        })
     }
 
 }

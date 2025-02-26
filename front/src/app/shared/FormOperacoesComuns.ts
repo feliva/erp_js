@@ -8,7 +8,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {Model} from "../model/Model";
 
 
-export abstract class FormOperacoesComuns<T extends Model>{
+export abstract class FormOperacoesComuns<T extends Model> {
     protected appMessage: AppMessageService = inject(AppMessageService);
     protected breadservice:BreadcrumbService = inject(BreadcrumbService);
     protected activatedRoute: ActivatedRoute = inject(ActivatedRoute);
@@ -28,7 +28,7 @@ export abstract class FormOperacoesComuns<T extends Model>{
     listDelite:any[] = [];
 
     constructor() {
-        this.inicializaFormGroup(true);
+        // this.inicializaFormGroup(true);
     }
 
     createPostEntity(){

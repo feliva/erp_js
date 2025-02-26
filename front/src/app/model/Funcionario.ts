@@ -10,10 +10,10 @@ export class Funcionario {
   status?:Status
 
 
-  static CreateFormGroup(entity: Funcionario) {
+  static CreateFormGroup(entity?: Funcionario) {
     return new FormGroup({
-      idFuncionario: new FormControl(''),
-      endereco: Endereco.CreateFormGroup(entity.endereco),
+      idFuncionario: new FormControl(entity?.idFuncionario),
+      endereco: Endereco.CreateFormGroup(entity?.endereco),
 
     });
   }

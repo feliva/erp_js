@@ -17,15 +17,16 @@ export class Endereco extends Model{
 
 
   static CreateFormGroup(entity?:Endereco){
+    console.log(entity?.cidade)
     return new FormGroup({
-      idEndereco : new FormControl('', []),
-      cep : new FormControl('', [Validators.required]),
+      idEndereco : new FormControl(entity?.idEndereco, []),
+      cep : new FormControl(entity?.cep, [Validators.required]),
       estado : new FormControl(entity?.cidade?.estado, [Validators.required]),
-      cidade : new FormControl('', [Validators.required]),
-      bairro : new FormControl('', [Validators.required]),
-      logradouro : new FormControl('', [Validators.required]),
-      numero : new FormControl('', [Validators.required]),
-      complemento : new FormControl('', [Validators.required]),
+      cidade : new FormControl(entity?.cidade, [Validators.required]),
+      bairro : new FormControl(entity?.bairro, [Validators.required]),
+      logradouro : new FormControl(entity?.logradouro, [Validators.required]),
+      numero : new FormControl(entity?.numero, [Validators.required]),
+      complemento : new FormControl(entity?.complemento, [Validators.required]),
     })
   }
 }

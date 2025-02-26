@@ -117,7 +117,7 @@ import {Cidade} from "../model/Cidade";
                         <th>{{ entity.endereco?.cidade?.nome }}</th>
                         <th>
                             <a class="p-ripple p-element p-button p-component p-button-icon-only p-button-rounded p-button-text"
-                               routerLink="/crm/contato/editar/{{entity.idFuncionario}}" aria-label="Novo">
+                               routerLink="/minhaEmpresa/funcionarios/editar/{{entity.idFuncionario}}" aria-label="Novo">
                                 <i class="pi pi-pencil"></i>
                             </a>
                             <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (onClick)="confirmExcluir(entity,entity.idFuncionario,$event)"></p-button>
