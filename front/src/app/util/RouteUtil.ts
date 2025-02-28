@@ -93,18 +93,19 @@ export class BuilderRoute{
       items:[]
     }
 
-     if(this.rootMenuitem.length == 0) {
-       this.rootMenuitem.push(this.localItem);
-       this.pilhaMenuNav.push(this.localItem);
-     }else{
-      let menu = this.pilhaMenuNav[this.pilhaMenuNav.length-1];
-      menu?.items?.push(this.localItem);
-    }
+    // if(this.rootMenuitem.length == 0) {
+      this.rootMenuitem.push(this.localItem);
+      this.pilhaMenuNav.push(this.localItem);
+    // }else{
+    //   let menu = this.pilhaMenuNav[this.pilhaMenuNav.length-1];
+    //   menu?.items?.push(this.localItem);
+    // }
 
     this.localItem = undefined;
 
     return this;
   }
+
   navOpenChildren(label:string):BuilderRoute{
     this.localItem = {
       label:label,

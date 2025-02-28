@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @Entity
@@ -25,9 +27,10 @@ public class Pessoa extends Model<Integer> {
     @Column(length = 100)
     private String email;
 
-    @NotNull(message = "Informe um celular.")
-    @Column(length = 100)
-    private String celular;
+    private String cpf;
+
+    @Column(name = "dt_nascimento")
+    private LocalDate dtNascimento;
 
     @Override
     public Integer getMMId() {

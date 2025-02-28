@@ -17,6 +17,8 @@ import {EnderecoFormComponent} from "../crm/views/empresas/endereco-form.compone
 import {TabPanel, TabsModule} from "primeng/tabs";
 import {FormOperacoesComuns} from "../shared/FormOperacoesComuns";
 import {LoadEnd} from "../model/events/LoadEnd";
+import {PessoaFormComponent} from "../components/pessoa-form.component";
+import {DatePicker} from "primeng/datepicker";
 
 @Component({
     selector: 'minha-emprsa-form',
@@ -26,19 +28,29 @@ import {LoadEnd} from "../model/events/LoadEnd";
                 <div class=" ">
                     <form autocomplete="off" [formGroup]="formGroup" (ngSubmit)="onSubmit($event)">
 
-                        <p-tabs>
+                        <p-tabs value="0">
                             <p-tablist>
                                 <p-tab value="0">Dados Funcionais</p-tab>
                                 <p-tab value="1">Dados Pessoas</p-tab>
-                                <p-tab value="5">Contato</p-tab>
                                 <p-tab value="2">Endereço</p-tab>
                                 <p-tab value="3">Permissões</p-tab>
                             </p-tablist>
                             <p-tabpanels>
-                                <p-tabpanel value="0"></p-tabpanel>
-                                <p-tabpanel value="1"></p-tabpanel>
+                                <p-tabpanel value="0">
+									<div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-2 pt-4">
+										<div class="md:col-span-1">
+											<app-react-message-validation label="Data Contratação">
+												<p-datePicker formControlName="dtContratacao" dateFormat="dd/mm/yy"  styleClass="w-full"/>
+											</app-react-message-validation>
+										</div>
+                                    </div>
+                                    
+                                </p-tabpanel>
+                                <p-tabpanel value="1">
+                                    <pessoa-form fgName="pessoa" [loadEmitter]="loadEmitter"/>
+                                </p-tabpanel>
                                 <p-tabpanel value="2">
-                                    <endereco-form fgName="endereco"  [loadEmitter]="loadEmitter"/>
+                                    <endereco-form fgName="endereco" [loadEmitter]="loadEmitter"/>
                                 </p-tabpanel>
                                 <p-tabpanel value="5">
                                     <div class="grid gap-4  text-sm grid-cols-1 lg:grid-cols-2">
@@ -91,12 +103,15 @@ import {LoadEnd} from "../model/events/LoadEnd";
         InputMaskModule,
         EnderecoFormComponent,
         TabPanel,
-        TabsModule
+        TabsModule,
+        PessoaFormComponent,
+        DatePicker
     ]
 })
 export class FuncionarioFormComponent extends FormOperacoesComuns<Funcionario> implements OnInit {
 
     funcionarioService: FuncionarioService = inject(FuncionarioService);
+    // status:StatusS
 
     loadEmitter = new EventEmitter<LoadEnd>();
 

@@ -58,4 +58,4 @@ INSERT INTO cidade (id_estado, nome) VALUES(24, 'EDUARDO GOMES');
 
 INSERT INTO pessoa (celular, email, nome) VALUES('55996108568', 'daran@gmail.com', 'darlan da silva');
 INSERT INTO endereco (id_cidade, cep, numero, bairro, complemento, logradouro) VALUES(1, '98690', '467', 'floresta', 'vado galpao vargas', 'rua são joao');
-INSERT INTO funcionario (id_endereco, id_pessoa, status) VALUES(1, 1, 'ATV');
+INSERT INTO funcionario (id_endereco, id_pessoa, status,dt_contratacao) VALUES(1, 1, 'ATV','2025-01-01');

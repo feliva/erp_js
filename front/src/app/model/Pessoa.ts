@@ -1,9 +1,10 @@
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Model} from "./Model";
 
 export class Pessoa extends Model{
   idPessoa?: number;
-  nome?: string;
+  nome?: string
+  email?: string
 
   constructor(entity?: Partial<Pessoa>) {
     super(entity);
@@ -17,10 +18,11 @@ export class Pessoa extends Model{
     return this.idPessoa;
   }
 
-  static CreateFormGroup(entity: Pessoa) {
+  static CreateFormGroup(entity?: Pessoa) {
     return new FormGroup({
-      idPessoa: new FormControl(''),
-
+      idPessoa: new FormControl(entity?.idPessoa),
+      nome: new FormControl(entity?.nome, [Validators.required]),
+      email: new FormControl(entity?.email, [Validators.required, Validators.email]),
     });
   }
 }

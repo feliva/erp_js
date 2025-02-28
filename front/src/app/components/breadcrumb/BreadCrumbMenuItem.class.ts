@@ -5,6 +5,11 @@ export interface BreadCrumbMenuItem extends MenuItem{
   first?:boolean;
   path?:string;//é o path do router
   route?:RouteP;
+  /**
+   * Text of the item.
+   */
+  label?: string;
+  expanded?: boolean;
 }
 
 export class BreadCrumbUtil{
